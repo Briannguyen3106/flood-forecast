@@ -4,7 +4,7 @@
 
 ## 📁 Cấu Trúc Project
 
-📂 **Dataset:** [Download tại đây](https://drive.google.com/file/d/1rJXyS9A4lMfM-RD2r5sjApAgjQBOFSEV/view?usp=sharing)
+Bạn có thể lấy data ở đây: [Tải dataset](https://drive.google.com/file/d/1rJXyS9A4lMfM-RD2r5sjApAgjQBOFSEV/view?usp=sharing)
 
 ML_PROJECT/
 ├── config/
