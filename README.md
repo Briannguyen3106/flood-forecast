@@ -1,10 +1,11 @@
+Bạn có thể lấy data ở đây: [Tải dataset](https://drive.google.com/file/d/1hTGvNImpJcetxsGXTYvGlu1NENWsntFe/view?usp=sharing)
+
 ```markdown
 
 # 🚀 Hướng Dẫn Phát Triển Model
 
 ## 📁 Cấu Trúc Project
 
-Bạn có thể lấy data ở đây: [Tải dataset](https://drive.google.com/file/d/1hTGvNImpJcetxsGXTYvGlu1NENWsntFe/view?usp=sharing)
 
 ML_PROJECT/
 ├── config/
