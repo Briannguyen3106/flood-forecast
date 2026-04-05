@@ -1,3 +1,7 @@
+
+Bạn có thể lấy data ở đây: [Tải dataset]
+(https://drive.google.com/file/d/1WcbXS7YceyNIe2y6LZU0V2sMibMnpsIC/view?usp=sharing)
+
 # 🚀 Hướng Dẫn Phát Triển Model
 
 ## 📁 Cấu Trúc Project
