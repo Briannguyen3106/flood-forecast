@@ -2,203 +2,229 @@
 
 import pandas as pd
 import numpy as np
-from sklearn.impute import KNNImputer
-from sklearn.preprocessing import RobustScaler, LabelEncoder
+from sklearn.preprocessing import RobustScaler, LabelEncoder, OrdinalEncoder, OneHotEncoder
 from scipy.stats import yeojohnson
 
+#=========================================================== #
+# Target Encoding
+#============================================================ #
+def assign_class(labels_str):
+    if pd.isna(labels_str) or labels_str.strip() =='':
+        return 'Low'
+    labels = [l.strip() for l in labels_str.split('|')]
+    if any(l in ['ponding_hotspot', 'extreme_rain_history'] for l in labels):
+        return 'High'
+    if any(l in ['low_lying', 'sparse_drainage'] for l in labels):
+        return 'Medium'
+    return 'Low'
 
 # ================================================================== #
-#  BASE CLASS
+#  BASE PREPROCESSOR
 # ================================================================== #
 class BasePreprocessor:
-    """
-    Chứa logic chung cho cả 2 pipeline:
-    - Aspect encoding (sin/cos)
-    - KNNImputer
-    - Clip outlier
-    - LabelEncoder cho target
-    """
+    def __init__(self, clip_proximity_uper = 0.95):
+        self.clip_proximity_uper = clip_proximity_uper
 
-    def __init__(self, n_neighbors: int = 5,
-                 clip_lower: float = 0.01, clip_upper: float = 0.99):
-        self.n_neighbors = n_neighbors
-        self.clip_lower = clip_lower
-        self.clip_upper = clip_upper
+        self.numerical_medians = {}
+        self.proximity_clip_uppers = None
+        self.label_encoders = LabelEncoder()
 
-        self.imputer = None
-        self.label_encoder = None
-        self.clip_bounds = {}
-
-        # Aspect sẽ được encode thành sin/cos TRƯỚC khi impute
-        self.raw_cols = ['Slope', 'Curvature', 'Aspect', 'TWI', 'FA', 'Drainage', 'Rainfall']
-        self.numeric_cols = ['Slope', 'Curvature', 'Aspect_sin', 'Aspect_cos',
-                             'TWI', 'FA', 'Drainage', 'Rainfall']
-        self.clip_cols = ['Slope', 'Curvature', 'TWI', 'FA']
-        # Aspect_sin/cos không clip vì luôn trong [-1, 1]
-        self.target_col = 'SUSCEP'
+        self.numeric_cols = [
+            'elevation_m',
+            'drainage_density_km_per_km2',
+            'storm_drain_proximity_m',
+            'historical_rainfall_intensity_mm_hr',
+            'return_period_years'
+        ]
+        self.categorical_cols = [
+            'land_use', 'soil_group',
+            'storm_drain_type', 'rainfall_source', 'dem_source'
+        ]
+        self.drop_cols = [
+            'segment_id', 'city_name', 'admin_ward',
+            'catchment_id', 'risk_labels'
+        ]
+        self.target_col = 'risk_class'
 
     # ------------------------------------------------------------------ #
-    # ASPECT ENCODING
+    # TARGET
     # ------------------------------------------------------------------ #
-    def _apply_aspect_encoding(self, df: pd.DataFrame) -> pd.DataFrame:
-        """
-        Chuyển Aspect (0-360°) → sin/cos để giữ tính chu kỳ.
-        0° và 360° có sin/cos giống nhau ✅
-        """
+    def _apply_target(self, df):
         df = df.copy()
-        aspect_rad = df['Aspect'] * np.pi / 180
-        df['Aspect_sin'] = np.sin(aspect_rad)
-        df['Aspect_cos'] = np.cos(aspect_rad)
-        df.drop(columns=['Aspect'], inplace=True)
+        df['risk_class'] = df['risk_labels'].apply(assign_class)
         return df
-
+    
     # ------------------------------------------------------------------ #
-    # IMPUTER
+    # SENTINEL VALUE
     # ------------------------------------------------------------------ #
-    def _fit_imputer(self, df: pd.DataFrame):
-        self.imputer = KNNImputer(n_neighbors=self.n_neighbors)
-        self.imputer.fit(df[self.numeric_cols])
-
-    def _apply_imputer(self, df: pd.DataFrame) -> pd.DataFrame:
-        imputed = self.imputer.transform(df[self.numeric_cols])
-        return pd.DataFrame(imputed, columns=self.numeric_cols, index=df.index)
-
-    # ------------------------------------------------------------------ #
-    # CLIP
-    # ------------------------------------------------------------------ #
-    def _fit_clip(self, df: pd.DataFrame):
-        for col in self.clip_cols:
-            self.clip_bounds[col] = (
-                df[col].quantile(self.clip_lower),
-                df[col].quantile(self.clip_upper)
-            )
-
-    def _apply_clip(self, df: pd.DataFrame) -> pd.DataFrame:
+    def _apply_sentinel(self, df):
         df = df.copy()
-        for col, (lo, hi) in self.clip_bounds.items():
-            df[col] = np.clip(df[col], lo, hi)
+        df['elevation_m'] = df['elevation_m'].replace(-3.0, np.nan)
         return df
-
+    
     # ------------------------------------------------------------------ #
-    # LABEL ENCODER
+    # FEATURE ENGINEERING
     # ------------------------------------------------------------------ #
-    def _fit_label_encoder(self, df: pd.DataFrame):
-        self.label_encoder = LabelEncoder()
-        self.label_encoder.fit(df[self.target_col])
-
-    def _apply_label_encoder(self, df: pd.DataFrame) -> pd.Series:
-        return self.label_encoder.transform(df[self.target_col])
-
+    def _apply_feature_engineering(self, df):
+        df = df.copy()
+        df['is_very_low_elev'] = (df['elevation_m'].fillna(999)<5).astype(int)
+        df['rain_x_return'] = (df['historical_rainfall_intensity_mm_hr'] * df['return_period_years'])
+        return df
+    
+    # ------------------------------------------------------------------ #
+    # Impute
+    # ------------------------------------------------------------------ #
+    def _fit_impute(self, df):
+        for col in self.numeric_cols:
+            self.numerical_medians[col] = df[col].median()
+    def _apply_impute(self,df):
+        df = df.copy()
+        for col in self.numeric_cols:
+            df[col] = df[col].fillna(self.numerical_medians[col])
+        
+        for col in self.categorical_cols:
+            df[col] = df[col].fillna('Unknown')
+        return df
+    
+    # ------------------------------------------------------------------ #
+    # CLIP PROXIMITY
+    # ------------------------------------------------------------------ #
+    def _fit_clip(self, df):
+        self.proximity_clip_uppers = df['storm_drain_proximity_m'].quantile(self.clip_proximity_uper)
+    def _apply_clip(self, df):
+        df = df.copy()
+        df['storm_drain_proximity_m'] = np.clip(df['storm_drain_proximity_m'], df['storm_drain_proximity_m'].min(), self.proximity_clip_uppers)
+        return df
+    
+    # ------------------------------------------------------------------ #
+    # ENCODE
+    # ------------------------------------------------------------------ #
+    def _fit_label_encoder(self, df):
+        self.label_encoders.fit(df[self.target_col])
+    def _apply_label_encoder(self, df):
+        return self.label_encoders.transform(df[self.target_col])
+    
     # ------------------------------------------------------------------ #
     # METADATA
     # ------------------------------------------------------------------ #
-    def _attach_metadata(self, df_processed: pd.DataFrame,
-                         df_original: pd.DataFrame) -> pd.DataFrame:
-        """Gắn lại X, Y, SUSCEP, SUSCEP_encoded"""
+    def _attach_metadata(self, df_processed, df_original):
         df_processed = df_processed.copy()
-        df_processed['SUSCEP_encoded'] = self._apply_label_encoder(df_original)
-        df_processed['SUSCEP'] = df_original[self.target_col].values
-        df_processed[['X', 'Y']] = df_original[['X', 'Y']].values
+        df_processed['risk_class'] = df_original[self.target_col].values
+        df_processed['risk_class_encoded'] = self._apply_label_encoder(df_original)
+        df_processed['latitude'] = df_original['latitude'].values
+        df_processed['longitude'] = df_original['longitude'].values
         return df_processed
-
+    
     # ------------------------------------------------------------------ #
-    def fit(self, df: pd.DataFrame):
-        raise NotImplementedError
+    #Common fit flow
+    # ------------------------------------------------------------------ #
+    def _common_fit(self, df):
+        df = self._apply_target(df)
+        df = self._apply_sentinel(df)
+        df = self._apply_feature_engineering(df)
+        self._fit_impute(df)
+        df = self._apply_impute(df)
+        self._fit_clip(df)
+        df = self._apply_clip(df)
+        self._fit_label_encoder(df)
+        return df
 
-    def transform(self, df: pd.DataFrame) -> pd.DataFrame:
-        raise NotImplementedError
+    def _common_transform(self, df):
+        df = self._apply_target(df)
+        df = self._apply_sentinel(df)
+        df = self._apply_feature_engineering(df)
+        df = self._apply_impute(df)
+        df = self._apply_clip(df)
+        return df
 
-    def fit_transform(self, df: pd.DataFrame) -> pd.DataFrame:
-        return self.fit(df).transform(df)
+    def fit(self, df):
+        raise NotImplementedError("Subclasses should implement this method.")
+    def transform(self, df):
+        raise NotImplementedError("Subclasses should implement this method.")
+    def fit_transform(self, df):
+        self.fit(df)
+        return self.transform(df)
 
 
 # ================================================================== #
 #  PIPELINE A — TREE-BASED
 #  Decision Tree, Random Forest, XGBoost, LightGBM
 # ================================================================== #
-class TreePreprocessor(BasePreprocessor):
-    """
-    Flow:
-    Raw → Aspect sin/cos → Impute → Clip(1%-99%) → Done
+class PipelineA(BasePreprocessor):
+    def __init__(self):
+        super().__init__()
+        self.ordinal_encoder = None
+        self.feature_cols_out = None
 
-    Tree không cần scale, fix skew, drop multicollinearity.
-    """
-
-    def __init__(self, n_neighbors: int = 5):
-        super().__init__(
-            n_neighbors=n_neighbors,
-            clip_lower=0.01,
-            clip_upper=0.99
+    def _fit_encoder(self, df):
+        self.ordinal_encoder = OrdinalEncoder(
+            handle_unknown='use_encoded_value',
+            unknown_value=-1
         )
-
-    def fit(self, df: pd.DataFrame):
+        self.ordinal_encoder.fit(df[self.categorical_cols])
+    def _apply_encoder(self, df):
         df = df.copy()
+        df[self.categorical_cols] = self.ordinal_encoder.transform(df[self.categorical_cols])
+        return df
+    
+    
+    
+    def fit(self, df: pd.DataFrame):
         print(f"[TreePreprocessor] fitting on {len(df):,} rows...")
-
-        # 1. Aspect encoding
-        df_encoded = self._apply_aspect_encoding(df)
-
-        # 2. Fit imputer
-        self._fit_imputer(df_encoded)
-        df_imp = self._apply_imputer(df_encoded)
-
-        # 3. Fit clip bounds
-        self._fit_clip(df_imp)
-
-        # 4. Fit label encoder
-        self._fit_label_encoder(df)
-
-        print(f"[TreePreprocessor] fit done ✅")
+        df_common = self._common_fit(df)
+        self._fit_encoder(df_common)
+        # Lưu feature cols để dùng trong transform
+        new_cols = ['is_very_low_elev', 'rain_x_return']
+        self.feature_cols_out = self.numeric_cols + new_cols + self.categorical_cols
+        print(f"[TreePreprocessor] fit done — {len(self.feature_cols_out)} features")
         return self
 
     def transform(self, df: pd.DataFrame) -> pd.DataFrame:
-        df_encoded = self._apply_aspect_encoding(df)
-        df_imp     = self._apply_imputer(df_encoded)
-        df_clipped = self._apply_clip(df_imp)
-        df_out     = self._attach_metadata(df_clipped, df)
+        df_common  = self._common_transform(df)
+        df_encoded = self._apply_encoder(df_common)
+        df_out     = df_encoded[self.feature_cols_out].copy()
+        df_out     = self._attach_metadata(df_out, df_common)
         return df_out
-
-
+    
 # ================================================================== #
 #  PIPELINE B — LINEAR / DISTANCE-BASED
 #  Logistic Regression, SVM, KNN
 # ================================================================== #
-class LinearPreprocessor(BasePreprocessor):
-    """
-    Flow:
-    Raw → Aspect sin/cos → Impute → Clip(5%-95%)
-        → Yeo-Johnson → VIF drop → RobustScaler → Done
+class PipelineB(BasePreprocessor):
 
-    Lý do từng bước:
-    - Clip chặt hơn : Linear nhạy cảm với outlier hơn Tree
-    - Yeo-Johnson   : Linear giả định phân bố gần normal
-    - VIF drop      : Loại multicollinearity (TWI ↔ FA = 0.864)
-    - RobustScaler  : Đồng đều scale để tránh feature áp đảo nhau
-    """
+    # Cols bị skew nặng → áp dụng Yeo-Johnson
+    SKEW_COLS = [
+        'elevation_m',
+        'storm_drain_proximity_m',
+        'historical_rainfall_intensity_mm_hr',
+        'return_period_years',
+        'rain_x_return'   # Derived feature cũng có thể skew
+    ]
 
-    def __init__(self, n_neighbors: int = 5,
-                 skew_threshold: float = 0.5,
-                 vif_threshold: float = 10.0):
-        super().__init__(
-            n_neighbors=n_neighbors,
-            clip_lower=0.05,
-            clip_upper=0.95
-        )
+    # soil_group có thứ tự tự nhiên A < B < C < D
+    ORDINAL_COLS   = ['soil_group']
+    ORDINAL_ORDER  = [['Unknown', 'A', 'B', 'C', 'D']]
+
+    # Categorical không có thứ tự → OneHotEncoder
+    OHE_COLS = ['land_use', 'storm_drain_type', 'rainfall_source', 'dem_source']
+
+
+    def __init__(self, skew_threshold=0.5):
+        super().__init__()
         self.skew_threshold = skew_threshold
-        self.vif_threshold  = vif_threshold
-
         self.skew_transforms = {}
-        self.scaler          = None
-        self.cols_to_drop    = []
-        self.final_cols      = None
+        self.ordinal_encoder = None
+        self.ohe_encoder = None
+        self.scaler = None
+        self.ohe_feature_names = None
+        self.feature_cols_out = None
 
-    # ------------------------------------------------------------------ #
-    # SKEW
-    # ------------------------------------------------------------------ #
     def _fit_skew(self, df: pd.DataFrame):
         self.skew_transforms = {}
-        print("  Skew transforms:")
-        for col in self.numeric_cols:
+        print("  Yeo-Johnson transforms:")
+        for col in self.SKEW_COLS:
+            if col not in df.columns:
+                continue
             skew = df[col].skew()
             if abs(skew) < self.skew_threshold:
                 self.skew_transforms[col] = {'method': 'none'}
@@ -210,83 +236,85 @@ class LinearPreprocessor(BasePreprocessor):
                     'skew_before' : round(skew, 3)
                 }
                 print(f"    '{col}': skew={skew:.3f} → λ={lmbda:.4f}")
-
-    def _apply_skew(self, df: pd.DataFrame) -> pd.DataFrame:
+    
+    def _apply_skew(self, df):
         df = df.copy()
-        for col in self.numeric_cols:
-            info = self.skew_transforms.get(col, {'method': 'none'})
-            if info['method'] == 'yeojohnson':
+        for col, info in self.skew_transforms.items():
+            if info['method'] == 'yeojohnson' and col in df.columns:
                 df[col] = yeojohnson(df[col], lmbda=info['lambda'])
         return df
+    
+    def _fit_encoders(self, df):
+        # Ordinal Encoder
+        self.ordinal_encoder = OrdinalEncoder(
+            categories=self.ORDINAL_ORDER,
+            handle_unknown='use_encoded_value',
+            unknown_value=-1
+        )
+        self.ordinal_encoder.fit(df[self.ORDINAL_COLS])
 
-    # ------------------------------------------------------------------ #
-    # VIF
-    # ------------------------------------------------------------------ #
-    def _fit_vif(self, df: pd.DataFrame):
-        from statsmodels.stats.outliers_influence import variance_inflation_factor
+        # One-Hot Encoder
+        self.ohe_encoder = OneHotEncoder(
+            sparse_output=False,
+            handle_unknown='ignore'
+        )
+        self.ohe_encoder.fit(df[self.OHE_COLS])
+        self.ohe_feature_names = self.ohe_encoder.get_feature_names_out(self.OHE_COLS).tolist()
 
-        self.cols_to_drop = []
-        cols = list(self.numeric_cols)
-        print("  VIF analysis:")
-
-        while True:
-            X    = df[cols].values.astype(float)
-            vifs = [variance_inflation_factor(X, i) for i in range(len(cols))]
-            max_vif = max(vifs)
-            if max_vif < self.vif_threshold:
-                break
-            drop_col = cols[vifs.index(max_vif)]
-            print(f"    Drop '{drop_col}' (VIF={max_vif:.2f})")
-            self.cols_to_drop.append(drop_col)
-            cols.remove(drop_col)
-
-        self.final_cols = cols
-        print(f"    Features giữ lại: {self.final_cols}")
-
-    # ------------------------------------------------------------------ #
-    def fit(self, df: pd.DataFrame):
+    def _apply_encoders(self, df):
         df = df.copy()
+        # Ordinal Encoding
+        df[self.ORDINAL_COLS] = self.ordinal_encoder.transform(df[self.ORDINAL_COLS])
+
+        # One-Hot Encoding
+        ohe_array = self.ohe_encoder.transform(df[self.OHE_COLS])
+        ohe_df = pd.DataFrame(ohe_array, columns=self.ohe_feature_names, index=df.index)
+        df = pd.concat([df.drop(columns=self.OHE_COLS), ohe_df], axis=1)
+        return df
+    
+    def _fit_scaler(self, df, scale_cols):
+        self.scaler = RobustScaler()
+        self.scaler.fit(df[scale_cols])
+    def _apply_scaler(self, df, scale_cols):
+        df = df.copy()
+        df[scale_cols] = self.scaler.transform(df[scale_cols])
+        return df
+    
+    def fit(self, df: pd.DataFrame):
         print(f"\n[LinearPreprocessor] fitting on {len(df):,} rows...")
 
-        # 1. Aspect encoding
-        df_encoded = self._apply_aspect_encoding(df)
+        df_common = self._common_fit(df)
 
-        # 2. Impute
-        self._fit_imputer(df_encoded)
-        df_imp = self._apply_imputer(df_encoded)
+        # Thêm rain_x_return vào numeric_cols để xử lý
+        all_numeric = self.numeric_cols + ['is_very_low_elev', 'rain_x_return']
 
-        # 3. Clip
-        self._fit_clip(df_imp)
-        df_clipped = self._apply_clip(df_imp)
+        # Yeo-Johnson
+        self._fit_skew(df_common)
+        df_unskewed = self._apply_skew(df_common)
 
-        # 4. Skew
-        self._fit_skew(df_clipped)
-        df_unskewed = self._apply_skew(df_clipped)
+        # Encoders
+        self._fit_encoders(df_unskewed)
+        df_encoded = self._apply_encoders(df_unskewed)
 
-        # 5. VIF drop
-        self._fit_vif(df_unskewed)
+        # Scale cols = numeric + ordinal + OHE
+        self.scale_cols = (
+            self.numeric_cols
+            + ['is_very_low_elev', 'rain_x_return']
+            + self.ORDINAL_COLS
+            + self.ohe_feature_names
+        )
+        self._fit_scaler(df_encoded, self.scale_cols)
 
-        # 6. Scaler — chỉ fit trên final_cols
-        self.scaler = RobustScaler()
-        self.scaler.fit(df_unskewed[self.final_cols])
-
-        # 7. Label encoder
-        self._fit_label_encoder(df)
-
-        print(f"[LinearPreprocessor] fit done ✅")
+        # Lưu feature cols out
+        self.feature_cols_out = self.scale_cols
+        print(f"[LinearPreprocessor] fit done — {len(self.feature_cols_out)} features")
         return self
 
     def transform(self, df: pd.DataFrame) -> pd.DataFrame:
-        df_encoded  = self._apply_aspect_encoding(df)
-        df_imp      = self._apply_imputer(df_encoded)
-        df_clipped  = self._apply_clip(df_imp)
-        df_unskewed = self._apply_skew(df_clipped)
-
-        # Chỉ giữ final_cols sau VIF drop
-        df_final = df_unskewed[self.final_cols].copy()
-
-        scaled    = self.scaler.transform(df_final)
-        df_scaled = pd.DataFrame(scaled, columns=self.final_cols, index=df.index)
-
-        df_out = self._attach_metadata(df_scaled, df)
-        return df_out
+        df_common   = self._common_transform(df)
+        df_unskewed = self._apply_skew(df_common)
+        df_encoded  = self._apply_encoders(df_unskewed)
+        df_scaled   = self._apply_scaler(df_encoded, self.scale_cols)
+        df_out      = df_scaled[self.feature_cols_out].copy()
+        df_out      = self._attach_metadata(df_out, df_common)
+        return df_out   

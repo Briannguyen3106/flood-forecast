@@ -1,0 +1,594 @@
+segment_id,city_name,admin_ward,latitude,longitude,catchment_id,elevation_m,dem_source,land_use,soil_group,drainage_density_km_per_km2,storm_drain_proximity_m,storm_drain_type,rainfall_source,historical_rainfall_intensity_mm_hr,return_period_years,risk_labels,risk_class
+SEG-02818,"Sydney, Australia",Ward A,-33.972494,151.193279,CAT-165,21.38,SRTM_3arc,Informal,B,6.43,75.8,Manhole,Blended,24.4,100,monitor,Low
+SEG-01223,"Rio de Janeiro, Brazil",District 9,-22.93855,-43.299984,CAT-114,-3.0,Copernicus_GLO-90_v2022,Mixed,B,,211.3,OpenChannel,Blended,120.6,2,ponding_hotspot|extreme_rain_history|low_lying,High
+SEG-01071,"Tokyo, Japan",Sector 28,35.709772,139.85643,CAT-056,,Copernicus_GLO-30_v2023,Commercial,C,7.22,99.5,CurbInlet,LocalGauge,11.0,5,monitor,Low
+SEG-02732,"Washington DC, USA",Ward D,38.813354,-77.080088,CAT-132,6.64,Copernicus_GLO-90_v2022,Roads,,,,CurbInlet,,33.1,5,low_lying,Medium
+SEG-02294,"Mumbai, India",Sector 13,19.090451,72.879029,CAT-036,13.08,SRTM_1arc,Commercial,B,10.48,35.2,CurbInlet,ERA5,103.2,10,extreme_rain_history,High
+SEG-02594,"Barcelona, Spain",Borough Delta,41.394521,2.16947,CAT-077,-3.0,SRTM_1arc,Roads,D,8.89,64.8,OpenChannel,ERA5,31.8,5,ponding_hotspot|low_lying|event_2024-01-02,High
+SEG-01820,"Hamburg, Germany",Sector 22,53.544649,9.959612,CAT-016,83.28,SRTM_3arc,Roads,D,8.27,49.4,CurbInlet,LocalGauge,21.2,5,monitor,Low
+SEG-00030,"San Francisco, USA",Sector 12,37.770337,-122.398163,CAT-048,93.76,Copernicus_GLO-30_v2023,Industrial,D,12.07,54.0,Manhole,ERA5,39.8,25,monitor,Low
+SEG-02481,"Dubai, UAE",Borough West,25.223319,55.202678,CAT-118,84.53,Copernicus_EEA-10_v5,Industrial,B,7.66,62.7,Manhole,LocalGauge,11.1,2,monitor,Low
+SEG-02222,"Istanbul, Türkiye",Zone V,41.012371,28.958532,CAT-004,52.79,Copernicus_GLO-30_v2023,Roads,B,3.51,,GratedInlet,Blended,46.5,5,monitor,Low
+SEG-02434,"San Francisco, USA",Sector 29,37.838897,-122.422256,CAT-036,136.89,SRTM_1arc,Water,D,1.4,156.3,OpenChannel,ERA5,63.1,2,sparse_drainage|event_2022-11-02,Medium
+SEG-02946,"Rome, Italy",District 15,41.905959,12.611534,CAT-172,91.07,Copernicus_GLO-30_v2023,Water,D,,204.7,Manhole,ERA5,56.7,5,monitor,Low
+SEG-00574,"Colombo, Sri Lanka",Ward B,6.916385,79.909313,CAT-127,13.54,SRTM_1arc,Residential,,8.03,,Manhole,ERA5,42.0,25,monitor,Low
+SEG-02514,"Jakarta, Indonesia",Sector 8,-6.178563,106.81276,CAT-091,10.26,Copernicus_GLO-30_v2023,Roads,B,7.77,267.4,,Blended,75.1,10,monitor,Low
+SEG-01278,"Paris, France",Zone III,48.882927,2.410389,CAT-113,75.07,SRTM_3arc,Roads,C,8.82,193.1,GratedInlet,ERA5,42.1,10,monitor,Low
+SEG-01745,"Seoul, South Korea",Borough South,37.492462,126.990787,CAT-135,8.83,Copernicus_GLO-30_v2023,Green,C,6.0,176.6,Manhole,LocalGauge,22.4,25,monitor,Low
+SEG-00729,"New Orleans, USA",Sector 10,29.89275,-90.028087,CAT-075,13.95,Copernicus_EEA-10_v5,Institutional,B,,162.8,GratedInlet,IMD,33.3,100,monitor,Low
+SEG-02479,"Lagos, Nigeria",Sector 11,6.593112,3.436032,CAT-105,8.53,Copernicus_GLO-30_v2023,Residential,B,4.3,9.8,CurbInlet,Blended,79.6,25,monitor,Low
+SEG-01889,"Bengaluru, India",Ward K,13.030968,77.563192,CAT-037,115.93,Copernicus_EEA-10_v5,Residential,C,8.04,47.8,Manhole,ERA5,26.3,2,monitor,Low
+SEG-00422,"Seoul, South Korea",Ward J,37.636326,127.088438,CAT-165,,Copernicus_EEA-10_v5,Green,A,,157.9,CurbInlet,ERA5,23.1,5,monitor,Low
+SEG-01312,"Sao Paulo, Brazil",Ward E,-23.659598,-46.544649,CAT-026,74.78,Copernicus_GLO-30_v2023,Commercial,A,9.16,367.9,OpenChannel,ERA5,72.2,25,monitor,Low
+SEG-01546,"Dubai, UAE",District 6,25.122209,55.161431,CAT-158,15.77,Copernicus_EEA-10_v5,Residential,B,5.9,61.0,CurbInlet,ERA5,18.2,5,monitor,Low
+SEG-00351,"Montreal, Canada",Borough Harbor,45.627042,-73.481711,CAT-157,17.13,SRTM_1arc,Green,B,2.69,,CurbInlet,Blended,40.6,5,sparse_drainage|event_2022-09-01,Medium
+SEG-00726,"Ahmedabad, India",Ward H,23.057006,72.535381,CAT-074,16.18,Copernicus_EEA-10_v5,Mixed,C,9.14,16.9,CurbInlet,Blended,29.2,2,monitor,Low
+SEG-01664,"Ho Chi Minh City, Vietnam",Zone II,10.766218,106.701474,CAT-131,9.42,SRTM_1arc,Roads,B,10.36,121.9,CurbInlet,ERA5,28.2,10,monitor,Low
+SEG-00271,"Hanoi, Vietnam",Zone V,21.112174,105.827814,CAT-013,92.2,SRTM_1arc,Residential,B,4.51,134.4,CurbInlet,Blended,66.8,25,monitor,Low
+SEG-01519,"Pune, India",District 20,18.489338,73.932663,CAT-113,38.04,Copernicus_GLO-30_v2023,Commercial,B,6.26,38.2,GratedInlet,Blended,29.4,10,monitor,Low
+SEG-00929,"Athens, Greece",Borough West,37.862792,23.720579,CAT-003,67.2,SRTM_1arc,Roads,D,4.58,31.8,GratedInlet,,12.6,2,monitor,Low
+SEG-02370,"Mumbai, India",Ward D,18.987762,72.833014,CAT-069,8.11,SRTM_1arc,Residential,C,3.43,9.8,Manhole,Blended,95.3,50,ponding_hotspot|extreme_rain_history|event_2022-10-28,High
+SEG-01799,"Guangzhou, China",Ward A,23.044224,113.367838,CAT-164,16.81,Copernicus_EEA-10_v5,Residential,C,3.04,58.5,,,44.3,2,monitor,Low
+SEG-00991,"Washington DC, USA",Borough North,38.900106,-77.130974,CAT-052,46.25,Copernicus_GLO-30_v2023,Commercial,B,9.6,66.0,Manhole,Blended,57.0,5,monitor,Low
+SEG-01698,"Auckland, New Zealand",Zone VIII,-36.937066,174.75811,CAT-125,83.5,Copernicus_EEA-10_v5,Institutional,B,7.31,,GratedInlet,IMD,30.2,2,monitor,Low
+SEG-01985,"Sydney, Australia",District 13,-33.757865,151.279085,CAT-021,18.59,Copernicus_GLO-30_v2023,Roads,A,8.26,112.1,CurbInlet,ERA5,46.9,10,monitor,Low
+SEG-02812,"Durban, South Africa",Zone IV,-29.854879,31.077289,CAT-109,89.14,Copernicus_GLO-30_v2023,Commercial,D,6.56,108.7,CurbInlet,LocalGauge,24.2,2,monitor,Low
+SEG-01138,"Ahmedabad, India",Ward H,22.986481,72.553506,CAT-033,12.9,SRTM_1arc,Residential,D,7.73,142.0,OpenChannel,,36.3,25,monitor,Low
+SEG-01189,"Delhi, India",Ward G,28.51214,77.296243,CAT-031,87.07,SRTM_1arc,Residential,C,3.1,23.5,CurbInlet,ERA5,52.0,10,monitor,Low
+SEG-01706,"Bengaluru, India",Sector 30,12.95821,77.647817,CAT-012,69.99,Copernicus_GLO-30_v2023,Residential,,6.99,160.8,OpenChannel,IMD,25.4,2,monitor,Low
+SEG-02351,"Miami, USA",Sector 21,25.7316,-80.217966,CAT-167,,SRTM_1arc,Green,A,3.1,304.4,CurbInlet,ERA5,81.8,25,extreme_rain_history,High
+SEG-02137,"Montreal, Canada",Sector 22,45.536632,-73.453494,CAT-003,81.28,Copernicus_GLO-30_v2023,Commercial,D,9.1,102.7,GratedInlet,Blended,25.9,5,monitor,Low
+SEG-02937,"Riyadh, Saudi Arabia",Ward B,24.743991,46.586826,CAT-116,75.38,Copernicus_GLO-30_v2023,Green,C,5.73,177.5,OpenChannel,Blended,5.4,5,monitor,Low
+SEG-00546,"Auckland, New Zealand",Sector 29,-36.906351,174.781978,CAT-129,52.78,SRTM_1arc,Roads,D,6.88,64.7,Manhole,ERA5,50.4,5,monitor,Low
+SEG-00076,"Auckland, New Zealand",District 28,-36.914207,174.717566,CAT-115,73.7,Copernicus_EEA-10_v5,Residential,C,,98.8,Manhole,ERA5,35.7,10,monitor,Low
+SEG-00712,"Tokyo, Japan",Zone X,35.654081,139.797701,CAT-046,,SRTM_1arc,Industrial,C,10.18,,CurbInlet,ERA5,60.5,25,monitor,Low
+SEG-00419,"New Orleans, USA",Ward H,29.873484,-90.243268,CAT-149,2.81,SRTM_1arc,Mixed,,5.65,31.4,Manhole,,17.4,5,low_lying,Medium
+SEG-00812,"Hamburg, Germany",District 10,53.469971,10.069403,CAT-050,0.53,Copernicus_EEA-10_v5,Green,B,3.14,274.6,Manhole,,32.0,25,low_lying,Medium
+SEG-01767,"Montreal, Canada",Zone IX,45.428028,-73.548254,CAT-121,,Copernicus_GLO-30_v2023,Commercial,A,10.81,393.7,,ERA5,44.0,50,monitor,Low
+SEG-02328,"Durban, South Africa",Zone V,-29.85575,31.064617,CAT-139,-3.0,SRTM_1arc,Residential,D,3.25,86.6,CurbInlet,IMD,26.4,10,ponding_hotspot|low_lying|event_2024-09-14,High
+SEG-01118,"Washington DC, USA",Ward B,38.853497,-76.88931,CAT-001,62.17,SRTM_3arc,Mixed,A,5.87,183.2,CurbInlet,,21.5,5,monitor,Low
+SEG-02672,"Osaka, Japan",Zone II,34.799928,135.490743,CAT-038,-3.0,Copernicus_GLO-30_v2023,Commercial,B,9.9,171.8,CurbInlet,ERA5,35.6,2,low_lying,Medium
+SEG-01936,"Bengaluru, India",Sector 9,12.922471,77.554136,CAT-069,-3.0,SRTM_1arc,Residential,D,4.89,114.9,CurbInlet,ERA5,30.7,2,ponding_hotspot|low_lying,High
+SEG-01812,"Copenhagen, Denmark",Zone V,55.657211,12.420329,CAT-172,29.72,Copernicus_EEA-10_v5,Institutional,D,7.76,223.1,OpenChannel,ERA5,32.3,2,monitor,Low
+SEG-02751,"Accra, Ghana",Borough Old Town,5.703659,-0.240675,CAT-059,8.44,SRTM_1arc,Roads,B,10.43,410.8,OpenChannel,,50.5,2,monitor,Low
+SEG-02381,"Manila, Philippines",District 25,14.577747,120.971288,CAT-062,-3.0,Copernicus_GLO-30_v2023,Residential,A,7.06,305.5,OpenChannel,Blended,50.2,50,low_lying,Medium
+SEG-00105,"Amsterdam, Netherlands",District 4,52.342532,4.859696,CAT-091,7.72,SRTM_3arc,Commercial,A,9.35,,Manhole,LocalGauge,27.1,10,low_lying,Medium
+SEG-00353,"Kuala Lumpur, Malaysia",Ward D,3.239758,101.615626,CAT-069,-3.0,Copernicus_EEA-10_v5,Mixed,,,58.8,Manhole,ERA5,67.1,50,ponding_hotspot|low_lying|event_2023-02-11,High
+SEG-02168,"Auckland, New Zealand",Zone V,-36.787295,174.825867,CAT-091,28.8,Copernicus_GLO-90_v2022,Residential,B,2.92,18.1,CurbInlet,LocalGauge,16.6,2,sparse_drainage|event_2023-07-11,Medium
+SEG-00007,"Nairobi, Kenya",Ward J,-1.374024,36.730491,CAT-112,15.8,Copernicus_GLO-30_v2023,Residential,A,8.25,43.0,Manhole,LocalGauge,39.3,10,monitor,Low
+SEG-00980,"Rio de Janeiro, Brazil",District 26,-22.852815,-43.10377,CAT-107,8.57,Copernicus_GLO-30_v2023,Green,C,5.86,273.1,CurbInlet,LocalGauge,46.1,5,monitor,Low
+SEG-02037,"Houston, USA",Zone VIII,29.868966,-95.257333,CAT-078,,Copernicus_GLO-30_v2023,Residential,D,2.79,47.1,CurbInlet,,24.1,5,sparse_drainage,Medium
+SEG-02013,"Miami, USA",Zone VIII,25.690416,-80.186522,CAT-177,18.66,SRTM_3arc,Residential,A,2.48,240.7,OpenChannel,ERA5,51.2,25,sparse_drainage|event_2022-09-20,Medium
+SEG-00668,"Montreal, Canada",Zone V,45.509106,-73.484677,CAT-049,75.53,SRTM_1arc,Commercial,B,7.97,138.1,CurbInlet,ERA5,56.3,5,monitor,Low
+SEG-02692,"Buenos Aires, Argentina",Borough East,-34.670257,-58.518195,CAT-092,51.13,Copernicus_GLO-30_v2023,Industrial,A,10.4,130.6,OpenChannel,LocalGauge,52.6,10,monitor,Low
+SEG-00156,"New Orleans, USA",Ward C,29.993055,-90.129588,CAT-007,13.63,Copernicus_EEA-10_v5,Roads,A,6.04,75.8,CurbInlet,ERA5,46.0,50,monitor,Low
+SEG-02323,"Karachi, Pakistan",District 30,24.743011,67.009559,CAT-173,59.69,Copernicus_EEA-10_v5,Green,C,3.4,,CurbInlet,,42.8,2,monitor,Low
+SEG-02774,"Athens, Greece",District 14,37.978103,23.822463,CAT-143,96.37,SRTM_3arc,Residential,B,,,GratedInlet,Blended,33.8,5,monitor,Low
+SEG-02554,"Dubai, UAE",District 30,25.193837,55.316052,CAT-130,2.08,Copernicus_GLO-30_v2023,Green,B,5.17,167.5,CurbInlet,ERA5,8.6,2,low_lying,Medium
+SEG-02282,"Sao Paulo, Brazil",District 14,-23.648512,-46.647881,CAT-119,,SRTM_3arc,Commercial,B,4.67,23.3,CurbInlet,IMD,39.7,25,monitor,Low
+SEG-01154,"Riyadh, Saudi Arabia",District 6,24.714689,46.683165,CAT-086,31.85,Copernicus_GLO-30_v2023,Residential,,3.21,45.9,GratedInlet,LocalGauge,14.1,50,monitor,Low
+SEG-01272,"Manila, Philippines",Borough South,14.672318,120.987996,CAT-006,2.07,SRTM_3arc,Institutional,D,4.65,209.0,GratedInlet,ERA5,110.7,25,ponding_hotspot|extreme_rain_history|low_lying,High
+SEG-01625,"Delhi, India",Sector 15,28.635472,77.344476,CAT-155,76.8,SRTM_1arc,Industrial,D,6.57,36.1,CurbInlet,ERA5,62.2,2,monitor,Low
+SEG-00581,"Montreal, Canada",Sector 19,45.404999,-73.668635,CAT-028,20.34,Copernicus_GLO-30_v2023,Commercial,B,6.14,90.2,Manhole,Blended,31.5,10,monitor,Low
+SEG-01655,"Amsterdam, Netherlands",Sector 25,52.369307,4.893947,CAT-009,,Copernicus_GLO-30_v2023,Residential,B,3.17,16.0,GratedInlet,Blended,34.8,5,monitor,Low
+SEG-02141,"Chennai, India",Ward D,13.045491,80.24032,CAT-042,16.48,Copernicus_GLO-90_v2022,Residential,C,3.88,72.0,CurbInlet,Blended,123.3,100,extreme_rain_history|event_2023-07-09,High
+SEG-01880,"Auckland, New Zealand",Borough Hillside,-36.803481,174.776147,CAT-099,78.57,SRTM_1arc,Green,B,4.96,272.6,CurbInlet,ERA5,45.7,25,monitor,Low
+SEG-02655,"Amsterdam, Netherlands",Borough Riverside,52.425484,4.99957,CAT-059,7.07,Copernicus_GLO-30_v2023,Residential,B,6.98,27.9,CurbInlet,ERA5,44.7,25,low_lying,Medium
+SEG-01907,"Manila, Philippines",Ward E,14.640602,120.94778,CAT-180,9.13,Copernicus_GLO-30_v2023,Roads,C,11.04,94.6,Manhole,,83.2,25,extreme_rain_history,High
+SEG-01714,"Paris, France",District 15,48.836778,2.310792,CAT-064,77.21,Copernicus_GLO-30_v2023,Residential,B,2.79,156.2,CurbInlet,Blended,56.0,25,sparse_drainage,Medium
+SEG-02065,"Chennai, India",Zone VI,13.066405,80.271944,CAT-036,-2.27,SRTM_1arc,Green,D,2.8,10.2,OpenChannel,ERA5,30.0,5,ponding_hotspot|low_lying|sparse_drainage,High
+SEG-02218,"Bangkok, Thailand",Ward G,13.69144,100.41412,CAT-090,-3.0,SRTM_1arc,Roads,A,7.79,614.2,,ERA5,45.7,5,low_lying,Medium
+SEG-01020,"Philadelphia, USA",Borough West,40.033321,-75.206655,CAT-006,59.75,SRTM_1arc,Residential,D,6.88,299.1,,Blended,16.5,2,monitor,Low
+SEG-02951,"Taipei, Taiwan",District 21,24.940207,121.450321,CAT-115,52.85,SRTM_3arc,Industrial,,8.83,101.4,CurbInlet,ERA5,51.9,25,monitor,Low
+SEG-02058,"Kolkata, India",District 11,22.619382,88.338351,CAT-005,13.4,SRTM_3arc,Residential,B,,309.4,OpenChannel,LocalGauge,51.1,10,monitor,Low
+SEG-02853,"Osaka, Japan",Ward I,34.610145,135.613167,CAT-103,12.39,SRTM_1arc,Roads,B,5.77,,CurbInlet,Blended,20.5,2,monitor,Low
+SEG-02231,"Rome, Italy",Ward K,41.884839,12.44155,CAT-032,40.91,Copernicus_GLO-30_v2023,Industrial,D,7.3,92.2,GratedInlet,ERA5,19.0,2,monitor,Low
+SEG-01992,"Ho Chi Minh City, Vietnam",Zone IV,10.850292,106.583407,CAT-006,67.51,Copernicus_EEA-10_v5,Residential,D,4.71,,,ERA5,88.2,50,extreme_rain_history,High
+SEG-00243,"Montreal, Canada",District 28,45.368058,-73.484158,CAT-166,25.55,Copernicus_GLO-30_v2023,Commercial,B,3.33,86.1,CurbInlet,IMD,31.2,2,monitor,Low
+SEG-02007,"Tehran, Iran",Borough North,35.588926,51.446636,CAT-106,14.9,Copernicus_GLO-30_v2023,Residential,C,,74.4,CurbInlet,ERA5,19.5,25,monitor,Low
+SEG-01663,"Philadelphia, USA",Ward I,39.95512,-75.114547,CAT-020,38.1,Copernicus_EEA-10_v5,Roads,A,8.24,17.4,Manhole,ERA5,30.7,25,monitor,Low
+SEG-00674,"Bangkok, Thailand",Borough West,13.873456,100.35958,CAT-030,0.56,Copernicus_EEA-10_v5,Commercial,,8.26,365.9,OpenChannel,IMD,69.3,50,low_lying,Medium
+SEG-01218,"San Francisco, USA",Zone VII,37.633465,-122.371309,CAT-004,154.29,SRTM_1arc,Water,B,6.67,174.9,CurbInlet,LocalGauge,35.7,5,monitor,Low
+SEG-01495,"Ahmedabad, India",Ward D,22.958424,72.628355,CAT-106,50.67,SRTM_1arc,Roads,B,6.09,96.0,CurbInlet,ERA5,29.9,50,monitor,Low
+SEG-02421,"Shenzhen, China",Borough East,22.533959,114.096474,CAT-112,28.68,SRTM_3arc,Residential,A,6.51,15.1,CurbInlet,Blended,56.7,10,monitor,Low
+SEG-02810,"Paris, France",District 18,48.976621,2.280111,CAT-160,53.37,SRTM_3arc,Water,D,2.23,279.4,Manhole,ERA5,53.9,25,sparse_drainage|event_2023-02-08,Medium
+SEG-00870,"San Francisco, USA",District 8,37.725868,-122.370136,CAT-037,199.87,SRTM_1arc,Residential,B,4.02,185.8,OpenChannel,ERA5,15.1,5,monitor,Low
+SEG-00615,"Rio de Janeiro, Brazil",Ward E,-22.827474,-43.151841,CAT-036,7.9,Copernicus_EEA-10_v5,Commercial,C,9.1,161.2,OpenChannel,ERA5,55.5,5,low_lying,Medium
+SEG-01593,"Sao Paulo, Brazil",Sector 11,-23.507695,-46.765201,CAT-167,128.63,Copernicus_GLO-90_v2022,Residential,C,5.68,93.4,CurbInlet,,57.9,25,monitor,Low
+SEG-01841,"Sao Paulo, Brazil",District 6,-23.410277,-46.518911,CAT-130,71.39,Copernicus_GLO-30_v2023,Residential,C,8.17,28.0,Manhole,LocalGauge,69.2,5,monitor,Low
+SEG-01356,"Istanbul, Türkiye",District 18,40.909137,28.925473,CAT-153,18.23,SRTM_1arc,Residential,A,5.26,306.4,,,40.2,2,monitor,Low
+SEG-00976,"San Francisco, USA",Borough Harbor,37.653485,-122.428024,CAT-066,103.7,SRTM_1arc,Green,C,2.59,383.9,Manhole,Blended,21.2,25,sparse_drainage,Medium
+SEG-01296,"Copenhagen, Denmark",Zone IX,55.630915,12.64334,CAT-022,53.12,SRTM_3arc,Residential,D,7.12,71.1,GratedInlet,IMD,20.3,10,monitor,Low
+SEG-01966,"Lima, Peru",Ward C,-12.185943,-77.113097,CAT-009,-3.0,SRTM_1arc,Institutional,A,7.36,210.2,Manhole,Blended,29.9,5,low_lying,Medium
+SEG-00269,"Washington DC, USA",Ward F,38.90712,-77.071526,CAT-086,,Copernicus_GLO-90_v2022,Commercial,C,6.23,94.4,Manhole,ERA5,18.8,5,monitor,Low
+SEG-00466,"Shenzhen, China",Borough South,22.602368,114.056033,CAT-070,5.82,Copernicus_GLO-30_v2023,Commercial,C,9.99,,GratedInlet,Blended,66.9,50,low_lying,Medium
+SEG-00815,"Cape Town, South Africa",Ward G,-33.870557,18.472307,CAT-135,183.7,SRTM_3arc,Green,D,1.93,273.6,CurbInlet,Blended,19.9,25,sparse_drainage|event_2022-08-06,Medium
+SEG-01313,"San Francisco, USA",Zone VI,37.759736,-122.375061,CAT-115,-3.0,Copernicus_GLO-30_v2023,Industrial,C,,103.7,GratedInlet,LocalGauge,34.2,2,ponding_hotspot|low_lying,High
+SEG-01866,"Hanoi, Vietnam",Zone VII,20.991727,105.941163,CAT-020,36.65,SRTM_1arc,Water,A,2.13,272.2,GratedInlet,ERA5,106.2,50,extreme_rain_history|sparse_drainage,High
+SEG-02713,"Bangkok, Thailand",Borough North,13.692472,100.572227,CAT-069,10.36,SRTM_3arc,Industrial,B,8.83,102.7,Manhole,LocalGauge,46.4,10,monitor,Low
+SEG-00747,"Colombo, Sri Lanka",District 29,6.945088,79.775974,CAT-055,8.48,Copernicus_GLO-90_v2022,Green,D,3.42,,CurbInlet,ERA5,63.3,5,monitor,Low
+SEG-02798,"Tehran, Iran",Sector 7,35.759233,51.441429,CAT-030,1.86,SRTM_1arc,Green,,,195.2,OpenChannel,ERA5,23.7,2,low_lying,Medium
+SEG-01763,"Dhaka, Bangladesh",Zone III,23.888506,90.339194,CAT-177,108.82,Copernicus_GLO-30_v2023,Residential,A,7.67,110.0,CurbInlet,ERA5,51.4,5,monitor,Low
+SEG-00352,"Montreal, Canada",Ward G,45.478258,-73.443574,CAT-025,7.4,SRTM_1arc,Roads,B,,83.3,Manhole,LocalGauge,67.3,25,low_lying,Medium
+SEG-00228,"Karachi, Pakistan",Ward G,24.922791,67.046273,CAT-062,118.81,SRTM_1arc,Residential,A,3.09,,,Blended,48.6,25,monitor,Low
+SEG-02512,"Hamburg, Germany",District 1,53.400215,9.935569,CAT-111,92.56,Copernicus_GLO-30_v2023,Industrial,A,8.51,3.6,CurbInlet,LocalGauge,52.1,10,monitor,Low
+SEG-01633,"Tokyo, Japan",Zone X,35.813078,139.651669,CAT-031,-0.71,Copernicus_GLO-90_v2022,Industrial,D,6.84,92.2,Manhole,ERA5,34.9,5,ponding_hotspot|low_lying,High
+SEG-01783,"Nairobi, Kenya",Ward H,-1.335747,36.862613,CAT-043,39.74,Copernicus_EEA-10_v5,Commercial,D,7.35,,Manhole,IMD,42.1,2,monitor,Low
+SEG-00195,"Dhaka, Bangladesh",Borough North,23.799724,90.459875,CAT-004,57.42,Copernicus_GLO-90_v2022,Green,A,4.85,291.8,Manhole,IMD,101.3,100,extreme_rain_history,High
+SEG-01715,"Paris, France",Zone V,48.922826,2.352367,CAT-073,79.62,Copernicus_EEA-10_v5,Industrial,C,9.19,240.0,,ERA5,16.2,10,monitor,Low
+SEG-00716,"Kolkata, India",Borough West,22.491177,88.492678,CAT-086,48.97,Copernicus_GLO-30_v2023,Roads,D,,139.3,GratedInlet,IMD,40.1,25,monitor,Low
+SEG-02817,"Shanghai, China",Borough West,31.226053,121.538879,CAT-029,1.84,Copernicus_GLO-90_v2022,Industrial,D,6.91,97.8,Manhole,Blended,36.8,2,ponding_hotspot|low_lying,High
+SEG-01801,"Rome, Italy",Ward I,41.78256,12.486334,CAT-085,52.0,Copernicus_GLO-90_v2022,Commercial,,,,OpenChannel,LocalGauge,36.8,25,monitor,Low
+SEG-00933,"Auckland, New Zealand",Ward H,-36.825738,174.819888,CAT-007,49.75,SRTM_3arc,Green,A,2.25,413.5,OpenChannel,LocalGauge,34.0,10,sparse_drainage,Medium
+SEG-01251,"Rome, Italy",District 19,41.918297,12.596651,CAT-166,58.14,SRTM_1arc,Residential,C,3.75,,GratedInlet,,23.7,2,monitor,Low
+SEG-00169,"Amsterdam, Netherlands",Sector 26,52.474882,4.858746,CAT-124,7.81,Copernicus_GLO-30_v2023,Industrial,C,5.29,14.2,Manhole,LocalGauge,37.9,25,low_lying,Medium
+SEG-01411,"Dubai, UAE",Sector 2,25.006856,55.272927,CAT-054,24.81,Copernicus_EEA-10_v5,Residential,D,8.51,158.3,OpenChannel,,24.4,2,monitor,Low
+SEG-02169,"Philadelphia, USA",Ward J,40.014546,-75.182815,CAT-169,29.12,SRTM_3arc,Industrial,B,10.81,410.7,OpenChannel,LocalGauge,13.1,100,monitor,Low
+SEG-01012,"Dubai, UAE",Ward E,25.206679,55.297,CAT-020,140.6,SRTM_1arc,Green,B,3.46,,OpenChannel,ERA5,14.2,10,monitor,Low
+SEG-01944,"Istanbul, Türkiye",Sector 19,40.857703,28.977783,CAT-162,80.15,SRTM_1arc,Commercial,B,6.43,101.2,Manhole,ERA5,65.6,5,monitor,Low
+SEG-02898,"Bengaluru, India",Zone VII,13.017994,77.595406,CAT-174,-3.0,SRTM_1arc,Residential,A,6.06,107.3,Manhole,,37.4,5,low_lying,Medium
+SEG-02679,"Chennai, India",Zone VI,13.119467,80.17096,CAT-011,10.06,Copernicus_GLO-90_v2022,Residential,B,5.73,,OpenChannel,ERA5,41.2,10,monitor,Low
+SEG-01913,"Barcelona, Spain",District 13,41.247366,2.282893,CAT-017,29.99,SRTM_3arc,Residential,B,5.83,363.0,,Blended,21.7,5,monitor,Low
+SEG-01705,"New York, USA",District 27,40.794321,-74.021741,CAT-038,75.91,Copernicus_GLO-30_v2023,Residential,D,5.86,66.7,CurbInlet,Blended,33.9,2,monitor,Low
+SEG-01778,"Istanbul, Türkiye",District 21,40.962648,28.919203,CAT-038,47.04,SRTM_1arc,Roads,B,6.42,46.2,GratedInlet,ERA5,38.0,2,monitor,Low
+SEG-00498,"Barcelona, Spain",Borough Hillside,41.405951,2.169967,CAT-053,6.31,Copernicus_GLO-30_v2023,Roads,A,,,Manhole,ERA5,35.5,10,low_lying,Medium
+SEG-01475,"Buenos Aires, Argentina",District 16,-34.531524,-58.471922,CAT-059,,Copernicus_EEA-10_v5,Roads,B,8.39,49.9,CurbInlet,IMD,31.0,5,monitor,Low
+SEG-01423,"London, UK",Sector 15,51.536526,-0.126175,CAT-152,,Copernicus_GLO-30_v2023,Green,B,5.3,204.2,GratedInlet,IMD,59.4,50,monitor,Low
+SEG-00159,"Hyderabad, India",Borough Hillside,17.331108,78.483171,CAT-138,64.42,Copernicus_GLO-30_v2023,Green,C,6.37,185.3,,ERA5,41.2,25,monitor,Low
+SEG-01787,"Delhi, India",District 3,28.607774,77.191759,CAT-088,38.63,Copernicus_EEA-10_v5,Residential,B,6.19,41.6,GratedInlet,,19.0,50,monitor,Low
+SEG-02404,"Istanbul, Türkiye",District 7,41.022895,28.899002,CAT-154,77.38,SRTM_1arc,Commercial,A,5.83,19.2,OpenChannel,ERA5,44.5,25,monitor,Low
+SEG-01206,"Durban, South Africa",Borough Central,-29.848704,31.01527,CAT-131,59.71,Copernicus_GLO-30_v2023,Residential,B,3.2,386.7,,IMD,15.8,2,monitor,Low
+SEG-01161,"Hyderabad, India",District 20,17.420398,78.439156,CAT-165,62.55,Copernicus_EEA-10_v5,Commercial,B,8.3,414.8,OpenChannel,ERA5,35.4,2,monitor,Low
+SEG-02346,"Pune, India",District 20,18.444194,73.862385,CAT-071,90.15,SRTM_1arc,Roads,A,9.85,273.3,,ERA5,52.4,50,monitor,Low
+SEG-02892,"Ho Chi Minh City, Vietnam",Zone II,10.803961,106.709404,CAT-140,39.17,Copernicus_EEA-10_v5,Institutional,D,7.32,,GratedInlet,ERA5,111.0,25,extreme_rain_history,High
+SEG-01438,"Rotterdam, Netherlands",District 19,51.881165,4.458376,CAT-074,8.53,SRTM_1arc,Green,B,3.41,,OpenChannel,ERA5,30.8,5,monitor,Low
+SEG-00203,"Riyadh, Saudi Arabia",District 17,24.602366,46.653616,CAT-167,87.83,Copernicus_GLO-30_v2023,Roads,C,7.63,86.0,CurbInlet,ERA5,6.7,25,monitor,Low
+SEG-02668,"Bengaluru, India",Borough Delta,12.993341,77.487358,CAT-019,34.1,Copernicus_GLO-30_v2023,Residential,C,4.94,244.8,OpenChannel,,26.0,10,monitor,Low
+SEG-02581,"Chennai, India",District 22,12.974622,80.332362,CAT-011,5.69,Copernicus_GLO-30_v2023,Commercial,D,8.31,144.4,GratedInlet,LocalGauge,57.6,50,low_lying,Medium
+SEG-01155,"Pune, India",Zone I,18.521728,73.7889,CAT-119,103.71,Copernicus_GLO-30_v2023,Residential,B,3.39,74.8,Manhole,Blended,19.9,10,monitor,Low
+SEG-00850,"Pune, India",Ward J,18.662988,74.089304,CAT-139,40.74,Copernicus_GLO-30_v2023,Green,D,,165.8,CurbInlet,ERA5,27.3,25,monitor,Low
+SEG-00707,"Shanghai, China",Borough North,31.29294,121.36865,CAT-084,1.04,Copernicus_EEA-10_v5,Residential,D,6.57,58.9,Manhole,Blended,33.5,100,ponding_hotspot|low_lying,High
+SEG-01364,"Riyadh, Saudi Arabia",Zone X,24.710403,46.649768,CAT-162,32.95,SRTM_3arc,Roads,,8.97,30.4,CurbInlet,IMD,12.7,50,monitor,Low
+SEG-02405,"Copenhagen, Denmark",Sector 13,55.708036,12.591504,CAT-016,86.42,Copernicus_GLO-90_v2022,Residential,C,,7.2,GratedInlet,LocalGauge,37.0,50,monitor,Low
+SEG-00759,"Hamburg, Germany",Sector 2,53.458456,10.003259,CAT-138,42.17,Copernicus_GLO-90_v2022,Commercial,C,5.94,56.6,GratedInlet,ERA5,37.8,10,monitor,Low
+SEG-00693,"Riyadh, Saudi Arabia",Borough Delta,24.644576,46.611099,CAT-103,57.61,SRTM_1arc,Residential,D,7.08,155.2,CurbInlet,Blended,34.5,2,monitor,Low
+SEG-01311,"Dubai, UAE",Sector 21,25.063237,55.199687,CAT-102,8.81,SRTM_3arc,Roads,D,9.19,43.3,GratedInlet,IMD,16.1,10,monitor,Low
+SEG-00509,"London, UK",District 20,51.585334,-0.186248,CAT-167,65.23,Copernicus_GLO-30_v2023,Industrial,B,11.53,105.0,Manhole,LocalGauge,35.5,25,monitor,Low
+SEG-02254,"Tokyo, Japan",Zone III,35.697121,139.666878,CAT-054,96.48,SRTM_3arc,Residential,C,3.59,20.8,CurbInlet,ERA5,38.3,2,monitor,Low
+SEG-00418,"Hyderabad, India",District 10,17.420186,78.463747,CAT-084,-3.0,SRTM_1arc,Green,A,1.77,278.3,GratedInlet,LocalGauge,57.5,5,low_lying|sparse_drainage|event_2025-05-30,Medium
+SEG-02484,"Copenhagen, Denmark",Sector 21,55.728828,12.508908,CAT-153,43.79,Copernicus_EEA-10_v5,Roads,,7.12,35.0,Manhole,ERA5,31.0,5,monitor,Low
+SEG-02450,"Brisbane, Australia",Sector 26,-27.507544,153.069348,CAT-047,62.47,SRTM_3arc,Institutional,D,6.27,380.5,Manhole,ERA5,18.8,2,monitor,Low
+SEG-01106,"Brisbane, Australia",Sector 8,-27.496909,153.071637,CAT-037,38.4,SRTM_1arc,Roads,B,5.95,74.6,Manhole,Blended,46.0,5,monitor,Low
+SEG-00959,"New Orleans, USA",Zone I,30.02893,-90.125852,CAT-004,25.71,SRTM_1arc,Industrial,A,9.35,164.9,OpenChannel,ERA5,30.6,50,monitor,Low
+SEG-01584,"Auckland, New Zealand",Zone II,-36.782513,174.791502,CAT-163,70.32,SRTM_1arc,Green,D,3.82,236.3,OpenChannel,ERA5,26.7,50,monitor,Low
+SEG-01749,"Ho Chi Minh City, Vietnam",Ward D,10.92502,106.675929,CAT-053,-3.0,Copernicus_GLO-90_v2022,Commercial,A,8.67,148.9,CurbInlet,ERA5,64.4,10,low_lying,Medium
+SEG-01471,"Lagos, Nigeria",Zone II,6.592352,3.488523,CAT-003,33.93,SRTM_1arc,Water,,2.09,296.4,CurbInlet,Blended,77.9,25,sparse_drainage,Medium
+SEG-00106,"Durban, South Africa",District 9,-29.853424,31.032758,CAT-014,38.05,SRTM_3arc,Institutional,,2.56,,,ERA5,32.3,10,sparse_drainage|event_2024-05-19,Medium
+SEG-02124,"Ho Chi Minh City, Vietnam",Sector 26,10.688585,106.681598,CAT-077,29.08,Copernicus_GLO-90_v2022,Industrial,B,9.61,7.4,CurbInlet,Blended,105.1,50,extreme_rain_history,High
+SEG-01440,"Guangzhou, China",Sector 20,23.084975,113.294863,CAT-177,2.33,Copernicus_GLO-30_v2023,Roads,D,8.65,82.8,Manhole,ERA5,60.6,25,ponding_hotspot|low_lying,High
+SEG-02361,"Shenzhen, China",Sector 25,22.657544,114.01175,CAT-007,29.04,SRTM_1arc,Industrial,D,9.93,68.1,CurbInlet,ERA5,99.0,5,extreme_rain_history,High
+SEG-01835,"Montreal, Canada",District 24,45.485482,-73.514533,CAT-163,,Copernicus_GLO-30_v2023,Commercial,D,10.72,582.3,,ERA5,24.3,10,monitor,Low
+SEG-01623,"Kolkata, India",Borough West,22.539001,88.465002,CAT-177,85.38,Copernicus_GLO-30_v2023,Green,,2.25,174.5,Manhole,Blended,57.0,2,sparse_drainage,Medium
+SEG-01525,"Rotterdam, Netherlands",Ward K,51.917995,4.490178,CAT-158,21.27,SRTM_1arc,Residential,B,3.37,36.2,CurbInlet,ERA5,53.1,50,monitor,Low
+SEG-01103,"Bogotá, Colombia",Borough West,4.785951,-74.061598,CAT-148,207.92,Copernicus_EEA-10_v5,Industrial,C,9.39,,GratedInlet,,32.9,25,monitor,Low
+SEG-02652,"Seoul, South Korea",Ward A,37.488973,126.980101,CAT-070,29.57,SRTM_1arc,Institutional,A,3.53,139.0,Manhole,LocalGauge,55.8,10,monitor,Low
+SEG-01425,"Taipei, Taiwan",Zone III,25.023869,121.611464,CAT-108,65.27,SRTM_1arc,Residential,C,5.95,174.8,OpenChannel,ERA5,39.5,2,monitor,Low
+SEG-02247,"Cape Town, South Africa",Sector 23,-33.862239,18.510836,CAT-088,221.63,SRTM_1arc,Green,B,3.48,162.9,OpenChannel,ERA5,19.9,2,monitor,Low
+SEG-02343,"Shenzhen, China",Sector 24,22.546913,114.226135,CAT-124,11.42,Copernicus_EEA-10_v5,Industrial,A,7.67,146.5,CurbInlet,ERA5,70.1,5,monitor,Low
+SEG-00520,"Tehran, Iran",Borough East,35.732164,51.308007,CAT-167,153.62,SRTM_3arc,Green,B,8.28,76.2,Manhole,,25.0,5,monitor,Low
+SEG-01069,"Mumbai, India",Ward H,19.129694,72.896332,CAT-131,10.36,SRTM_1arc,Industrial,B,5.24,30.4,CurbInlet,IMD,73.4,25,monitor,Low
+SEG-01011,"Osaka, Japan",Zone II,34.618238,135.543634,CAT-173,71.11,SRTM_1arc,Residential,D,8.03,70.0,CurbInlet,ERA5,27.1,100,monitor,Low
+SEG-02953,"Buenos Aires, Argentina",Zone III,-34.54193,-58.414024,CAT-178,40.1,SRTM_1arc,Mixed,,9.54,88.7,Manhole,Blended,17.9,2,monitor,Low
+SEG-02725,"Lagos, Nigeria",Sector 13,6.52908,3.338762,CAT-029,4.45,Copernicus_GLO-30_v2023,Residential,D,5.13,378.8,,ERA5,38.0,2,low_lying,Medium
+SEG-01972,"Chennai, India",Borough South,12.962468,80.220942,CAT-130,6.55,Copernicus_GLO-30_v2023,Mixed,,11.67,39.8,Manhole,ERA5,72.9,50,low_lying,Medium
+SEG-01466,"Brisbane, Australia",Zone III,-27.340339,153.135637,CAT-031,65.11,SRTM_1arc,Commercial,A,9.53,52.5,GratedInlet,LocalGauge,27.3,25,monitor,Low
+SEG-01968,"Rio de Janeiro, Brazil",Zone VI,-22.839366,-43.159471,CAT-134,0.09,Copernicus_GLO-30_v2023,Roads,,8.42,82.0,OpenChannel,ERA5,30.4,5,low_lying,Medium
+SEG-01383,"Karachi, Pakistan",Ward C,24.866421,66.958002,CAT-007,38.53,Copernicus_GLO-30_v2023,Residential,B,3.76,131.0,Manhole,IMD,13.1,2,monitor,Low
+SEG-00343,"Seoul, South Korea",Borough West,37.591017,126.890098,CAT-159,73.77,Copernicus_GLO-30_v2023,Green,D,4.02,23.6,CurbInlet,ERA5,24.4,25,monitor,Low
+SEG-00246,"Pune, India",Sector 17,18.444489,73.901304,CAT-005,42.25,SRTM_3arc,Industrial,C,7.77,188.4,GratedInlet,ERA5,23.7,2,monitor,Low
+SEG-00676,"Houston, USA",District 22,29.918555,-95.299258,CAT-162,42.01,SRTM_3arc,Green,D,4.78,107.5,CurbInlet,ERA5,50.2,10,monitor,Low
+SEG-02354,"Auckland, New Zealand",Ward E,-36.848344,174.75701,CAT-050,86.35,Copernicus_GLO-30_v2023,Residential,C,5.73,171.1,GratedInlet,LocalGauge,41.2,2,monitor,Low
+SEG-00056,"Mexico City, Mexico",Sector 26,19.454178,-99.104387,CAT-076,121.11,SRTM_1arc,Residential,,8.39,66.5,OpenChannel,ERA5,36.9,100,monitor,Low
+SEG-02397,"Auckland, New Zealand",District 17,-36.842567,174.835616,CAT-037,15.03,Copernicus_GLO-30_v2023,Roads,D,9.13,82.4,CurbInlet,ERA5,20.8,10,monitor,Low
+SEG-00648,"Ahmedabad, India",Zone IX,23.100636,72.610165,CAT-063,59.62,SRTM_1arc,Residential,B,4.5,39.8,Manhole,ERA5,21.6,2,monitor,Low
+SEG-01109,"Philadelphia, USA",Borough Hillside,39.859241,-75.12075,CAT-030,66.53,SRTM_1arc,Water,C,5.92,291.4,GratedInlet,Blended,36.8,2,monitor,Low
+SEG-00219,"Rome, Italy",Borough South,41.805683,12.509814,CAT-022,77.91,Copernicus_GLO-90_v2022,Green,B,3.81,257.1,Manhole,ERA5,36.9,100,monitor,Low
+SEG-01104,"Buenos Aires, Argentina",Borough West,-34.757794,-58.297773,CAT-179,-3.0,Copernicus_GLO-90_v2022,Industrial,D,10.01,127.7,Manhole,ERA5,30.8,5,ponding_hotspot|low_lying|event_2023-05-11,High
+SEG-01488,"Seoul, South Korea",District 22,37.605762,126.963086,CAT-061,45.7,SRTM_1arc,Informal,A,10.45,220.6,Manhole,,31.0,25,monitor,Low
+SEG-01718,"Karachi, Pakistan",Zone VII,24.790519,67.083915,CAT-035,27.84,SRTM_1arc,Residential,A,8.56,282.5,OpenChannel,ERA5,44.9,2,monitor,Low
+SEG-02278,"Accra, Ghana",Ward D,5.64871,-0.123407,CAT-008,19.7,Copernicus_EEA-10_v5,Water,B,5.76,260.2,Manhole,ERA5,86.5,50,extreme_rain_history,High
+SEG-00779,"Shanghai, China",Zone III,31.18297,121.49218,CAT-178,5.88,SRTM_1arc,Residential,C,5.19,48.1,Manhole,Blended,34.9,2,low_lying,Medium
+SEG-02654,"Colombo, Sri Lanka",Borough Hillside,7.025741,79.839333,CAT-136,10.38,Copernicus_GLO-30_v2023,Residential,C,6.49,290.5,OpenChannel,ERA5,56.1,10,monitor,Low
+SEG-02105,"Osaka, Japan",Sector 5,34.664879,135.588003,CAT-105,60.36,SRTM_1arc,Residential,C,8.65,46.3,GratedInlet,LocalGauge,24.7,25,monitor,Low
+SEG-02049,"Houston, USA",Sector 9,29.859559,-95.307096,CAT-129,47.8,Copernicus_EEA-10_v5,Residential,D,2.11,141.7,CurbInlet,Blended,32.2,50,sparse_drainage,Medium
+SEG-02280,"Dubai, UAE",Sector 5,25.179262,55.324771,CAT-056,33.57,Copernicus_EEA-10_v5,Residential,C,5.79,105.2,GratedInlet,ERA5,17.0,5,monitor,Low
+SEG-01575,"Barcelona, Spain",Borough North,41.463531,2.082965,CAT-162,12.51,Copernicus_GLO-30_v2023,Residential,C,7.31,69.7,GratedInlet,ERA5,51.8,50,monitor,Low
+SEG-00790,"Tehran, Iran",Zone VII,35.680355,51.299926,CAT-143,38.3,Copernicus_EEA-10_v5,Residential,,,19.1,GratedInlet,LocalGauge,38.2,5,monitor,Low
+SEG-00690,"Taipei, Taiwan",Ward G,25.074434,121.446602,CAT-083,61.21,SRTM_3arc,Commercial,C,7.61,61.0,GratedInlet,IMD,53.2,10,monitor,Low
+SEG-01833,"New York, USA",Zone V,40.756099,-73.83419,CAT-040,56.4,SRTM_3arc,Commercial,A,3.79,93.9,GratedInlet,,23.6,5,monitor,Low
+SEG-00727,"Lagos, Nigeria",District 26,6.642788,3.411478,CAT-093,1.38,SRTM_1arc,Residential,D,6.64,37.9,GratedInlet,IMD,85.9,25,ponding_hotspot|extreme_rain_history|low_lying|event_2023-11-14,High
+SEG-01179,"Jakarta, Indonesia",District 25,-6.283434,106.788739,CAT-103,2.75,Copernicus_GLO-30_v2023,Roads,B,6.8,28.7,GratedInlet,ERA5,54.3,50,low_lying,Medium
+SEG-01086,"Barcelona, Spain",Sector 17,41.316869,2.180096,CAT-115,11.8,Copernicus_GLO-90_v2022,Mixed,D,8.49,76.1,GratedInlet,ERA5,36.2,5,monitor,Low
+SEG-00313,"Delhi, India",Ward K,28.589648,77.197997,CAT-128,93.2,Copernicus_EEA-10_v5,Residential,B,4.04,669.5,,ERA5,19.7,50,monitor,Low
+SEG-01005,"Shanghai, China",District 23,31.228349,121.503088,CAT-099,16.21,Copernicus_GLO-30_v2023,Industrial,C,9.21,73.1,Manhole,LocalGauge,40.1,5,monitor,Low
+SEG-02488,"Rome, Italy",Ward B,41.80631,12.423265,CAT-122,44.51,SRTM_1arc,Commercial,B,6.29,10.6,CurbInlet,LocalGauge,27.9,5,monitor,Low
+SEG-02888,"Jakarta, Indonesia",Sector 25,-6.113062,106.856855,CAT-170,4.2,SRTM_1arc,Commercial,A,7.94,37.0,CurbInlet,ERA5,76.6,25,low_lying,Medium
+SEG-02027,"Ho Chi Minh City, Vietnam",Ward A,10.908047,106.696275,CAT-026,68.79,Copernicus_EEA-10_v5,Industrial,,10.34,18.0,GratedInlet,Blended,88.7,25,extreme_rain_history,High
+SEG-00136,"Karachi, Pakistan",Borough East,24.92432,67.113589,CAT-017,-3.0,Copernicus_EEA-10_v5,Residential,D,5.59,22.5,Manhole,Blended,26.8,2,ponding_hotspot|low_lying,High
+SEG-02092,"Nairobi, Kenya",Borough Delta,-1.242107,36.812667,CAT-133,,SRTM_1arc,Commercial,B,,44.3,CurbInlet,LocalGauge,30.3,2,monitor,Low
+SEG-02659,"Hong Kong, China",Sector 12,22.26686,113.996481,CAT-038,6.91,SRTM_1arc,Institutional,B,2.36,226.4,Manhole,ERA5,87.6,100,extreme_rain_history|low_lying|sparse_drainage|event_2022-09-19,High
+SEG-01491,"Accra, Ghana",Ward D,5.619345,-0.166021,CAT-052,16.15,Copernicus_EEA-10_v5,Water,B,1.53,199.7,OpenChannel,ERA5,106.4,10,extreme_rain_history|sparse_drainage,High
+SEG-00832,"Karachi, Pakistan",Zone IV,24.932233,67.022422,CAT-141,3.04,Copernicus_EEA-10_v5,Residential,C,6.14,371.8,,,35.4,10,low_lying,Medium
+SEG-01136,"San Francisco, USA",District 1,37.698102,-122.428617,CAT-016,101.16,Copernicus_GLO-30_v2023,Commercial,C,4.45,44.7,Manhole,,20.0,5,monitor,Low
+SEG-00984,"Athens, Greece",District 14,38.060732,23.814645,CAT-113,64.97,SRTM_3arc,Industrial,D,8.12,203.5,OpenChannel,LocalGauge,72.5,25,monitor,Low
+SEG-01742,"Amsterdam, Netherlands",District 18,52.298764,4.857421,CAT-108,8.56,Copernicus_GLO-30_v2023,Commercial,C,8.19,206.2,OpenChannel,LocalGauge,25.9,10,monitor,Low
+SEG-00725,"Hanoi, Vietnam",Sector 27,21.090787,105.771564,CAT-045,64.4,Copernicus_EEA-10_v5,Residential,A,6.23,275.4,,ERA5,55.7,10,monitor,Low
+SEG-01422,"Jakarta, Indonesia",District 18,-6.1315,106.913555,CAT-015,12.88,SRTM_1arc,Commercial,A,7.94,77.7,CurbInlet,ERA5,38.8,2,monitor,Low
+SEG-02906,"Seoul, South Korea",Ward D,37.589517,126.978738,CAT-072,15.71,Copernicus_GLO-30_v2023,Roads,,5.43,114.7,GratedInlet,ERA5,31.6,5,monitor,Low
+SEG-02419,"Montreal, Canada",Ward D,45.538737,-73.618238,CAT-059,63.01,Copernicus_EEA-10_v5,Residential,D,2.66,157.5,GratedInlet,LocalGauge,36.7,25,sparse_drainage|event_2024-05-25,Medium
+SEG-00386,"Bangkok, Thailand",Sector 27,13.710087,100.537363,CAT-097,12.06,Copernicus_EEA-10_v5,Residential,D,6.09,80.4,GratedInlet,IMD,51.0,50,monitor,Low
+SEG-00525,"Sydney, Australia",Zone V,-33.763674,151.221566,CAT-019,5.3,Copernicus_GLO-30_v2023,Industrial,A,8.91,17.5,OpenChannel,LocalGauge,22.0,5,low_lying,Medium
+SEG-02456,"Barcelona, Spain",Zone IV,41.391097,2.191819,CAT-162,-3.0,Copernicus_GLO-90_v2022,Mixed,C,6.94,23.5,GratedInlet,,30.1,25,ponding_hotspot|low_lying,High
+SEG-00635,"Miami, USA",Sector 16,25.727049,-80.122735,CAT-098,7.34,Copernicus_EEA-10_v5,Roads,B,,47.1,GratedInlet,ERA5,149.5,50,ponding_hotspot|extreme_rain_history|low_lying|event_2025-07-02,High
+SEG-00667,"Tokyo, Japan",District 17,35.672686,139.679858,CAT-180,25.71,SRTM_1arc,Industrial,A,4.98,16.5,OpenChannel,Blended,25.6,10,monitor,Low
+SEG-01033,"New York, USA",District 9,40.721325,-73.918089,CAT-121,32.33,SRTM_1arc,Mixed,A,7.45,97.7,GratedInlet,ERA5,58.1,10,monitor,Low
+SEG-02290,"Cape Town, South Africa",Borough Hillside,-33.858642,18.407795,CAT-129,53.81,Copernicus_EEA-10_v5,Residential,C,7.84,91.6,GratedInlet,ERA5,24.1,10,monitor,Low
+SEG-01274,"Rio de Janeiro, Brazil",Sector 1,-22.952251,-43.148138,CAT-166,7.97,Copernicus_GLO-90_v2022,Roads,D,5.83,28.1,OpenChannel,LocalGauge,97.7,10,ponding_hotspot|extreme_rain_history|low_lying,High
+SEG-02631,"Colombo, Sri Lanka",District 26,7.006232,79.899184,CAT-063,-2.21,Copernicus_GLO-30_v2023,Green,A,7.45,106.2,CurbInlet,ERA5,40.8,10,low_lying,Medium
+SEG-02088,"Hyderabad, India",Sector 6,17.389693,78.449162,CAT-076,91.95,Copernicus_GLO-30_v2023,Green,C,2.76,245.1,GratedInlet,ERA5,40.3,10,sparse_drainage|event_2022-08-03,Medium
+SEG-01252,"Accra, Ghana",Borough Old Town,5.638587,-0.232134,CAT-170,9.7,SRTM_3arc,Residential,B,6.15,13.0,GratedInlet,Blended,62.6,10,monitor,Low
+SEG-00171,"Vancouver, Canada",District 28,49.383375,-123.251292,CAT-115,-3.0,Copernicus_GLO-30_v2023,Mixed,,5.25,61.2,CurbInlet,LocalGauge,57.8,25,ponding_hotspot|low_lying|event_2022-12-18,High
+SEG-00733,"Rome, Italy",Sector 25,41.961757,12.571678,CAT-004,47.48,Copernicus_GLO-30_v2023,Commercial,C,,6.8,CurbInlet,ERA5,15.9,10,monitor,Low
+SEG-01053,"Taipei, Taiwan",Sector 4,25.070587,121.528752,CAT-064,53.17,Copernicus_GLO-30_v2023,Commercial,D,5.61,112.8,,Blended,43.0,50,monitor,Low
+SEG-00791,"Guangzhou, China",Sector 12,23.200778,113.147624,CAT-091,-1.23,SRTM_1arc,Residential,D,7.14,52.2,CurbInlet,LocalGauge,41.5,100,ponding_hotspot|low_lying|event_2023-12-23,High
+SEG-01040,"Delhi, India",Borough Central,28.597697,77.14876,CAT-177,16.94,Copernicus_EEA-10_v5,Mixed,D,11.06,14.9,CurbInlet,LocalGauge,31.3,2,monitor,Low
+SEG-02910,"San Francisco, USA",Ward I,37.863263,-122.496667,CAT-127,85.42,Copernicus_GLO-30_v2023,Residential,D,4.71,47.0,CurbInlet,ERA5,21.5,5,monitor,Low
+SEG-01690,"Athens, Greece",District 28,38.016074,23.719803,CAT-075,59.37,Copernicus_EEA-10_v5,Residential,B,,189.7,,ERA5,15.9,10,monitor,Low
+SEG-01378,"Cape Town, South Africa",District 10,-34.001171,18.43076,CAT-020,118.01,Copernicus_GLO-30_v2023,Residential,,5.32,129.2,Manhole,ERA5,20.3,100,monitor,Low
+SEG-01693,"Taipei, Taiwan",Zone VIII,24.979429,121.44545,CAT-094,115.02,Copernicus_EEA-10_v5,Roads,A,7.56,55.7,Manhole,ERA5,61.7,10,monitor,Low
+SEG-00385,"Accra, Ghana",Sector 16,5.576077,-0.221677,CAT-164,0.64,Copernicus_GLO-30_v2023,Residential,C,4.29,33.5,CurbInlet,ERA5,55.6,5,ponding_hotspot|low_lying,High
+SEG-02333,"Rotterdam, Netherlands",Ward D,52.018151,4.611293,CAT-042,11.83,Copernicus_GLO-90_v2022,Green,B,4.11,139.4,Manhole,ERA5,35.0,2,monitor,Low
+SEG-00582,"San Francisco, USA",Borough Old Town,37.74768,-122.4196,CAT-157,51.19,Copernicus_EEA-10_v5,Commercial,A,9.18,6.4,CurbInlet,,66.6,5,monitor,Low
+SEG-01387,"Dubai, UAE",District 21,25.132368,55.151454,CAT-107,,Copernicus_EEA-10_v5,Green,D,4.07,17.4,OpenChannel,IMD,23.0,5,monitor,Low
+SEG-02026,"Shanghai, China",District 26,31.257964,121.445585,CAT-038,11.93,Copernicus_EEA-10_v5,Green,,2.36,212.2,CurbInlet,LocalGauge,45.9,5,sparse_drainage,Medium
+SEG-02182,"Copenhagen, Denmark",Ward F,55.602411,12.505045,CAT-144,10.38,SRTM_1arc,Residential,C,,,CurbInlet,,25.0,10,monitor,Low
+SEG-01241,"Rio de Janeiro, Brazil",Sector 19,-22.868733,-43.216059,CAT-028,-0.99,SRTM_3arc,Residential,A,7.1,375.2,,ERA5,53.5,5,low_lying,Medium
+SEG-02921,"Hyderabad, India",Borough Delta,17.49296,78.525816,CAT-142,52.24,SRTM_1arc,Roads,B,7.49,113.1,GratedInlet,ERA5,50.7,10,monitor,Low
+SEG-02646,"Montreal, Canada",Borough Central,45.516611,-73.511508,CAT-137,62.54,Copernicus_EEA-10_v5,Water,C,3.06,171.9,CurbInlet,ERA5,25.5,2,monitor,Low
+SEG-02607,"Mexico City, Mexico",Sector 20,19.367945,-99.056559,CAT-090,81.66,Copernicus_GLO-30_v2023,Institutional,,4.59,372.4,CurbInlet,ERA5,26.9,10,monitor,Low
+SEG-00358,"Guangzhou, China",Ward E,23.190183,113.263792,CAT-039,3.69,Copernicus_GLO-30_v2023,Informal,A,7.21,223.2,Manhole,ERA5,123.6,50,extreme_rain_history|low_lying,High
+SEG-02401,"Doha, Qatar",Borough Central,25.36351,51.3671,CAT-070,42.73,Copernicus_GLO-30_v2023,Industrial,C,7.71,45.9,Manhole,ERA5,27.7,5,monitor,Low
+SEG-00957,"New York, USA",Borough Central,40.697476,-73.989248,CAT-025,-3.0,SRTM_1arc,Roads,B,5.28,28.1,Manhole,ERA5,37.0,10,low_lying,Medium
+SEG-00377,"Houston, USA",Ward B,29.730219,-95.362023,CAT-052,47.66,Copernicus_GLO-30_v2023,Residential,C,2.69,133.5,Manhole,LocalGauge,67.5,10,sparse_drainage,Medium
+SEG-01867,"Riyadh, Saudi Arabia",District 16,24.767984,46.623534,CAT-103,74.74,Copernicus_GLO-90_v2022,Residential,B,3.71,450.8,,,26.6,25,monitor,Low
+SEG-00893,"Hong Kong, China",Zone VIII,22.275331,114.066262,CAT-146,-0.54,Copernicus_GLO-30_v2023,Industrial,B,10.43,287.2,OpenChannel,,60.2,2,low_lying,Medium
+SEG-02779,"Manila, Philippines",Borough North,14.483235,120.886102,CAT-178,12.69,Copernicus_GLO-90_v2022,Green,B,1.39,65.2,Manhole,IMD,53.3,10,sparse_drainage|event_2024-03-18,Medium
+SEG-02609,"Bangkok, Thailand",District 5,13.727426,100.465606,CAT-123,15.9,Copernicus_GLO-30_v2023,Residential,B,4.24,71.6,GratedInlet,Blended,73.5,50,monitor,Low
+SEG-02757,"Brisbane, Australia",Borough Old Town,-27.443145,153.096118,CAT-173,88.08,Copernicus_EEA-10_v5,Roads,A,6.86,83.1,CurbInlet,IMD,27.1,2,monitor,Low
+SEG-01319,"Philadelphia, USA",Ward E,39.972205,-75.071289,CAT-057,3.33,Copernicus_EEA-10_v5,Commercial,B,8.96,131.0,GratedInlet,Blended,20.2,5,low_lying,Medium
+SEG-01088,"Doha, Qatar",Zone V,25.265792,51.537143,CAT-116,4.72,Copernicus_EEA-10_v5,Residential,B,,,Manhole,ERA5,21.1,25,low_lying,Medium
+SEG-02783,"Dhaka, Bangladesh",Ward B,23.728247,90.423786,CAT-095,0.03,Copernicus_GLO-30_v2023,Industrial,A,4.98,21.4,GratedInlet,Blended,74.4,25,low_lying,Medium
+SEG-01323,"Taipei, Taiwan",District 13,25.072586,121.637115,CAT-107,60.97,Copernicus_EEA-10_v5,Water,D,2.22,161.8,Manhole,LocalGauge,40.3,2,sparse_drainage,Medium
+SEG-02293,"Durban, South Africa",District 15,-29.900143,31.002225,CAT-029,38.72,Copernicus_GLO-30_v2023,Green,B,2.71,145.3,OpenChannel,ERA5,20.6,5,sparse_drainage,Medium
+SEG-00703,"Shanghai, China",Zone V,31.122104,121.5664,CAT-098,14.72,SRTM_3arc,Roads,D,2.67,148.9,CurbInlet,LocalGauge,49.9,10,sparse_drainage,Medium
+SEG-01300,"Dubai, UAE",Borough Old Town,25.299828,55.237903,CAT-107,116.84,Copernicus_GLO-30_v2023,Residential,C,4.78,61.6,GratedInlet,ERA5,10.4,5,monitor,Low
+SEG-00251,"Bengaluru, India",Ward D,13.11177,77.548232,CAT-079,30.77,SRTM_1arc,Industrial,C,7.81,17.1,GratedInlet,IMD,20.5,2,monitor,Low
+SEG-01943,"Sydney, Australia",District 17,-33.763008,151.145601,CAT-049,24.72,Copernicus_GLO-30_v2023,Commercial,A,7.05,87.0,OpenChannel,LocalGauge,56.2,5,monitor,Low
+SEG-00501,"Riyadh, Saudi Arabia",Ward G,24.719017,46.682121,CAT-164,82.21,SRTM_3arc,Residential,D,4.95,50.9,CurbInlet,LocalGauge,23.5,2,monitor,Low
+SEG-01800,"Riyadh, Saudi Arabia",District 17,24.688676,46.652328,CAT-029,25.71,SRTM_3arc,Residential,C,4.97,10.2,OpenChannel,ERA5,15.7,2,monitor,Low
+SEG-02764,"Tehran, Iran",Sector 10,35.63636,51.409971,CAT-051,46.88,Copernicus_GLO-90_v2022,Commercial,A,5.67,147.5,CurbInlet,Blended,17.1,5,monitor,Low
+SEG-02504,"Copenhagen, Denmark",Ward F,55.696285,12.628094,CAT-146,15.92,SRTM_1arc,Roads,A,7.16,294.9,OpenChannel,IMD,26.8,10,monitor,Low
+SEG-02159,"Mumbai, India",Borough North,19.16408,72.873119,CAT-077,18.26,Copernicus_EEA-10_v5,Roads,D,7.29,28.1,CurbInlet,,77.6,50,monitor,Low
+SEG-00973,"Ahmedabad, India",Zone I,22.918461,72.46655,CAT-030,17.29,SRTM_1arc,Residential,D,5.34,141.0,Manhole,Blended,41.3,50,monitor,Low
+SEG-00940,"Washington DC, USA",Ward G,39.003335,-77.123286,CAT-158,59.14,Copernicus_GLO-30_v2023,Residential,B,2.07,2.0,Manhole,Blended,35.7,25,sparse_drainage,Medium
+SEG-01439,"Pune, India",Borough South,18.566523,73.879818,CAT-151,62.33,SRTM_1arc,Roads,A,6.46,64.5,GratedInlet,ERA5,42.4,5,monitor,Low
+SEG-00658,"Cape Town, South Africa",Borough West,-33.939786,18.361097,CAT-143,115.2,Copernicus_GLO-30_v2023,Residential,D,,177.0,OpenChannel,ERA5,16.1,10,monitor,Low
+SEG-00050,"Shenzhen, China",Zone VII,22.497561,114.026625,CAT-045,,Copernicus_EEA-10_v5,Roads,,9.69,115.7,Manhole,IMD,79.8,25,monitor,Low
+SEG-00851,"Barcelona, Spain",Zone VIII,41.337527,2.162418,CAT-063,-1.72,SRTM_1arc,Roads,A,8.33,98.9,CurbInlet,Blended,41.1,2,low_lying,Medium
+SEG-00840,"Shenzhen, China",Zone II,22.405906,114.101329,CAT-088,9.54,Copernicus_EEA-10_v5,Commercial,B,6.61,216.0,OpenChannel,,85.6,10,extreme_rain_history|event_2022-09-24,High
+SEG-01345,"Bangkok, Thailand",Borough North,13.7912,100.565226,CAT-069,8.42,SRTM_1arc,Commercial,C,10.14,2.7,OpenChannel,ERA5,69.1,50,monitor,Low
+SEG-00653,"Barcelona, Spain",Sector 29,41.331471,2.202911,CAT-114,11.11,Copernicus_GLO-30_v2023,Commercial,,5.46,102.2,GratedInlet,ERA5,27.8,2,monitor,Low
+SEG-00545,"Philadelphia, USA",Borough Riverside,39.912384,-75.199868,CAT-174,3.04,Copernicus_GLO-30_v2023,Residential,A,6.73,154.4,Manhole,LocalGauge,26.2,2,low_lying,Medium
+SEG-00519,"Manila, Philippines",Sector 29,14.580626,120.972563,CAT-056,12.81,Copernicus_EEA-10_v5,Roads,C,7.21,116.0,Manhole,LocalGauge,45.6,5,monitor,Low
+SEG-02291,"Bogotá, Colombia",District 20,4.726781,-74.105088,CAT-043,124.78,Copernicus_GLO-90_v2022,Residential,D,,104.3,GratedInlet,ERA5,42.3,5,monitor,Low
+SEG-01684,"Kolkata, India",Sector 17,22.529005,88.303404,CAT-041,32.44,Copernicus_EEA-10_v5,Green,A,1.78,74.9,OpenChannel,ERA5,67.3,10,sparse_drainage,Medium
+SEG-00395,"New York, USA",Zone V,40.732751,-74.09645,CAT-014,,Copernicus_GLO-30_v2023,Roads,C,10.44,58.3,GratedInlet,ERA5,19.9,10,monitor,Low
+SEG-02854,"Bengaluru, India",Sector 25,12.89027,77.492583,CAT-159,30.94,Copernicus_GLO-30_v2023,Residential,A,7.55,84.9,Manhole,ERA5,29.5,10,monitor,Low
+SEG-02532,"Athens, Greece",District 30,38.000329,23.764904,CAT-177,94.05,SRTM_3arc,Green,A,4.32,32.0,CurbInlet,IMD,50.8,10,monitor,Low
+SEG-01049,"Kolkata, India",Ward B,22.536239,88.364486,CAT-172,32.93,Copernicus_GLO-30_v2023,Mixed,C,3.92,176.2,CurbInlet,ERA5,18.7,5,monitor,Low
+SEG-02062,"Auckland, New Zealand",Ward C,-36.986417,174.673069,CAT-100,-3.0,Copernicus_GLO-30_v2023,Mixed,,5.73,61.7,GratedInlet,ERA5,22.7,2,low_lying|event_2023-08-15,Medium
+SEG-01117,"Cape Town, South Africa",Sector 1,-33.849295,18.46284,CAT-110,-3.0,Copernicus_GLO-90_v2022,Commercial,A,10.12,157.5,Manhole,LocalGauge,21.4,5,low_lying,Medium
+SEG-01123,"Istanbul, Türkiye",Zone V,41.073396,29.025451,CAT-050,36.68,SRTM_3arc,Roads,C,5.98,88.1,CurbInlet,ERA5,27.6,5,monitor,Low
+SEG-00706,"Shenzhen, China",Borough Riverside,22.683999,114.045831,CAT-153,2.84,Copernicus_GLO-30_v2023,Roads,C,4.05,,Manhole,ERA5,72.8,100,ponding_hotspot|low_lying|event_2025-04-29,High
+SEG-02272,"Riyadh, Saudi Arabia",Zone III,24.83752,46.612715,CAT-137,82.39,Copernicus_GLO-90_v2022,Commercial,B,5.98,45.2,GratedInlet,Blended,13.5,5,monitor,Low
+SEG-02335,"Vancouver, Canada",Zone III,49.265586,-123.292949,CAT-045,9.66,Copernicus_GLO-30_v2023,Commercial,C,5.94,23.8,Manhole,ERA5,67.4,10,monitor,Low
+SEG-02362,"Vancouver, Canada",Sector 26,49.28164,-123.023055,CAT-057,27.54,Copernicus_GLO-30_v2023,Residential,B,,115.8,GratedInlet,LocalGauge,27.7,25,monitor,Low
+SEG-01733,"Athens, Greece",Borough Riverside,37.928723,23.771009,CAT-118,79.46,SRTM_1arc,Residential,A,6.72,151.7,GratedInlet,LocalGauge,44.0,50,monitor,Low
+SEG-02454,"Taipei, Taiwan",District 28,25.021944,121.578472,CAT-177,72.7,Copernicus_GLO-90_v2022,Industrial,,6.02,,GratedInlet,ERA5,41.8,2,monitor,Low
+SEG-02117,"Colombo, Sri Lanka",District 6,7.013326,79.848604,CAT-147,19.24,Copernicus_EEA-10_v5,Mixed,A,,93.0,CurbInlet,LocalGauge,93.6,100,extreme_rain_history,High
+SEG-02545,"Shanghai, China",Zone VI,31.198221,121.374789,CAT-168,9.07,Copernicus_GLO-30_v2023,Green,B,4.41,20.5,CurbInlet,,26.5,10,monitor,Low
+SEG-01449,"Bengaluru, India",Sector 28,13.096619,77.745298,CAT-013,111.43,SRTM_1arc,Residential,A,6.47,64.9,GratedInlet,IMD,29.9,5,monitor,Low
+SEG-01028,"Dubai, UAE",Borough West,25.233784,55.162711,CAT-063,37.56,SRTM_1arc,Roads,A,4.68,58.4,Manhole,Blended,12.3,25,monitor,Low
+SEG-01576,"Lagos, Nigeria",Borough Hillside,6.555921,3.406728,CAT-011,21.92,Copernicus_GLO-30_v2023,Commercial,C,10.43,363.4,OpenChannel,ERA5,36.9,2,monitor,Low
+SEG-00537,"Singapore, Singapore",Zone VI,1.315637,103.746955,CAT-099,13.8,Copernicus_GLO-30_v2023,Commercial,A,10.34,248.2,OpenChannel,ERA5,112.1,100,extreme_rain_history,High
+SEG-01079,"Shenzhen, China",District 28,22.58301,114.102571,CAT-089,23.04,SRTM_3arc,Water,C,5.0,157.2,GratedInlet,LocalGauge,75.6,50,monitor,Low
+SEG-02506,"Washington DC, USA",Zone VIII,38.790622,-77.029956,CAT-163,7.4,SRTM_3arc,Industrial,A,10.07,,CurbInlet,IMD,33.9,5,low_lying,Medium
+SEG-00319,"Ho Chi Minh City, Vietnam",District 12,10.799522,106.466662,CAT-079,1.22,Copernicus_GLO-30_v2023,Roads,A,9.48,76.1,GratedInlet,ERA5,52.0,25,low_lying,Medium
+SEG-02926,"Vancouver, Canada",Ward H,49.338744,-123.153135,CAT-136,6.47,Copernicus_GLO-30_v2023,Institutional,D,3.18,,OpenChannel,Blended,52.0,5,low_lying|event_2025-05-06,Medium
+SEG-01547,"Manila, Philippines",Sector 22,14.647308,120.966319,CAT-023,-3.0,SRTM_3arc,Roads,D,5.04,59.5,Manhole,Blended,78.2,25,ponding_hotspot|low_lying|event_2023-05-20,High
+SEG-00016,"Miami, USA",District 20,25.727376,-80.21539,CAT-091,13.43,SRTM_1arc,Green,A,3.45,53.3,OpenChannel,ERA5,52.6,25,monitor,Low
+SEG-00964,"Copenhagen, Denmark",Ward G,55.68215,12.620313,CAT-010,46.36,Copernicus_EEA-10_v5,Roads,A,5.78,113.9,Manhole,Blended,67.1,10,monitor,Low
+SEG-01905,"Chennai, India",Borough Riverside,13.010744,80.375494,CAT-166,23.52,SRTM_1arc,Water,D,5.44,96.4,CurbInlet,LocalGauge,67.6,2,monitor,Low
+SEG-01657,"Jakarta, Indonesia",Ward K,-6.214388,106.7287,CAT-056,2.29,Copernicus_EEA-10_v5,Commercial,,7.71,,CurbInlet,ERA5,140.8,50,ponding_hotspot|extreme_rain_history|low_lying,High
+SEG-02847,"Shenzhen, China",Zone VIII,22.666964,114.099563,CAT-120,10.28,SRTM_1arc,Residential,,6.14,173.4,OpenChannel,ERA5,92.4,10,extreme_rain_history,High
+SEG-00861,"Paris, France",Zone VIII,48.804512,2.353269,CAT-044,79.22,Copernicus_GLO-30_v2023,Residential,C,6.99,154.5,CurbInlet,IMD,33.3,5,monitor,Low
+SEG-02320,"Paris, France",Sector 17,48.857643,2.337157,CAT-044,89.94,SRTM_3arc,Institutional,C,7.86,186.7,OpenChannel,,55.9,25,monitor,Low
+SEG-01290,"Dhaka, Bangladesh",Ward C,23.724277,90.489794,CAT-038,69.39,SRTM_3arc,Industrial,B,5.5,13.1,CurbInlet,ERA5,26.8,2,monitor,Low
+SEG-02475,"New York, USA",District 12,40.812788,-74.086715,CAT-025,43.72,Copernicus_GLO-90_v2022,Green,B,4.47,40.8,GratedInlet,Blended,40.8,50,monitor,Low
+SEG-02243,"Miami, USA",Sector 3,25.800385,-80.128648,CAT-015,17.1,SRTM_1arc,Residential,B,4.07,117.1,Manhole,,42.9,5,monitor,Low
+SEG-00737,"Hamburg, Germany",Ward B,53.48909,10.084538,CAT-121,6.02,SRTM_1arc,Industrial,,7.68,32.2,GratedInlet,ERA5,32.0,2,low_lying,Medium
+SEG-02511,"Lagos, Nigeria",Ward A,6.578388,3.347453,CAT-041,2.04,Copernicus_EEA-10_v5,Residential,D,5.41,218.9,OpenChannel,Blended,54.2,2,ponding_hotspot|low_lying|event_2024-12-02,High
+SEG-02769,"Delhi, India",Ward I,28.646746,77.233784,CAT-070,85.92,Copernicus_GLO-30_v2023,Residential,B,6.73,3.6,CurbInlet,Blended,32.7,25,monitor,Low
+SEG-02944,"Bangkok, Thailand",Sector 10,13.773632,100.53604,CAT-103,4.6,SRTM_3arc,Roads,,8.15,120.4,CurbInlet,LocalGauge,87.8,50,extreme_rain_history|low_lying|event_2023-11-07,High
+SEG-02871,"Kuala Lumpur, Malaysia",Sector 16,2.936132,101.674927,CAT-025,90.35,SRTM_1arc,Water,D,6.72,139.9,CurbInlet,ERA5,70.4,5,monitor,Low
+SEG-01178,"Hong Kong, China",District 21,22.401144,114.092472,CAT-157,-3.0,Copernicus_EEA-10_v5,Industrial,C,7.13,44.3,Manhole,Blended,29.4,2,low_lying|event_2025-04-08,Medium
+SEG-00120,"Athens, Greece",Ward G,38.085449,23.694449,CAT-138,89.01,SRTM_3arc,Residential,,4.69,251.2,OpenChannel,ERA5,33.3,100,monitor,Low
+SEG-01852,"Shanghai, China",District 11,31.287181,121.579084,CAT-011,20.5,SRTM_1arc,Commercial,,6.88,33.6,Manhole,IMD,23.0,50,monitor,Low
+SEG-00452,"Barcelona, Spain",District 8,41.535835,2.001861,CAT-149,6.66,SRTM_3arc,Institutional,B,2.65,46.8,OpenChannel,ERA5,40.0,10,low_lying|sparse_drainage|event_2023-03-26,Medium
+SEG-02430,"Delhi, India",Sector 2,28.633431,77.187809,CAT-098,139.09,SRTM_3arc,Industrial,A,6.4,114.5,GratedInlet,IMD,20.2,100,monitor,Low
+SEG-01514,"Delhi, India",Zone III,28.598775,77.327263,CAT-096,44.96,Copernicus_GLO-30_v2023,Roads,A,,96.0,GratedInlet,ERA5,22.8,100,monitor,Low
+SEG-01504,"Jakarta, Indonesia",District 5,-6.129638,106.846254,CAT-073,27.7,SRTM_3arc,Residential,D,4.05,21.9,CurbInlet,ERA5,57.3,50,monitor,Low
+SEG-00291,"Copenhagen, Denmark",Ward G,55.655924,12.577613,CAT-059,14.51,SRTM_1arc,Residential,C,3.24,6.5,Manhole,,59.6,50,monitor,Low
+SEG-02146,"Montreal, Canada",Sector 16,45.526889,-73.657444,CAT-164,35.51,Copernicus_GLO-30_v2023,Industrial,A,4.48,68.4,GratedInlet,ERA5,19.2,2,monitor,Low
+SEG-01513,"Accra, Ghana",Borough Hillside,5.621065,-0.167653,CAT-073,13.0,SRTM_1arc,Commercial,,,82.3,CurbInlet,ERA5,32.0,50,monitor,Low
+SEG-02066,"Guangzhou, China",Zone III,22.991159,113.279219,CAT-001,-0.48,Copernicus_EEA-10_v5,Industrial,C,7.29,53.3,Manhole,ERA5,79.0,10,ponding_hotspot|low_lying,High
+SEG-02687,"Guangzhou, China",Sector 14,23.03044,113.258364,CAT-090,12.51,Copernicus_GLO-30_v2023,Commercial,C,4.32,82.7,CurbInlet,IMD,62.2,50,monitor,Low
+SEG-01639,"Osaka, Japan",Borough Central,34.503467,135.566862,CAT-131,97.81,SRTM_3arc,Commercial,D,10.51,,OpenChannel,ERA5,29.6,10,monitor,Low
+SEG-01583,"Bangkok, Thailand",District 20,13.86683,100.382149,CAT-137,19.54,SRTM_1arc,Industrial,B,4.78,79.0,CurbInlet,ERA5,97.0,2,extreme_rain_history,High
+SEG-01724,"Barcelona, Spain",Ward I,41.33393,2.079141,CAT-144,11.55,Copernicus_GLO-30_v2023,Residential,D,2.68,,GratedInlet,LocalGauge,36.8,2,sparse_drainage,Medium
+SEG-02831,"Philadelphia, USA",Zone VI,39.858013,-75.118309,CAT-099,,Copernicus_EEA-10_v5,Green,A,5.02,175.3,OpenChannel,IMD,27.5,5,monitor,Low
+SEG-01418,"Mumbai, India",Borough Old Town,19.060576,72.787831,CAT-023,10.01,SRTM_3arc,Green,C,,346.5,,Blended,66.3,10,monitor,Low
+SEG-02127,"Lima, Peru",District 16,-12.042956,-76.968145,CAT-128,67.12,Copernicus_GLO-30_v2023,Residential,A,3.38,93.6,Manhole,LocalGauge,33.3,2,monitor,Low
+SEG-01285,"New York, USA",District 23,40.769971,-73.979319,CAT-088,20.29,Copernicus_GLO-30_v2023,Water,,6.46,393.9,,Blended,30.8,25,monitor,Low
+SEG-00046,"Paris, France",Ward E,48.854264,2.375006,CAT-135,77.71,SRTM_1arc,Residential,B,3.43,69.8,GratedInlet,ERA5,38.8,25,monitor,Low
+SEG-01435,"Washington DC, USA",District 24,39.025949,-76.967405,CAT-113,90.38,Copernicus_GLO-30_v2023,Institutional,,8.02,,OpenChannel,,20.4,25,monitor,Low
+SEG-02899,"Rotterdam, Netherlands",Ward I,51.95351,4.43569,CAT-180,,SRTM_1arc,Industrial,,7.01,23.9,GratedInlet,ERA5,49.5,25,monitor,Low
+SEG-00988,"Philadelphia, USA",Zone IV,39.863444,-75.244375,CAT-083,-3.0,SRTM_3arc,Residential,D,8.19,18.5,CurbInlet,IMD,15.9,2,ponding_hotspot|low_lying|event_2023-06-21,High
+SEG-01675,"Paris, France",District 9,48.864973,2.399368,CAT-085,41.55,SRTM_3arc,Roads,A,8.76,32.7,GratedInlet,Blended,7.0,5,monitor,Low
+SEG-00103,"Paris, France",Borough Harbor,48.893045,2.260981,CAT-017,21.87,Copernicus_EEA-10_v5,Residential,B,8.19,44.3,Manhole,ERA5,18.4,25,monitor,Low
+SEG-02476,"Dubai, UAE",Zone IX,25.178588,55.266147,CAT-115,89.18,Copernicus_GLO-90_v2022,Commercial,D,6.4,109.8,CurbInlet,ERA5,14.6,50,monitor,Low
+SEG-02443,"Mumbai, India",Borough Central,19.122359,72.851145,CAT-089,7.75,SRTM_3arc,Residential,A,,,GratedInlet,ERA5,60.9,5,low_lying,Medium
+SEG-01373,"Istanbul, Türkiye",Sector 13,40.971305,29.10124,CAT-055,-3.0,Copernicus_GLO-30_v2023,Green,A,2.98,,Manhole,ERA5,31.0,2,low_lying|sparse_drainage,Medium
+SEG-01901,"Istanbul, Türkiye",Ward K,40.925616,29.038261,CAT-032,58.26,SRTM_3arc,Commercial,B,7.06,22.1,Manhole,IMD,38.2,5,monitor,Low
+SEG-01528,"Sao Paulo, Brazil",Borough West,-23.557311,-46.654938,CAT-152,73.62,Copernicus_GLO-30_v2023,Roads,,7.66,91.6,Manhole,LocalGauge,26.6,100,monitor,Low
+SEG-02074,"Amsterdam, Netherlands",Sector 2,52.467316,4.937162,CAT-065,4.27,SRTM_3arc,Residential,C,2.59,,Manhole,Blended,19.0,2,low_lying|sparse_drainage,Medium
+SEG-00750,"Vancouver, Canada",Zone VI,49.28578,-123.149075,CAT-098,15.56,Copernicus_GLO-30_v2023,Commercial,,5.68,,Manhole,ERA5,53.1,10,monitor,Low
+SEG-02465,"Tokyo, Japan",Ward A,35.628516,139.642413,CAT-052,35.23,SRTM_1arc,Commercial,D,5.56,32.2,CurbInlet,ERA5,19.3,25,monitor,Low
+SEG-00372,"Dubai, UAE",Ward I,25.276718,55.263327,CAT-079,95.2,SRTM_1arc,Roads,,5.88,17.0,GratedInlet,Blended,32.3,5,monitor,Low
+SEG-00610,"Paris, France",Sector 27,48.866111,2.290553,CAT-161,78.32,Copernicus_GLO-30_v2023,Green,,5.49,27.5,CurbInlet,ERA5,57.6,10,monitor,Low
+SEG-02108,"Colombo, Sri Lanka",Sector 15,7.06202,79.839137,CAT-012,-3.0,Copernicus_GLO-30_v2023,Roads,B,5.23,88.0,OpenChannel,ERA5,91.4,10,ponding_hotspot|extreme_rain_history|low_lying,High
+SEG-02681,"Brisbane, Australia",Ward A,-27.439677,153.04085,CAT-014,82.94,Copernicus_GLO-30_v2023,Residential,C,3.65,55.7,Manhole,ERA5,18.7,2,monitor,Low
+SEG-02210,"Lima, Peru",Sector 1,-11.921741,-77.057409,CAT-167,21.76,SRTM_3arc,Roads,D,3.36,17.4,OpenChannel,ERA5,41.1,50,monitor,Low
+SEG-01844,"New Orleans, USA",Borough East,29.892516,-90.170318,CAT-081,,Copernicus_GLO-30_v2023,Water,C,6.67,308.1,Manhole,Blended,38.1,50,monitor,Low
+SEG-00382,"Lagos, Nigeria",District 23,6.581624,3.404093,CAT-074,2.24,Copernicus_GLO-30_v2023,Commercial,B,10.13,13.1,CurbInlet,LocalGauge,83.5,5,extreme_rain_history|low_lying,High
+SEG-01351,"Dhaka, Bangladesh",Sector 10,23.84048,90.430896,CAT-110,-3.0,Copernicus_GLO-30_v2023,Commercial,C,5.63,103.0,Manhole,,44.7,25,ponding_hotspot|low_lying|event_2023-10-31,High
+SEG-01307,"Delhi, India",Ward I,28.618661,77.141702,CAT-097,64.41,SRTM_3arc,Green,D,4.34,47.7,CurbInlet,ERA5,58.1,5,monitor,Low
+SEG-00539,"Shanghai, China",Zone IX,31.28627,121.614967,CAT-037,-1.22,SRTM_1arc,Industrial,A,8.41,75.2,GratedInlet,ERA5,23.4,2,low_lying,Medium
+SEG-01671,"Ho Chi Minh City, Vietnam",Sector 20,10.915452,106.656895,CAT-089,6.17,Copernicus_GLO-30_v2023,Residential,B,5.72,128.2,CurbInlet,Blended,95.8,25,extreme_rain_history|low_lying,High
+SEG-01070,"Miami, USA",Borough Hillside,25.656611,-80.21304,CAT-091,16.22,SRTM_3arc,Roads,D,,213.1,OpenChannel,IMD,81.2,50,extreme_rain_history,High
+SEG-00823,"Brisbane, Australia",Zone I,-27.482592,153.011911,CAT-065,,Copernicus_EEA-10_v5,Residential,C,5.42,52.8,CurbInlet,LocalGauge,32.4,50,monitor,Low
+SEG-01156,"Colombo, Sri Lanka",Zone IV,6.967384,79.685941,CAT-081,17.11,SRTM_1arc,Green,A,3.76,311.5,OpenChannel,ERA5,47.7,50,monitor,Low
+SEG-00240,"Nairobi, Kenya",Sector 27,-1.31365,36.782376,CAT-114,94.65,Copernicus_GLO-30_v2023,Roads,,4.67,44.7,CurbInlet,ERA5,41.9,5,monitor,Low
+SEG-02265,"Dubai, UAE",District 23,25.179043,55.318947,CAT-119,84.93,SRTM_3arc,Roads,A,9.39,161.0,CurbInlet,IMD,24.5,2,monitor,Low
+SEG-01058,"Lagos, Nigeria",District 12,6.546067,3.256323,CAT-100,8.15,SRTM_3arc,Residential,A,2.18,67.7,Manhole,,36.9,2,sparse_drainage|event_2023-02-14,Medium
+SEG-00801,"Singapore, Singapore",Ward E,1.376511,103.86334,CAT-041,8.88,SRTM_1arc,Commercial,C,3.31,136.4,Manhole,LocalGauge,150.0,100,ponding_hotspot|extreme_rain_history,High
+SEG-00081,"Buenos Aires, Argentina",Ward J,-34.718054,-58.379462,CAT-112,85.45,Copernicus_GLO-90_v2022,Residential,C,8.64,67.7,GratedInlet,Blended,19.5,2,monitor,Low
+SEG-02061,"Rio de Janeiro, Brazil",Sector 10,-22.894916,-43.157179,CAT-138,27.68,Copernicus_GLO-30_v2023,Commercial,C,7.29,,,LocalGauge,44.5,10,monitor,Low
+SEG-00687,"Istanbul, Türkiye",District 2,41.040132,29.006163,CAT-116,,Copernicus_GLO-30_v2023,Industrial,C,6.84,33.4,Manhole,LocalGauge,26.5,25,monitor,Low
+SEG-00148,"Lima, Peru",District 19,-11.99651,-77.205472,CAT-080,76.66,Copernicus_GLO-30_v2023,Residential,,4.03,,OpenChannel,ERA5,56.9,10,monitor,Low
+SEG-01064,"Ho Chi Minh City, Vietnam",District 6,10.886239,106.718425,CAT-115,72.66,SRTM_1arc,Roads,C,7.0,26.3,CurbInlet,IMD,75.3,25,monitor,Low
+SEG-02301,"Buenos Aires, Argentina",Zone III,-34.573344,-58.423029,CAT-166,71.92,Copernicus_GLO-90_v2022,Commercial,C,8.95,80.3,Manhole,Blended,11.7,2,monitor,Low
+SEG-02513,"New York, USA",District 24,40.743956,-73.950251,CAT-112,1.67,Copernicus_GLO-30_v2023,Residential,B,8.06,258.1,,ERA5,18.0,2,low_lying,Medium
+SEG-01477,"Chennai, India",Sector 20,13.091605,80.28485,CAT-061,7.64,SRTM_3arc,Roads,C,4.22,,Manhole,,56.4,10,low_lying,Medium
+SEG-01083,"Rotterdam, Netherlands",Zone X,51.930353,4.453565,CAT-115,,Copernicus_GLO-90_v2022,Mixed,C,6.82,29.4,CurbInlet,Blended,34.0,2,monitor,Low
+SEG-02433,"Colombo, Sri Lanka",Borough Harbor,6.997182,79.833708,CAT-154,7.91,SRTM_3arc,Green,A,,26.2,OpenChannel,LocalGauge,29.2,25,low_lying,Medium
+SEG-00378,"Hamburg, Germany",District 13,53.532784,9.927489,CAT-169,27.27,SRTM_1arc,Residential,,5.98,87.8,Manhole,Blended,38.3,10,monitor,Low
+SEG-02043,"Tehran, Iran",District 16,35.680479,51.264527,CAT-045,85.88,SRTM_3arc,Green,D,6.07,10.2,Manhole,Blended,21.4,50,monitor,Low
+SEG-02303,"Guangzhou, China",Zone V,23.077116,113.164569,CAT-053,18.45,Copernicus_GLO-30_v2023,Residential,D,8.11,69.7,CurbInlet,IMD,40.0,2,monitor,Low
+SEG-02130,"Kolkata, India",Sector 4,22.533176,88.221921,CAT-060,59.16,SRTM_3arc,Mixed,C,5.29,194.0,OpenChannel,IMD,40.5,5,monitor,Low
+SEG-00966,"Auckland, New Zealand",Zone III,-36.770466,174.80051,CAT-037,96.1,SRTM_1arc,Residential,B,2.55,116.6,CurbInlet,ERA5,34.2,5,sparse_drainage,Medium
+SEG-01807,"Kuala Lumpur, Malaysia",Sector 16,3.042042,101.788406,CAT-111,82.72,Copernicus_GLO-30_v2023,Residential,C,7.78,,Manhole,IMD,42.2,5,monitor,Low
+SEG-01793,"Athens, Greece",Ward C,38.022791,23.833288,CAT-031,66.16,Copernicus_EEA-10_v5,Commercial,B,7.54,142.5,,ERA5,22.4,25,monitor,Low
+SEG-00583,"Ahmedabad, India",Borough Harbor,22.868325,72.681198,CAT-098,16.6,Copernicus_EEA-10_v5,Commercial,B,5.45,,Manhole,ERA5,44.8,5,monitor,Low
+SEG-01856,"Bogotá, Colombia",Borough Delta,4.726905,-74.079685,CAT-089,76.55,SRTM_3arc,Commercial,C,9.91,1.5,GratedInlet,,27.3,10,monitor,Low
+SEG-00116,"San Francisco, USA",District 22,37.817249,-122.539137,CAT-134,137.68,SRTM_3arc,Commercial,B,4.5,206.7,OpenChannel,ERA5,22.0,5,monitor,Low
+SEG-02413,"Manila, Philippines",Ward K,14.606749,120.950813,CAT-037,14.89,Copernicus_GLO-30_v2023,Residential,B,5.54,,CurbInlet,ERA5,145.5,50,extreme_rain_history,High
+SEG-00123,"San Francisco, USA",Sector 1,37.667235,-122.385164,CAT-061,157.71,SRTM_3arc,Roads,B,7.72,58.6,CurbInlet,ERA5,32.7,5,monitor,Low
+SEG-02113,"San Francisco, USA",District 10,37.783743,-122.39362,CAT-121,30.08,SRTM_3arc,Commercial,A,6.25,68.1,Manhole,ERA5,29.5,5,monitor,Low
+SEG-01248,"Lima, Peru",Zone X,-11.980449,-77.098557,CAT-127,62.62,Copernicus_GLO-30_v2023,Residential,D,6.43,130.6,GratedInlet,ERA5,15.7,100,monitor,Low
+SEG-02701,"Copenhagen, Denmark",Ward B,55.613245,12.569616,CAT-099,45.39,Copernicus_GLO-30_v2023,Mixed,B,,67.7,Manhole,IMD,10.3,2,monitor,Low
+SEG-01236,"Kuala Lumpur, Malaysia",District 16,3.167442,101.662094,CAT-171,,Copernicus_GLO-90_v2022,Green,B,6.72,243.2,Manhole,ERA5,102.3,50,extreme_rain_history,High
+SEG-02865,"Kuala Lumpur, Malaysia",Zone III,3.108174,101.679408,CAT-079,,Copernicus_EEA-10_v5,Green,A,2.37,95.8,CurbInlet,ERA5,43.5,10,sparse_drainage,Medium
+SEG-00499,"Delhi, India",Zone III,28.606539,77.216364,CAT-126,26.32,Copernicus_EEA-10_v5,Residential,D,4.8,138.1,Manhole,ERA5,38.1,10,monitor,Low
+SEG-00809,"Ahmedabad, India",Borough West,23.056499,72.629412,CAT-013,61.69,Copernicus_EEA-10_v5,Industrial,B,7.45,,CurbInlet,LocalGauge,20.0,25,monitor,Low
+SEG-02943,"Osaka, Japan",District 27,34.614831,135.450671,CAT-126,-3.0,SRTM_1arc,Residential,,,77.7,Manhole,,28.2,10,low_lying,Medium
+SEG-01667,"London, UK",Borough Central,51.606573,-0.061731,CAT-162,27.18,SRTM_3arc,Roads,D,6.11,7.1,Manhole,ERA5,59.8,10,monitor,Low
+SEG-01617,"Athens, Greece",Sector 23,37.910108,23.689854,CAT-001,54.09,Copernicus_GLO-30_v2023,Industrial,D,8.38,409.6,OpenChannel,LocalGauge,30.0,25,monitor,Low
+SEG-01166,"Ho Chi Minh City, Vietnam",District 8,10.695213,106.619548,CAT-080,78.32,SRTM_1arc,Roads,A,7.26,53.9,Manhole,ERA5,36.9,10,monitor,Low
+SEG-00334,"Ho Chi Minh City, Vietnam",Zone III,10.848181,106.647658,CAT-149,4.01,Copernicus_GLO-30_v2023,Water,D,4.98,66.8,OpenChannel,IMD,63.3,5,ponding_hotspot|low_lying,High
+SEG-02894,"Copenhagen, Denmark",Sector 18,55.568589,12.555565,CAT-149,64.66,Copernicus_GLO-90_v2022,Roads,D,,195.5,OpenChannel,ERA5,33.3,2,monitor,Low
+SEG-02075,"Lima, Peru",District 25,-12.170019,-77.078821,CAT-011,47.66,Copernicus_GLO-90_v2022,Mixed,C,5.14,11.7,GratedInlet,ERA5,24.0,25,monitor,Low
+SEG-01346,"Pune, India",Sector 5,18.463089,73.845764,CAT-089,27.52,Copernicus_GLO-30_v2023,Commercial,D,6.61,,CurbInlet,ERA5,33.6,100,monitor,Low
+SEG-00428,"Jakarta, Indonesia",Sector 6,-6.248436,106.907974,CAT-156,19.34,Copernicus_GLO-30_v2023,Commercial,C,5.83,9.4,Manhole,ERA5,150.0,10,ponding_hotspot|extreme_rain_history,High
+SEG-02016,"Hamburg, Germany",District 14,53.4559,9.780049,CAT-005,13.73,Copernicus_GLO-30_v2023,Mixed,D,5.17,88.8,CurbInlet,LocalGauge,23.8,5,monitor,Low
+SEG-02383,"Kolkata, India",District 24,22.749871,88.378939,CAT-126,70.6,SRTM_1arc,Residential,D,2.57,58.8,CurbInlet,ERA5,33.1,5,sparse_drainage|event_2023-12-05,Medium
+SEG-00044,"Montreal, Canada",Sector 1,45.550481,-73.562016,CAT-123,62.3,SRTM_3arc,Institutional,A,7.2,116.3,Manhole,,24.0,25,monitor,Low
+SEG-02632,"Kolkata, India",Borough Delta,22.599995,88.379854,CAT-003,109.25,Copernicus_EEA-10_v5,Industrial,D,5.61,83.0,Manhole,ERA5,41.9,10,monitor,Low
+SEG-01861,"Durban, South Africa",Zone X,-29.970877,31.210716,CAT-005,,Copernicus_EEA-10_v5,Commercial,C,7.71,,,IMD,55.8,10,monitor,Low
+SEG-01990,"Dhaka, Bangladesh",Borough South,23.842502,90.293506,CAT-174,,SRTM_1arc,Residential,C,,75.0,GratedInlet,IMD,46.1,5,monitor,Low
+SEG-02929,"Bengaluru, India",Ward E,12.934398,77.653962,CAT-027,44.67,SRTM_1arc,Commercial,D,9.05,23.1,Manhole,ERA5,72.8,10,monitor,Low
+SEG-02322,"Jakarta, Indonesia",Sector 8,-6.263213,106.99687,CAT-119,9.14,Copernicus_GLO-30_v2023,Green,C,6.95,444.1,,Blended,46.6,50,monitor,Low
+SEG-02135,"Mexico City, Mexico",Borough Old Town,19.318091,-99.020897,CAT-004,28.06,Copernicus_GLO-30_v2023,Green,D,3.59,100.6,Manhole,ERA5,61.3,10,monitor,Low
+SEG-02040,"San Francisco, USA",Zone IV,37.815956,-122.488656,CAT-010,86.36,Copernicus_GLO-30_v2023,Roads,,8.2,50.5,Manhole,Blended,29.3,5,monitor,Low
+SEG-01445,"Rio de Janeiro, Brazil",Sector 12,-22.95048,-43.107141,CAT-134,16.09,Copernicus_GLO-30_v2023,Green,C,3.93,104.1,Manhole,LocalGauge,102.1,25,extreme_rain_history,High
+SEG-02557,"Shenzhen, China",Sector 6,22.571797,114.276343,CAT-037,17.08,Copernicus_EEA-10_v5,Residential,C,4.3,29.0,OpenChannel,ERA5,125.0,25,extreme_rain_history,High
+SEG-02018,"Amsterdam, Netherlands",Borough Old Town,52.393364,4.860393,CAT-160,17.3,SRTM_3arc,Residential,,5.04,43.6,GratedInlet,ERA5,22.7,5,monitor,Low
+SEG-00834,"Philadelphia, USA",District 4,39.937856,-75.228937,CAT-143,28.33,Copernicus_EEA-10_v5,Roads,B,10.33,65.7,GratedInlet,IMD,35.6,2,monitor,Low
+SEG-01344,"Sydney, Australia",Sector 19,-33.785383,151.240146,CAT-142,14.37,SRTM_3arc,Water,A,2.95,81.0,Manhole,,30.5,5,sparse_drainage,Medium
+SEG-02480,"Mexico City, Mexico",District 12,19.521967,-99.173117,CAT-094,29.3,Copernicus_GLO-30_v2023,Roads,D,7.74,83.6,Manhole,Blended,38.1,2,monitor,Low
+SEG-02717,"Sydney, Australia",Borough Harbor,-33.79575,151.198359,CAT-136,,SRTM_1arc,Residential,A,3.9,23.3,Manhole,LocalGauge,31.9,2,monitor,Low
+SEG-02432,"Ahmedabad, India",Sector 15,23.115824,72.634627,CAT-056,0.56,Copernicus_GLO-30_v2023,Residential,C,4.81,,CurbInlet,LocalGauge,58.8,5,ponding_hotspot|low_lying,High
+SEG-02604,"Brisbane, Australia",Zone VI,-27.347571,152.936834,CAT-147,30.64,SRTM_1arc,Water,C,,291.4,,LocalGauge,72.7,25,monitor,Low
+SEG-01553,"Durban, South Africa",Borough Old Town,-29.908283,31.042215,CAT-101,13.76,Copernicus_EEA-10_v5,Industrial,C,10.15,154.6,OpenChannel,,41.1,10,monitor,Low
+SEG-01130,"Dhaka, Bangladesh",Borough Harbor,23.881802,90.541463,CAT-087,,SRTM_1arc,Commercial,C,6.99,31.4,CurbInlet,,65.6,25,monitor,Low
+SEG-01332,"Accra, Ghana",District 5,5.63754,-0.337666,CAT-129,-3.0,SRTM_1arc,Institutional,D,,169.1,GratedInlet,LocalGauge,30.0,5,ponding_hotspot|low_lying|event_2022-11-06,High
+SEG-02524,"Mumbai, India",District 17,19.181847,72.891275,CAT-160,0.41,Copernicus_GLO-30_v2023,Institutional,D,5.92,157.1,GratedInlet,ERA5,68.6,10,ponding_hotspot|low_lying|event_2025-01-02,High
+SEG-01212,"Copenhagen, Denmark",Ward B,55.59991,12.473685,CAT-091,43.16,SRTM_3arc,Industrial,B,6.43,106.2,Manhole,LocalGauge,27.3,5,monitor,Low
+SEG-00910,"Amsterdam, Netherlands",Borough Harbor,52.392608,4.965928,CAT-084,7.1,SRTM_1arc,Residential,,5.02,11.8,CurbInlet,ERA5,16.9,2,low_lying,Medium
+SEG-01879,"Hong Kong, China",Ward B,22.389775,114.215259,CAT-147,,SRTM_3arc,Institutional,B,4.75,341.8,GratedInlet,ERA5,30.1,25,monitor,Low
+SEG-02171,"Brisbane, Australia",Sector 8,-27.533231,153.07808,CAT-059,2.44,SRTM_3arc,Commercial,C,10.86,23.3,GratedInlet,LocalGauge,42.4,50,low_lying,Medium
+SEG-02767,"Sao Paulo, Brazil",District 21,-23.547826,-46.675882,CAT-080,32.9,Copernicus_GLO-30_v2023,Roads,A,8.5,75.6,Manhole,,61.6,5,monitor,Low
+SEG-00885,"Hyderabad, India",Zone V,17.409677,78.390015,CAT-050,22.17,SRTM_3arc,Residential,A,6.92,34.6,OpenChannel,ERA5,50.3,25,monitor,Low
+SEG-00968,"Bengaluru, India",Zone II,12.971863,77.499457,CAT-143,19.29,Copernicus_EEA-10_v5,Mixed,C,5.39,102.9,CurbInlet,LocalGauge,45.5,50,monitor,Low
+SEG-00089,"Houston, USA",District 11,29.738211,-95.43419,CAT-164,46.98,Copernicus_GLO-30_v2023,Green,A,2.0,74.8,OpenChannel,IMD,31.9,2,sparse_drainage,Medium
+SEG-01022,"Amsterdam, Netherlands",District 30,52.411967,4.910303,CAT-087,13.61,SRTM_3arc,Roads,C,6.86,7.4,Manhole,ERA5,40.8,2,monitor,Low
+SEG-00006,"Bangkok, Thailand",Borough Harbor,13.730254,100.441634,CAT-132,15.36,Copernicus_GLO-30_v2023,Roads,C,8.97,30.0,Manhole,LocalGauge,120.5,50,extreme_rain_history,High
+SEG-02763,"San Francisco, USA",Sector 15,37.755462,-122.538357,CAT-144,74.63,Copernicus_GLO-30_v2023,Roads,C,8.28,,,,78.8,50,monitor,Low
+SEG-00387,"Durban, South Africa",District 1,-29.972456,30.935897,CAT-024,14.47,Copernicus_GLO-30_v2023,Roads,D,6.57,11.1,Manhole,IMD,43.8,25,monitor,Low
+SEG-00014,"Athens, Greece",District 29,38.054642,23.718257,CAT-024,18.54,Copernicus_GLO-30_v2023,Commercial,B,9.08,248.0,OpenChannel,ERA5,29.1,10,monitor,Low
+SEG-00854,"Miami, USA",Sector 26,25.514165,-80.337782,CAT-159,3.91,SRTM_1arc,Roads,D,9.57,33.0,GratedInlet,ERA5,104.2,5,ponding_hotspot|extreme_rain_history|low_lying,High
+SEG-00604,"Houston, USA",Ward B,29.730955,-95.322082,CAT-102,86.6,SRTM_1arc,Residential,D,3.27,395.8,OpenChannel,ERA5,41.1,10,monitor,Low
+SEG-00634,"Vancouver, Canada",District 30,49.192106,-123.270287,CAT-156,22.95,Copernicus_GLO-30_v2023,Residential,D,5.71,164.6,,Blended,26.4,50,monitor,Low
+SEG-02855,"Miami, USA",District 29,25.806785,-80.22264,CAT-177,-3.0,SRTM_1arc,Commercial,D,5.78,65.1,Manhole,LocalGauge,65.4,2,ponding_hotspot|low_lying,High
+SEG-02344,"Singapore, Singapore",Ward J,1.280166,103.828157,CAT-028,10.83,Copernicus_EEA-10_v5,Commercial,A,4.63,92.4,GratedInlet,Blended,62.3,50,monitor,Low
+SEG-02745,"Shanghai, China",Sector 21,31.21804,121.568636,CAT-101,18.03,Copernicus_GLO-90_v2022,Residential,D,5.64,0.8,CurbInlet,IMD,37.2,5,monitor,Low
+SEG-01075,"Nairobi, Kenya",Borough Harbor,-1.258043,36.91423,CAT-041,56.93,Copernicus_EEA-10_v5,Commercial,,,216.4,OpenChannel,ERA5,73.0,5,monitor,Low
+SEG-01571,"Vancouver, Canada",Borough Old Town,49.239396,-123.140558,CAT-051,15.27,SRTM_1arc,Water,C,7.14,49.1,GratedInlet,LocalGauge,23.1,10,monitor,Low
+SEG-01540,"Washington DC, USA",Borough West,38.819708,-77.063099,CAT-156,27.81,SRTM_1arc,Roads,A,9.4,91.5,Manhole,ERA5,22.5,2,monitor,Low
+SEG-01302,"Taipei, Taiwan",District 30,25.10365,121.588294,CAT-165,20.6,SRTM_1arc,Commercial,B,7.82,4.4,CurbInlet,Blended,39.5,2,monitor,Low
+SEG-01289,"Ho Chi Minh City, Vietnam",Ward K,10.830979,106.581071,CAT-090,60.87,SRTM_1arc,Water,B,6.1,327.8,,ERA5,42.0,5,monitor,Low
+SEG-00277,"Guangzhou, China",Borough North,23.274446,113.195713,CAT-006,,Copernicus_GLO-30_v2023,Residential,B,7.39,,OpenChannel,IMD,113.0,100,extreme_rain_history,High
+SEG-02051,"Philadelphia, USA",District 6,39.880627,-75.167382,CAT-054,36.32,SRTM_3arc,Residential,D,4.71,146.5,,ERA5,33.6,100,monitor,Low
+SEG-02483,"Copenhagen, Denmark",Borough Riverside,55.693958,12.517207,CAT-165,43.53,SRTM_3arc,Industrial,D,10.13,52.9,GratedInlet,ERA5,30.5,10,monitor,Low
+SEG-01805,"Barcelona, Spain",Zone X,41.488167,2.043373,CAT-051,9.84,SRTM_1arc,Roads,A,4.2,164.6,OpenChannel,ERA5,22.3,2,monitor,Low
+SEG-01266,"Hyderabad, India",Borough Riverside,17.3143,78.469074,CAT-173,19.69,Copernicus_GLO-30_v2023,Commercial,D,5.62,118.8,Manhole,LocalGauge,19.2,2,monitor,Low
+SEG-01928,"Doha, Qatar",Zone V,25.214714,51.630436,CAT-043,,SRTM_1arc,Institutional,,5.65,174.8,Manhole,ERA5,12.0,2,monitor,Low
+SEG-01297,"Sydney, Australia",Sector 21,-33.895918,151.154166,CAT-011,8.5,Copernicus_EEA-10_v5,Residential,B,4.86,10.2,GratedInlet,Blended,54.5,10,monitor,Low
+SEG-02791,"Hyderabad, India",Ward A,17.410482,78.465957,CAT-131,70.47,SRTM_1arc,Green,C,4.79,225.3,Manhole,ERA5,20.2,2,monitor,Low
+SEG-01320,"Lagos, Nigeria",District 27,6.740203,3.432489,CAT-125,6.97,Copernicus_GLO-30_v2023,Commercial,D,8.47,267.5,OpenChannel,IMD,33.6,5,low_lying,Medium
+SEG-00163,"Brisbane, Australia",Zone I,-27.447855,153.020973,CAT-163,81.74,SRTM_1arc,Green,A,6.22,118.6,GratedInlet,,51.6,5,monitor,Low
+SEG-02158,"New Orleans, USA",Borough West,29.947837,-90.038943,CAT-009,7.98,Copernicus_GLO-30_v2023,Residential,D,7.67,120.5,OpenChannel,ERA5,53.4,50,low_lying,Medium
+SEG-01365,"Tokyo, Japan",Borough Hillside,35.699059,139.62428,CAT-145,-1.02,Copernicus_GLO-30_v2023,Residential,B,2.25,156.9,CurbInlet,ERA5,18.2,100,low_lying|sparse_drainage,Medium
+SEG-00063,"Jakarta, Indonesia",Sector 9,-6.269827,106.847064,CAT-160,6.38,Copernicus_GLO-30_v2023,Green,,2.73,133.7,Manhole,LocalGauge,53.7,2,low_lying|sparse_drainage,Medium
+SEG-02630,"Shanghai, China",District 30,31.235145,121.444393,CAT-089,12.0,Copernicus_GLO-30_v2023,Residential,C,8.32,,CurbInlet,Blended,43.7,2,monitor,Low
+SEG-02851,"Hyderabad, India",Sector 26,17.368676,78.469696,CAT-177,15.12,SRTM_1arc,Commercial,,5.55,72.3,Manhole,ERA5,22.4,10,monitor,Low
+SEG-01949,"Cape Town, South Africa",Borough Harbor,-33.923586,18.438608,CAT-047,229.62,Copernicus_EEA-10_v5,Industrial,C,4.26,79.5,CurbInlet,ERA5,26.6,5,monitor,Low
+SEG-01264,"Nairobi, Kenya",Ward A,-1.357392,36.818486,CAT-134,-3.0,Copernicus_GLO-30_v2023,Industrial,D,9.61,205.3,OpenChannel,LocalGauge,18.0,25,low_lying,Medium
+SEG-00904,"Riyadh, Saudi Arabia",Borough Delta,24.776093,46.710111,CAT-103,39.68,Copernicus_EEA-10_v5,Residential,C,4.94,52.0,CurbInlet,IMD,32.3,5,monitor,Low
+SEG-02012,"Pune, India",Ward K,18.524937,73.814449,CAT-026,25.95,Copernicus_GLO-90_v2022,Roads,,5.96,72.7,CurbInlet,IMD,41.2,25,monitor,Low
+SEG-02901,"Mexico City, Mexico",Zone III,19.410303,-99.065479,CAT-049,23.58,SRTM_3arc,Mixed,,7.82,2.5,CurbInlet,ERA5,36.3,50,monitor,Low
+SEG-01121,"Shanghai, China",Borough Riverside,31.301322,121.458469,CAT-037,18.49,SRTM_3arc,Commercial,A,9.5,160.8,CurbInlet,,35.5,100,monitor,Low
+SEG-01970,"Houston, USA",District 8,29.704903,-95.424514,CAT-147,38.72,Copernicus_EEA-10_v5,Green,,6.8,183.2,OpenChannel,LocalGauge,47.5,10,monitor,Low
+SEG-01105,"Cape Town, South Africa",District 23,-33.838658,18.467204,CAT-130,-3.0,SRTM_1arc,Roads,C,7.09,56.5,CurbInlet,ERA5,17.2,5,low_lying,Medium
+SEG-00038,"Shanghai, China",Ward A,31.162448,121.443756,CAT-030,15.68,SRTM_1arc,Residential,A,5.76,80.7,CurbInlet,IMD,29.9,5,monitor,Low
+SEG-00743,"Delhi, India",Sector 1,28.628947,77.212775,CAT-115,89.56,Copernicus_EEA-10_v5,Institutional,C,3.31,235.3,Manhole,LocalGauge,49.1,2,monitor,Low
+SEG-01622,"Sao Paulo, Brazil",Ward C,-23.464615,-46.611385,CAT-154,38.38,Copernicus_GLO-30_v2023,Commercial,C,7.45,34.5,OpenChannel,ERA5,42.1,25,monitor,Low
+SEG-00931,"Durban, South Africa",Zone IV,-29.942261,31.043286,CAT-057,40.49,SRTM_3arc,Mixed,B,8.64,123.1,CurbInlet,Blended,38.1,5,monitor,Low
+SEG-01340,"Rio de Janeiro, Brazil",District 20,-22.908434,-43.127816,CAT-171,19.18,Copernicus_EEA-10_v5,Roads,B,6.61,52.3,Manhole,ERA5,47.3,25,monitor,Low
+SEG-01785,"Guangzhou, China",Sector 17,23.042909,113.261943,CAT-073,21.52,SRTM_1arc,Residential,A,6.51,74.1,CurbInlet,ERA5,77.3,100,monitor,Low
+SEG-02838,"New York, USA",Borough West,40.716122,-73.895498,CAT-034,39.88,SRTM_1arc,Roads,D,7.52,140.0,OpenChannel,LocalGauge,23.1,2,monitor,Low
+SEG-00099,"Taipei, Taiwan",Borough West,25.005631,121.506985,CAT-062,131.12,SRTM_1arc,Industrial,B,8.8,,CurbInlet,IMD,40.4,2,monitor,Low
+SEG-02045,"Athens, Greece",Borough Central,38.154795,23.735582,CAT-127,-3.0,SRTM_1arc,Roads,C,7.25,94.9,GratedInlet,,34.6,5,low_lying,Medium
+SEG-01085,"Seoul, South Korea",Zone II,37.49049,127.08021,CAT-088,44.75,SRTM_1arc,Roads,B,7.77,416.6,OpenChannel,ERA5,54.6,10,monitor,Low
+SEG-00410,"Lima, Peru",Ward E,-12.038787,-77.053968,CAT-086,22.92,Copernicus_EEA-10_v5,Residential,C,6.07,30.1,CurbInlet,ERA5,32.6,2,monitor,Low
+SEG-00577,"New Orleans, USA",Sector 12,29.797916,-90.173499,CAT-035,5.78,Copernicus_EEA-10_v5,Green,C,1.61,,Manhole,Blended,20.4,10,low_lying|sparse_drainage|event_2024-09-20,Medium
+SEG-01217,"Kolkata, India",Ward E,22.654054,88.245119,CAT-161,7.68,SRTM_3arc,Residential,,6.83,231.6,,IMD,21.8,50,low_lying,Medium
+SEG-02585,"Lima, Peru",Borough Old Town,-11.985509,-77.206691,CAT-071,122.72,Copernicus_EEA-10_v5,Residential,C,6.75,224.8,OpenChannel,Blended,21.0,2,monitor,Low
+SEG-01983,"Accra, Ghana",Sector 21,5.414722,-0.088166,CAT-087,23.66,SRTM_1arc,Industrial,D,8.26,515.6,,LocalGauge,142.1,25,extreme_rain_history,High
+SEG-01280,"Nairobi, Kenya",Zone III,-1.145813,36.797676,CAT-120,34.25,SRTM_1arc,Industrial,D,8.48,148.8,Manhole,ERA5,39.6,2,monitor,Low
+SEG-01956,"Barcelona, Spain",Zone III,41.313,2.150599,CAT-127,1.13,SRTM_3arc,Industrial,B,10.03,161.0,OpenChannel,ERA5,23.2,5,low_lying,Medium
+SEG-02739,"Singapore, Singapore",Zone III,1.431328,103.866152,CAT-006,7.53,Copernicus_GLO-30_v2023,Green,B,3.65,352.3,Manhole,ERA5,50.4,2,low_lying,Medium
+SEG-00338,"Washington DC, USA",Ward B,38.921384,-77.040353,CAT-132,67.3,SRTM_3arc,Residential,A,2.73,100.2,CurbInlet,LocalGauge,28.3,5,sparse_drainage|event_2025-05-16,Medium
+SEG-02091,"Cape Town, South Africa",Sector 22,-33.896849,18.499685,CAT-070,8.14,Copernicus_GLO-90_v2022,Residential,C,6.45,88.2,CurbInlet,Blended,49.3,10,monitor,Low
+SEG-00617,"Accra, Ghana",Zone V,5.593634,-0.182098,CAT-012,5.71,SRTM_3arc,Roads,D,10.1,,CurbInlet,Blended,65.3,10,low_lying|event_2022-06-25,Medium
+SEG-02412,"New Orleans, USA",Sector 19,29.965805,-90.105716,CAT-097,10.38,Copernicus_EEA-10_v5,Roads,,5.88,27.1,GratedInlet,Blended,20.4,10,monitor,Low
+SEG-00967,"Washington DC, USA",Sector 15,38.840094,-77.085936,CAT-101,,SRTM_1arc,Residential,,5.8,207.7,OpenChannel,LocalGauge,33.5,5,monitor,Low
+SEG-02035,"Brisbane, Australia",Borough East,-27.351046,153.056745,CAT-048,53.06,Copernicus_EEA-10_v5,Residential,B,4.75,51.6,Manhole,ERA5,71.3,100,monitor,Low
+SEG-02644,"Rotterdam, Netherlands",Sector 14,51.972476,4.515549,CAT-021,29.84,Copernicus_GLO-30_v2023,Roads,B,7.51,44.3,CurbInlet,ERA5,59.0,10,monitor,Low
+SEG-01586,"Bangkok, Thailand",Zone V,13.695715,100.533076,CAT-003,2.99,SRTM_1arc,Residential,D,6.68,105.6,GratedInlet,ERA5,33.9,5,low_lying,Medium
+SEG-01314,"Rotterdam, Netherlands",Ward G,51.972605,4.583407,CAT-134,16.16,SRTM_1arc,Industrial,A,5.75,,CurbInlet,ERA5,25.9,2,monitor,Low
+SEG-01618,"Tokyo, Japan",District 26,35.676908,139.715177,CAT-032,41.42,SRTM_1arc,Green,C,4.2,139.8,GratedInlet,LocalGauge,31.8,50,monitor,Low
+SEG-01529,"Mexico City, Mexico",District 28,19.395159,-99.191503,CAT-103,,SRTM_1arc,Green,A,6.28,346.2,Manhole,LocalGauge,43.2,25,monitor,Low
+SEG-00542,"Tehran, Iran",District 7,35.804241,51.460545,CAT-079,105.71,Copernicus_GLO-90_v2022,Roads,A,9.62,83.1,CurbInlet,IMD,22.7,50,monitor,Low
+SEG-01066,"Bangkok, Thailand",District 23,13.768683,100.565325,CAT-167,11.42,Copernicus_GLO-30_v2023,Green,A,3.78,248.4,CurbInlet,LocalGauge,68.3,5,monitor,Low
+SEG-01146,"Philadelphia, USA",Sector 9,39.880331,-75.272589,CAT-024,12.08,Copernicus_GLO-30_v2023,Roads,D,9.81,57.3,Manhole,ERA5,22.4,10,monitor,Low
+SEG-01738,"New York, USA",Sector 6,40.724905,-73.955546,CAT-071,18.97,SRTM_3arc,Roads,B,,38.3,Manhole,LocalGauge,18.7,10,monitor,Low
+SEG-01507,"Mumbai, India",Sector 26,19.075387,72.866257,CAT-116,8.39,Copernicus_EEA-10_v5,Roads,D,,247.9,OpenChannel,ERA5,49.6,10,monitor,Low
+SEG-02580,"Hyderabad, India",Borough South,17.26284,78.464424,CAT-158,3.7,SRTM_1arc,Residential,B,3.39,13.9,CurbInlet,ERA5,22.6,2,low_lying,Medium
+SEG-02549,"Durban, South Africa",Sector 8,-29.794193,30.906022,CAT-077,15.66,Copernicus_GLO-90_v2022,Institutional,C,2.9,565.4,,LocalGauge,22.9,5,sparse_drainage,Medium
+SEG-01987,"Shenzhen, China",Zone X,22.506467,114.016399,CAT-039,22.18,Copernicus_GLO-90_v2022,Residential,D,,225.7,OpenChannel,,70.0,10,monitor,Low
+SEG-00184,"Karachi, Pakistan",Borough Old Town,24.821874,67.022477,CAT-069,207.57,Copernicus_EEA-10_v5,Residential,A,6.57,,GratedInlet,Blended,48.0,25,monitor,Low
+SEG-00566,"Mexico City, Mexico",Zone II,19.271991,-99.149248,CAT-126,29.67,Copernicus_GLO-30_v2023,Green,C,,138.8,CurbInlet,,52.8,10,monitor,Low
+SEG-02530,"Amsterdam, Netherlands",District 15,52.310917,4.952228,CAT-087,,Copernicus_GLO-30_v2023,Residential,A,7.94,,GratedInlet,,28.6,2,monitor,Low
+SEG-00312,"Pune, India",District 25,18.518432,73.960971,CAT-054,47.81,Copernicus_GLO-30_v2023,Roads,D,4.31,30.8,CurbInlet,ERA5,25.8,10,monitor,Low
+SEG-02653,"Auckland, New Zealand",Sector 28,-36.999038,174.733442,CAT-041,53.89,Copernicus_GLO-30_v2023,Roads,C,4.47,20.8,GratedInlet,Blended,22.2,25,monitor,Low
+SEG-01759,"San Francisco, USA",District 8,37.826049,-122.328795,CAT-178,21.89,SRTM_1arc,Commercial,C,,65.5,GratedInlet,,20.2,10,monitor,Low
+SEG-01908,"Cape Town, South Africa",Sector 22,-34.022991,18.382392,CAT-012,172.86,Copernicus_GLO-90_v2022,Commercial,C,9.07,25.4,Manhole,ERA5,15.1,2,monitor,Low
+SEG-02690,"Buenos Aires, Argentina",District 23,-34.67211,-58.323738,CAT-163,-3.0,Copernicus_GLO-30_v2023,Informal,B,4.41,85.8,Manhole,ERA5,14.4,5,low_lying,Medium
+SEG-02902,"Nairobi, Kenya",District 18,-1.18951,36.645351,CAT-143,-3.0,SRTM_3arc,Green,A,3.49,101.9,CurbInlet,ERA5,27.0,2,low_lying,Medium
+SEG-00117,"Bogotá, Colombia",Sector 9,4.615015,-74.103586,CAT-011,86.21,SRTM_1arc,Commercial,D,5.68,229.7,OpenChannel,Blended,26.3,2,monitor,Low
+SEG-00048,"Ahmedabad, India",Ward E,22.945161,72.586269,CAT-027,17.34,Copernicus_EEA-10_v5,Water,D,4.14,20.3,,,28.8,100,monitor,Low
+SEG-01203,"Amsterdam, Netherlands",Sector 20,52.420899,4.899613,CAT-023,14.23,SRTM_1arc,Green,C,6.48,147.8,Manhole,ERA5,53.4,10,monitor,Low
+SEG-00664,"Cape Town, South Africa",Zone VI,-33.827695,18.397607,CAT-076,,SRTM_1arc,Roads,C,8.04,28.8,Manhole,LocalGauge,49.5,25,monitor,Low
+SEG-01536,"Mumbai, India",Zone IV,19.117053,73.007688,CAT-040,8.8,SRTM_1arc,Institutional,A,3.5,133.4,Manhole,,70.1,25,monitor,Low
+SEG-02947,"Sydney, Australia",Sector 2,-33.831552,151.392343,CAT-061,13.52,Copernicus_GLO-90_v2022,Roads,,8.92,85.9,Manhole,ERA5,34.1,5,monitor,Low
+SEG-02115,"Tokyo, Japan",Zone VII,35.71595,139.671483,CAT-153,54.31,SRTM_1arc,Roads,B,8.66,86.8,GratedInlet,LocalGauge,39.3,2,monitor,Low
+SEG-00556,"Lagos, Nigeria",Sector 10,6.543747,3.404901,CAT-171,13.3,Copernicus_GLO-30_v2023,Mixed,C,7.11,263.3,OpenChannel,Blended,30.5,5,monitor,Low
+SEG-02726,"Sydney, Australia",District 14,-33.829791,151.249205,CAT-041,-3.0,Copernicus_GLO-30_v2023,Roads,,6.3,85.6,GratedInlet,ERA5,73.6,10,ponding_hotspot|low_lying|event_2025-05-10,High
+SEG-02613,"Dhaka, Bangladesh",Sector 4,23.735428,90.439376,CAT-104,72.68,SRTM_3arc,Green,B,,342.1,OpenChannel,,102.5,50,extreme_rain_history,High
+SEG-00723,"Dubai, UAE",Zone X,25.295387,55.321834,CAT-025,76.78,Copernicus_GLO-30_v2023,Institutional,B,,72.2,OpenChannel,ERA5,25.2,2,monitor,Low
+SEG-02399,"Washington DC, USA",Borough Delta,38.926672,-76.991597,CAT-026,57.56,SRTM_1arc,Roads,A,7.61,158.1,GratedInlet,ERA5,33.8,2,monitor,Low
+SEG-01848,"Athens, Greece",Zone X,37.984756,23.849995,CAT-084,82.8,Copernicus_EEA-10_v5,Green,B,4.3,96.9,CurbInlet,Blended,55.7,25,monitor,Low
+SEG-02771,"Vancouver, Canada",Borough Hillside,49.270085,-123.145004,CAT-112,27.03,Copernicus_GLO-90_v2022,Residential,A,5.23,259.1,OpenChannel,ERA5,33.9,10,monitor,Low
+SEG-01624,"Cape Town, South Africa",Borough West,-33.918674,18.451922,CAT-123,50.24,Copernicus_GLO-90_v2022,Residential,D,5.67,48.0,GratedInlet,ERA5,18.2,5,monitor,Low
+SEG-01469,"Jakarta, Indonesia",Ward F,-6.298172,106.880719,CAT-046,-0.12,Copernicus_EEA-10_v5,Roads,,6.72,70.2,CurbInlet,ERA5,88.4,25,ponding_hotspot|extreme_rain_history|low_lying,High
+SEG-01170,"New Orleans, USA",Sector 4,30.030359,-90.147191,CAT-167,8.96,Copernicus_GLO-30_v2023,Roads,,7.8,14.2,GratedInlet,ERA5,27.4,5,monitor,Low
+SEG-01441,"Delhi, India",Borough West,28.548825,77.28749,CAT-070,52.25,Copernicus_GLO-90_v2022,Roads,D,5.75,89.6,CurbInlet,Blended,29.2,25,monitor,Low
+SEG-00236,"Mexico City, Mexico",Borough South,19.382919,-99.093299,CAT-133,0.77,SRTM_3arc,Commercial,C,9.12,266.6,OpenChannel,Blended,31.8,25,low_lying,Medium
+SEG-01881,"Bogotá, Colombia",Borough Hillside,4.656296,-74.033901,CAT-164,,Copernicus_GLO-30_v2023,Residential,A,4.31,124.4,OpenChannel,LocalGauge,35.7,25,monitor,Low
+SEG-02177,"Tehran, Iran",District 25,35.807749,51.459159,CAT-143,51.23,SRTM_1arc,Green,B,3.95,58.7,CurbInlet,LocalGauge,38.2,50,monitor,Low
+SEG-00371,"Mumbai, India",Borough South,19.030918,72.769868,CAT-165,4.03,SRTM_1arc,Industrial,A,9.02,75.5,CurbInlet,ERA5,46.3,25,low_lying,Medium
+SEG-00354,"Singapore, Singapore",Sector 17,1.289656,103.868752,CAT-099,0.69,Copernicus_GLO-90_v2022,Institutional,C,6.32,190.7,GratedInlet,ERA5,77.8,25,ponding_hotspot|low_lying,High
+SEG-01502,"Accra, Ghana",Ward C,5.501045,-0.31867,CAT-172,14.89,SRTM_1arc,Industrial,C,9.01,14.7,OpenChannel,ERA5,37.9,5,monitor,Low
+SEG-02924,"Manila, Philippines",Zone II,14.518679,121.009838,CAT-127,0.04,SRTM_3arc,Industrial,B,10.44,41.7,Manhole,ERA5,51.7,25,low_lying,Medium
+SEG-02649,"Bangkok, Thailand",Ward D,13.767741,100.511072,CAT-012,21.13,SRTM_3arc,Residential,D,5.84,483.5,,LocalGauge,39.0,5,monitor,Low
+SEG-01470,"Mumbai, India",District 1,18.979018,73.018621,CAT-129,16.15,SRTM_3arc,Roads,D,6.87,258.5,OpenChannel,ERA5,112.4,25,extreme_rain_history|event_2024-08-06,High
+SEG-01391,"Bogotá, Colombia",Borough North,4.696227,-74.208417,CAT-003,129.25,Copernicus_GLO-30_v2023,Residential,C,4.92,360.9,OpenChannel,ERA5,47.0,5,monitor,Low
+SEG-00686,"Karachi, Pakistan",Zone VII,24.882304,67.010255,CAT-023,2.7,SRTM_1arc,Roads,C,3.87,81.6,CurbInlet,ERA5,23.9,10,low_lying,Medium
+SEG-01735,"Dubai, UAE",District 19,25.165849,55.274383,CAT-063,52.63,Copernicus_GLO-30_v2023,Commercial,B,6.32,21.2,GratedInlet,IMD,28.7,2,monitor,Low
+SEG-01883,"Tehran, Iran",Borough North,35.819623,51.394449,CAT-016,76.43,SRTM_3arc,Commercial,C,6.17,7.8,GratedInlet,ERA5,23.1,25,monitor,Low
+SEG-01851,"Hamburg, Germany",Sector 17,53.549264,10.040641,CAT-077,59.01,SRTM_1arc,Green,C,6.57,234.1,Manhole,IMD,28.0,10,monitor,Low
+SEG-01598,"Brisbane, Australia",District 16,-27.476446,152.988144,CAT-067,47.72,Copernicus_EEA-10_v5,Residential,C,8.49,22.8,GratedInlet,ERA5,23.0,2,monitor,Low
+SEG-02411,"Mexico City, Mexico",District 28,19.30931,-99.057294,CAT-104,71.25,SRTM_1arc,Residential,,3.12,63.9,Manhole,LocalGauge,32.5,25,monitor,Low
+SEG-01815,"Taipei, Taiwan",Zone IX,25.106814,121.621154,CAT-146,70.62,Copernicus_GLO-90_v2022,Green,C,2.59,304.2,GratedInlet,IMD,44.7,5,sparse_drainage|event_2022-12-31,Medium
+SEG-02875,"Jakarta, Indonesia",District 2,-6.258846,106.771621,CAT-160,7.56,Copernicus_GLO-30_v2023,Green,D,5.48,,GratedInlet,IMD,95.6,100,ponding_hotspot|extreme_rain_history|low_lying|event_2025-04-08,High
+SEG-00376,"Manila, Philippines",Borough East,14.598787,121.021471,CAT-175,1.5,SRTM_3arc,Mixed,C,7.11,183.2,Manhole,LocalGauge,128.3,50,ponding_hotspot|extreme_rain_history|low_lying,High
+SEG-01409,"Philadelphia, USA",Borough Harbor,39.872179,-75.078438,CAT-044,72.9,Copernicus_GLO-30_v2023,Industrial,B,8.73,89.8,Manhole,LocalGauge,30.7,5,monitor,Low
+SEG-01923,"Guangzhou, China",Ward E,23.126431,113.213918,CAT-123,19.53,SRTM_3arc,Green,,3.74,185.6,GratedInlet,ERA5,45.3,25,monitor,Low
+SEG-02499,"Durban, South Africa",Ward B,-29.843438,30.990436,CAT-096,72.94,SRTM_3arc,Water,C,2.69,244.5,Manhole,,44.0,10,sparse_drainage,Medium
+SEG-02736,"Kuala Lumpur, Malaysia",Zone IV,3.214714,101.674473,CAT-178,50.89,SRTM_1arc,Residential,,4.85,40.4,CurbInlet,ERA5,94.2,25,extreme_rain_history,High
+SEG-02022,"Singapore, Singapore",District 3,1.424151,103.837049,CAT-158,12.62,Copernicus_GLO-30_v2023,Commercial,B,7.45,127.7,Manhole,ERA5,90.4,25,extreme_rain_history,High
+SEG-02541,"Kolkata, India",District 19,22.549886,88.443252,CAT-081,115.16,Copernicus_GLO-90_v2022,Mixed,C,4.16,56.7,Manhole,ERA5,34.7,25,monitor,Low
+SEG-00362,"Ho Chi Minh City, Vietnam",Zone III,10.777637,106.782703,CAT-092,43.25,SRTM_3arc,Commercial,B,6.97,145.2,Manhole,ERA5,37.8,10,monitor,Low
+SEG-00666,"Rome, Italy",Ward E,42.032416,12.493229,CAT-017,41.3,SRTM_1arc,Institutional,B,3.01,184.3,CurbInlet,ERA5,37.1,50,monitor,Low
+SEG-01171,"Tokyo, Japan",Borough Central,35.600976,139.647244,CAT-118,6.73,Copernicus_GLO-30_v2023,Residential,B,5.06,94.6,CurbInlet,Blended,17.7,2,low_lying,Medium
+SEG-02221,"Auckland, New Zealand",Ward G,-36.879021,174.741063,CAT-161,53.9,Copernicus_GLO-30_v2023,Residential,C,3.27,143.9,CurbInlet,LocalGauge,66.2,10,monitor,Low
+SEG-02962,"Lagos, Nigeria",Zone V,6.50457,3.388571,CAT-092,7.0,Copernicus_GLO-30_v2023,Industrial,B,8.74,294.8,OpenChannel,ERA5,131.6,100,extreme_rain_history|low_lying,High
+SEG-02905,"Houston, USA",Ward B,29.745037,-95.426991,CAT-104,67.81,SRTM_3arc,Residential,C,3.54,1.4,GratedInlet,LocalGauge,28.6,50,monitor,Low
+SEG-00647,"Athens, Greece",Borough Old Town,37.961692,23.754627,CAT-027,7.94,Copernicus_GLO-30_v2023,Commercial,D,,58.4,CurbInlet,Blended,20.2,5,low_lying,Medium
+SEG-00495,"Delhi, India",Zone V,28.610276,77.177269,CAT-158,59.56,Copernicus_GLO-90_v2022,Roads,B,6.57,127.7,Manhole,LocalGauge,77.3,50,monitor,Low
+SEG-01204,"Mumbai, India",Sector 21,19.082327,72.881707,CAT-087,10.54,Copernicus_EEA-10_v5,Institutional,C,6.31,209.8,CurbInlet,ERA5,74.5,100,monitor,Low
+SEG-01692,"Buenos Aires, Argentina",Zone VI,-34.715362,-58.318522,CAT-033,13.39,SRTM_3arc,Roads,D,4.34,48.8,GratedInlet,ERA5,37.3,2,monitor,Low
+SEG-00402,"Shanghai, China",Borough Delta,31.157784,121.388674,CAT-152,4.54,SRTM_1arc,Roads,D,10.87,21.3,Manhole,IMD,22.1,5,low_lying,Medium
+SEG-02445,"Washington DC, USA",Borough Central,39.042299,-77.024956,CAT-072,-3.0,Copernicus_GLO-90_v2022,Residential,B,2.45,432.1,,Blended,16.8,5,low_lying|sparse_drainage,Medium
+SEG-02267,"Ahmedabad, India",Zone IV,23.044635,72.497931,CAT-133,38.5,Copernicus_GLO-30_v2023,Residential,C,5.99,382.9,OpenChannel,LocalGauge,25.7,10,monitor,Low
