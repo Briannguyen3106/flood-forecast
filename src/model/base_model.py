@@ -34,3 +34,11 @@ class BaseModel(ABC):
     def set_params(self, **params):
         self.model.set_params(**params)
         return self
+    
+    def get_params(self, deep: bool=True):
+        return {}
+    
+    def set_params(self, **params):
+        for key, value in params.items():
+            setattr(self, key, value)
+        return self    
