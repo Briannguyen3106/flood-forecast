@@ -164,32 +164,10 @@ class YourModel(BaseModel):
         # 'linear' → Logistic Regression, SVM, KNN
         self.pipeline_type = 'tree'
 
-    def get_param_distributions(self) -> dict:
-        """Cho RandomSearchTuner"""
-        return {
-            'param_1': [value_1, value_2, value_3],
-            'param_2': [value_1, value_2],
-        }
-
-    
-    def build(self, **params):
-        """Khởi tạo model với params"""
-        self.model = YourAlgorithm(random_state=42, **params)
-        return self
+    Nhớ tạo các abstract method có trong BaseModel    
 ```
 
-### Bước 2 — Đăng ký model vào config
-
-```yaml
-# config/config.yaml
-models:
-  tree:                          # Nếu pipeline_type = 'tree'
-    - name: "YourModelName"
-      module: "src.model.your_model"
-      class: "YourModel"
-```
-
-### Bước 3 — Thử nghiệm trong notebook
+### Bước 2 — Thử nghiệm trong notebook
 
 ```python
 # experiments/your_name_experiment.ipynb
@@ -198,7 +176,7 @@ import sys
 sys.path.append('..')
 
 import pandas as pd
-from src.core.trainer import Trainer, RandomSearchTuner, OptunaTuner
+from src.core.trainer import Trainer
 from src.model.your_model import YourModel
 
 # Load data đúng pipeline type
@@ -219,7 +197,7 @@ print(f"Best params: {trainer.model.best_params}")
 test_metrics = trainer.evaluate_test(test)
 ```
 
-### Bước 4 — Cải thiện model
+### Bước 3 — Cải thiện model
 
 ```python
 # 1. Mở rộng search space
@@ -239,6 +217,15 @@ importances = best_model.feature_importances_
 # Train F2-macro >> CV F2-macro → overfit → tăng regularization
 ```
 
+### Bước 4 - Lưu Model
+
+```
+# Lấy model sau khi đã train
+model = trainer.model
+import pickle
+with open("Đường dẫn ở trong config", "wb") as f:
+   pickle.dump(model, f)
+```
 ---
 
 ## ⚠️ Những Điều KHÔNG Được Làm
