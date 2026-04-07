@@ -145,12 +145,15 @@ class Trainer:
         search.fit(X_train, y_train)
 
         # Lưu lại pipeline tốt nhất
-        self.pipeline          = search.best_estimator_
+        self.pipeline   = search.best_estimator_
+        self.model      = self.pipeline.named_steps['model']
         self.model.best_params = {
             # Bỏ prefix 'model__' để dễ đọc
             k.replace('model__', ''): v
             for k, v in search.best_params_.items()
         }
+
+        
 
         # Log kết quả
         best_cv_score   = search.best_score_

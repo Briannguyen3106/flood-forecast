@@ -1,6 +1,3 @@
-
-Bạn có thể lấy data ở đây: [Tải dataset](https://drive.google.com/file/d/1WcbXS7YceyNIe2y6LZU0V2sMibMnpsIC/view?usp=sharing)
-
 # 🚀 Hướng Dẫn Phát Triển Model
 
 ## 📁 Cấu Trúc Project
@@ -28,7 +25,7 @@ ML_PROJECT/
 │   ├── core/
 │   │   ├── data_splitter.py         # Chia train/test (80/20)
 │   │   ├── data_preprocessing.py    # TreePreprocessor + LinearPreprocessor
-│   │   ├── trainer.py               # Trainer + RandomSearchTuner + OptunaTuner
+│   │   ├── trainer.py               # Trainer + RandomSearchTuner
 │   │   ├── evaluator.py             # So sánh các model
 │   │   └── pipeline.py              # Điều phối toàn bộ flow
 │   │
@@ -120,7 +117,7 @@ DataSplitter (stratified)
           └── ImbPipeline: SMOTE → Model
               CV=10 (thay thế val set)
               SMOTE chỉ apply trong train fold → tránh data leak
-              Tuner: RandomSearch hoặc Optuna (bạn tự chọn)
+              Tuner: RandomSearch
                 │
                 ▼
         Trainer.evaluate_test(test)  ← chỉ chạy 1 lần duy nhất
@@ -174,14 +171,7 @@ class YourModel(BaseModel):
             'param_2': [value_1, value_2],
         }
 
-    def get_optuna_params(self, trial) -> dict:
-        """Cho OptunaTuner — dùng trial.suggest_*"""
-        return {
-            'param_1': trial.suggest_int('param_1', min_val, max_val),
-            'param_2': trial.suggest_float('param_2', min_val, max_val),
-            'param_3': trial.suggest_categorical('param_3', [val_1, val_2]),
-        }
-
+    
     def build(self, **params):
         """Khởi tạo model với params"""
         self.model = YourAlgorithm(random_state=42, **params)
@@ -216,16 +206,10 @@ train = pd.read_csv('../data/processed/tree/train.csv')   # hoặc linear/
 test  = pd.read_csv('../data/processed/tree/test.csv')
 
 model = YourModel()
+──────────────────────────────
 
-# ── Chọn 1 trong 2 tuner ──────────────────────────────
 
-# Option A: RandomSearch (đơn giản, nhanh)
-tuner = RandomSearchTuner(n_iter=50, cv=10)
-
-# Option B: Optuna (thông minh hơn, tốt cho model nhiều params)
-# tuner = OptunaTuner(n_trials=100, cv=10)
-
-trainer = Trainer(model=model, tuner=tuner)
+trainer = Trainer(model=model)
 
 # Tune
 trainer.tune(train)
@@ -244,8 +228,6 @@ def get_param_distributions(self):
         'max_depth': [3, 5, 10, 15, 20, None],  # Thêm giá trị
     }
 
-# 2. Dùng Optuna với nhiều trials hơn
-tuner = OptunaTuner(n_trials=200, cv=10)
 
 # 3. Xem feature importance (tree models)
 import matplotlib.pyplot as plt
@@ -289,9 +271,6 @@ importances = best_model.feature_importances_
 ✅ Chạy thử với n_iter=10 hoặc n_trials=10 trước
    → Sau khi không có lỗi mới tăng lên 50-100
 
-✅ Với Optuna, dùng trial.suggest_int() cho integer params
-   trial.suggest_float() cho float, trial.suggest_categorical() cho list
-
 ✅ Lưu lại best_params sau khi tune
    → print(trainer.model.best_params)
 
@@ -312,7 +291,6 @@ importances = best_model.feature_importances_
 |---|---|
 | `scikit-learn` | Preprocessing, models, metrics |
 | `imbalanced-learn` | SMOTE, ImbPipeline |
-| `optuna` | Bayesian hyperparameter tuning |
 | `xgboost` | XGBoost model |
 | `lightgbm` | LightGBM model |
 | `scipy` | Yeo-Johnson transform |
