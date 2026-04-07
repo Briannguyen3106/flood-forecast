@@ -144,6 +144,7 @@ DataSplitter (stratified)
 ---
 
 ## 👨‍💻 Hướng Dẫn Từng Bước
+Tham khảo experiments\Bao_experiments.ipynb
 
 ### Bước 1 — Tạo file model của bạn
 
