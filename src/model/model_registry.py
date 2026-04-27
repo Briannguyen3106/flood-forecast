@@ -4,6 +4,7 @@ from src.model.lgbm_classifier import LGBMClassifierModel
 from src.model.random_forest_classifier import RandomForestClassifierModel
 from src.model.xgb_classifier import XGBClassifierModel
 from src.model.xgbrf_classifier import XGBRFClassifierModel
+from src.model.svm_classifier import SVMClassifierModel
 
 
 MODEL_REGISTRY = {
@@ -13,6 +14,7 @@ MODEL_REGISTRY = {
     "xgbrf": XGBRFClassifierModel,
     "lgbm": LGBMClassifierModel,
     "hgb": HistGradientBoostingClassifierModel,
+    "svm": SVMClassifierModel,
 }
 
 
