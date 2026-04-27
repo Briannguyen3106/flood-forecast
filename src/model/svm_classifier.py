@@ -649,7 +649,12 @@ class SVMClassifierModel(BaseModel):
         if scores.ndim == 1:
             assert self._binary_state_ is not None
             neg_class, pos_class = self._binary_state_.classes
-            return np.where(scores >= 0.0, pos_class, neg_class)
+            # NOTE (typing): `_BinarySVMState.classes` stores labels as `object` to
+            # support arbitrary label types. NumPy’s type stubs for `np.where` are
+            # strict about x/y being ArrayLike, so we wrap labels as 0-d arrays.
+            pos = np.asarray(pos_class)
+            neg = np.asarray(neg_class)
+            return np.where(scores >= 0.0, pos, neg)
 
         # Multi-class OVR: pick class with max score
         # Order of columns corresponds to self.classes_ order.

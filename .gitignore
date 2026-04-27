@@ -173,3 +173,4 @@ pyrightconfig.json
 
 ### Yunoball ###
 temp_svm_tests/
+experiments/SVM_experiment.py
