@@ -75,7 +75,7 @@ class Trainer:
         ])
 
     # ------------------------------------------------------------------ #
-    def _prefix_params(self, param_distributions: dict) -> dict:
+    def _prefix_params(self, param_distributions: dict | list[dict]) -> dict | list[dict]:
         """
         RandomizedSearchCV cần prefix 'model__' cho params của model
         khi dùng trong Pipeline.
@@ -84,6 +84,9 @@ class Trainer:
             {'n_estimators': [100, 200]}
             → {'model__n_estimators': [100, 200]}
         """
+        if isinstance(param_distributions, list):
+            return [self._prefix_params(d) for d in param_distributions]
+
         return {
             f"model__{k}": v
             for k, v in param_distributions.items()

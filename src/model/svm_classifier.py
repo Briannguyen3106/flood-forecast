@@ -136,23 +136,40 @@ class SVMClassifierModel(BaseModel):
     # ====================================================================== #
     # Hyperparameter tuning integration
     # ====================================================================== #
-    def get_param_distributions(self) -> dict:
+    def get_param_distributions(self) -> list[dict]:
         """Hyperparameter search space for `RandomizedSearchCV`.
 
-        Keep this reasonably small: SMO is CPU-heavy and the trainer uses CV=10.
-        You can expand this later if you’re willing to pay the compute cost.
+        Returns a list of dictionaries to avoid redundant parameter combinations
+        (e.g., `degree` is only used by the 'poly' kernel).
         """
-
-        return {
-            "kernel": ["linear", "rbf", "poly", "sigmoid"],
-            "C": [0.1, 1.0, 10.0],
-            "gamma": ["scale", "auto", 0.1, 1.0],
-            "degree": [2, 3, 4],
-            "coef0": [0.0, 1.0],
-            # Solver controls (optional to tune; keep tight ranges)
+        # Stronger regularization (smaller C) to combat overfitting.
+        common = {
+            "C": [0.01, 0.1, 1.0],
             "tol": [1e-3, 1e-4],
             "max_passes": [5, 10],
         }
+
+        return [
+            {"kernel": ["linear"], **common},
+            {
+                "kernel": ["rbf"],
+                "gamma": ["scale", "auto", 0.01, 0.1],
+                **common,
+            },
+            {
+                "kernel": ["poly"],
+                "gamma": ["scale", "auto", 0.01, 0.1],
+                "degree": [2, 3],
+                "coef0": [0.0, 1.0],
+                **common,
+            },
+            {
+                "kernel": ["sigmoid"],
+                "gamma": ["scale", "auto", 0.01, 0.1],
+                "coef0": [0.0, 1.0],
+                **common,
+            },
+        ]
 
     def build(self, **params):
         """Prepare the estimator for training.

@@ -2,20 +2,22 @@
 
 from abc import ABC, abstractmethod
 import numpy as np
+from sklearn.base import BaseEstimator
 
-class BaseModel(ABC):
+class BaseModel(ABC, BaseEstimator):
     """
     Interface mà tất cả model phải implement.
     Trainer chỉ làm việc với BaseModel — không biết model cụ thể là gì.
     """
 
     def __init__(self):
+        super().__init__()
         self.model       = None   # Model thực tế bên trong
         self.best_params = None
         self.pipeline_type = None # 'tree' hoặc 'linear' → biết dùng data nào
 
     @abstractmethod
-    def get_param_distributions(self) -> dict:
+    def get_param_distributions(self) -> dict | list[dict]:
         """Trả về không gian tìm kiếm hyperparameter"""
         raise NotImplementedError
 
