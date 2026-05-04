@@ -54,7 +54,9 @@ import numpy as np
 from src.model.base_model import BaseModel
 
 
-KernelName = Literal["linear", "poly", "rbf"]
+KernelCallable = Callable[[np.ndarray, np.ndarray], np.ndarray]
+KernelName = Literal["linear", "poly", "rbf", "sigmoid"]
+KernelSpec = KernelName | KernelCallable
 
 
 @dataclass
@@ -94,7 +96,7 @@ class SVMClassifierModel(BaseModel):
 
     def __init__(
         self,
-        kernel: KernelName = "rbf",
+        kernel: KernelSpec = "rbf",
         C: float = 1.0,
         gamma: str | float = "scale",
         degree: int = 3,
@@ -142,7 +144,7 @@ class SVMClassifierModel(BaseModel):
         """
 
         return {
-            "kernel": ["linear", "rbf", "poly"],
+            "kernel": ["linear", "rbf", "poly", "sigmoid"],
             "C": [0.1, 1.0, 10.0],
             "gamma": ["scale", "auto", 0.1, 1.0],
             "degree": [2, 3, 4],
@@ -221,6 +223,15 @@ class SVMClassifierModel(BaseModel):
         return (gamma * (A @ B.T) + coef0) ** degree
 
     @staticmethod
+    def _kernel_sigmoid(A: np.ndarray, B: np.ndarray, gamma: float, coef0: float) -> np.ndarray:
+        """Sigmoid kernel (a.k.a. tanh kernel): K(x, z) = tanh(gamma * x^T z + coef0).
+
+        This matches the common formulation used by scikit-learn (`sklearn.svm.SVC`).
+        """
+
+        return np.tanh(gamma * (A @ B.T) + coef0)
+
+    @staticmethod
     def _kernel_rbf(A: np.ndarray, B: np.ndarray, gamma: float) -> np.ndarray:
         """RBF (Gaussian) kernel: K(x, z) = exp(-gamma * ||x - z||^2)
 
@@ -262,7 +273,29 @@ class SVMClassifierModel(BaseModel):
         return gamma_val
 
     def _kernel_fn(self, gamma_value: float) -> Callable[[np.ndarray, np.ndarray], np.ndarray]:
-        """Return a function K(A, B) based on current kernel settings."""
+        """Return a function K(A, B) based on current kernel settings.
+
+        Supports:
+        - built-in kernels via strings: 'linear', 'poly', 'rbf', 'sigmoid'
+        - user-provided callable: kernel(A, B) -> Gram matrix
+        """
+
+        # User-provided callable kernel
+        if callable(self.kernel):
+            user_kernel = self.kernel
+
+            def _kuser(A: np.ndarray, B: np.ndarray) -> np.ndarray:
+                K = user_kernel(A, B)
+                K = np.asarray(K, dtype=np.float64)
+                expected = (A.shape[0], B.shape[0])
+                if K.shape != expected:
+                    raise ValueError(
+                        "Callable kernel must return a matrix with shape "
+                        f"{expected}, got {K.shape}"
+                    )
+                return K
+
+            return _kuser
 
         k = str(self.kernel).lower().strip()
         if k == "linear":
@@ -282,7 +315,17 @@ class SVMClassifierModel(BaseModel):
 
             return _krbf
 
-        raise ValueError(f"Unknown kernel: {self.kernel}. Use 'linear', 'poly', or 'rbf'.")
+        if k == "sigmoid":
+            coef0 = float(self.coef0)
+
+            def _ksig(A: np.ndarray, B: np.ndarray) -> np.ndarray:
+                return self._kernel_sigmoid(A, B, gamma=gamma_value, coef0=coef0)
+
+            return _ksig
+
+        raise ValueError(
+            f"Unknown kernel: {self.kernel}. Use 'linear', 'poly', 'rbf', 'sigmoid', or a callable."
+        )
 
     # ====================================================================== #
     # SMO solver (binary)
@@ -293,6 +336,7 @@ class SVMClassifierModel(BaseModel):
         y_pm1: np.ndarray,
         classes: tuple[object, object],
         kernel: Callable[[np.ndarray, np.ndarray], np.ndarray],
+        K: np.ndarray | None = None,
     ) -> _BinarySVMState:
         """Fit a *binary* SVM using the simplified SMO algorithm.
 
@@ -337,7 +381,16 @@ class SVMClassifierModel(BaseModel):
 
         # Precompute the full kernel matrix K_ij = K(x_i, x_j).
         # This costs O(n^2) memory, but here n~2k so it’s acceptable and speeds up SMO.
-        K = kernel(X, X).astype(np.float64, copy=False)
+        #
+        # For multi-class OVR training, we can reuse the same Gram matrix across the
+        # per-class binary problems. If a precomputed K is provided, validate and use it.
+        if K is None:
+            K = kernel(X, X).astype(np.float64, copy=False)
+        else:
+            K = np.asarray(K, dtype=np.float64)
+            expected = (n_samples, n_samples)
+            if K.shape != expected:
+                raise ValueError(f"Precomputed K must have shape {expected}, got {K.shape}")
 
         # Lagrange multipliers
         alphas = np.zeros(n_samples, dtype=np.float64)
@@ -585,6 +638,9 @@ class SVMClassifierModel(BaseModel):
         # Multi-class (OVR)
         self._binary_state_ = None
         self._ovr_states_ = []
+
+        # Compute the Gram matrix once and reuse across OVR classifiers.
+        K_train = kernel(X, X).astype(np.float64, copy=False)
         for cls in unique_classes:
             # Positive class = cls, negative = rest.
             y_pm1 = np.where(y == cls, 1.0, -1.0).astype(np.float64)
@@ -593,6 +649,7 @@ class SVMClassifierModel(BaseModel):
                 y_pm1=y_pm1,
                 classes=(f"not_{cls}", cls),
                 kernel=kernel,
+                K=K_train,
             )
             self._ovr_states_.append(state)
 
