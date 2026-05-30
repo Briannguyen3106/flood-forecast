@@ -9,17 +9,17 @@ class BaseOrdinalRegression(BaseModel):
                  tol: float = 1e-6,
                  random_state: int=42):
         super().__init__()
-        self.learning_rate = learning_rate
-        self.max_iter = max_iter
-        self.tol = tol
-        self.random_state = random_state
-        self.pipeline_type = 'linear'
+        self.learning_rate  = learning_rate
+        self.max_iter       = max_iter
+        self.tol            = tol
+        self.random_state   = random_state
+        self.pipeline_type  = 'linear'
 
-        self.weights = None
-        self.bias = None
-        self.threshold1 = None
-        self.threshold2 = None
-        self.loss_history = []
+        self.weights        = None
+        self.bias           = None
+        self.threshold1     = None
+        self.threshold2     = None
+        self.loss_history   = []
 
     def _predict_continuous(self, X):
         return np.dot(X, self.weights) + self.bias
@@ -96,20 +96,22 @@ class BaseOrdinalRegression(BaseModel):
         return y_class
 
 
-    def fit(self, X, y):
+    def fit(self, X: np.ndarray, y: np.ndarray):
         print(f"  Fitting {self.__class__.__name__}...")
-        print(f"  X: {X.shape}, y distribution: {np.bincount(y)}")
-
+        print(f"  X: {X.shape}, y distribution: {np.bincount(y.astype(int))}")
         self._gradient_descent(X, y.astype(float))
-
         self._optimize_thresholds(X, y)
         return self
-    
-    def predict(self, X):
+ 
+    def predict(self, X: np.ndarray) -> np.ndarray:
         y_pred_continuous = self._predict_continuous(X)
         return self._apply_threshold(
             y_pred_continuous, self.threshold1, self.threshold2
-        )    
+        )
+ 
+    def predict_continuous(self, X: np.ndarray) -> np.ndarray:
+        """Dùng để visualize regression output"""
+        return self._predict_continuous(X)  
     
     #==================================================
     #Cho imbPipeline
@@ -132,20 +134,6 @@ class BaseOrdinalRegression(BaseModel):
     def get_param_distributions(self):
         raise NotImplementedError
     
-    # Trong BaseOrdinalRegression — thêm fit, predict là concrete methods
-    # (không phải abstract vì logic dùng chung cho cả 4 model)
-
-    def fit(self, X: np.ndarray, y: np.ndarray):
-        print(f"  Fitting {self.__class__.__name__}...")
-        self._gradient_descent(X, y.astype(float))
-        self._optimize_thresholds(X, y)
-        return self
-    
-    def predict(self, X: np.ndarray) -> np.ndarray:
-        y_pred_continuous = self._predict_continuous(X)
-        return self._apply_threshold(
-            y_pred_continuous, self.threshold1, self.threshold2
-        )
     
     def build(self, **params):
         # Reset weights để fit lại từ đầu

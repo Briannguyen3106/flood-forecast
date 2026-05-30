@@ -32,10 +32,6 @@ class BaseModel(ABC, BaseEstimator):
 
     def predict(self, X):
         return self.model.predict(X)
-
-    def set_params(self, **params):
-        self.model.set_params(**params)
-        return self
     
     def get_params(self, deep: bool=True):
         return {}
