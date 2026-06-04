@@ -699,8 +699,7 @@ class GBDTMulticlass:
             if X_val is not None:
                 X_val_work = self.efb_bundler_.transform(X_val)
             n_features_work = X_work.shape[1]
-            print(f"  EFB: {n_features} features → {n_features_work} bundles "
-                  f"({self.efb_bundler_.compression_ratio():.1%} compression)")
+            
         else:
             X_work         = X
             X_val_work     = X_val
@@ -822,12 +821,10 @@ class GBDTMulticlass:
 
                 if (self.early_stopping_rounds is not None and
                         no_improve_cnt >= self.early_stopping_rounds):
-                    print(f"  Early stopping tại iter {t+1} "
-                          f"(best={self.best_iteration_}, val_loss={best_val_loss:.6f})")
+            
                     break
 
-            print(f"  Iter {t+1:>4}/{self.n_estimators} | "
-                  f"Train loss: {train_loss:.6f}{val_msg}")
+            
 
         return self
 
@@ -976,18 +973,18 @@ class LGBMScratchModel(BaseModel):
     # ── BaseModel interface ─────────────────────────────────────────
     def get_param_distributions(self) -> dict:
         return {
-            'n_estimators'     : [50, 100, 200, 300],
-            'learning_rate'    : [0.01, 0.05, 0.1, 0.2],
-            'max_depth'        : [3, 4, 5, 6, 8],
-            'num_leaves'       : [15, 31, 63],
-            'min_child_samples': [10, 20, 30, 50],
+            'n_estimators'     : [50, 100, 150],
+            'learning_rate'    : [0.05, 0.1, 0.2],
+            'max_depth'        : [3, 4, 5],
+            'num_leaves'       : [15, 31],
+            'min_child_samples': [20, 30, 50],
             'reg_lambda'       : [0.1, 1.0, 5.0, 10.0],
             'reg_alpha'        : [0.0, 0.1, 0.5, 1.0],
             'min_split_gain'   : [0.0, 0.01, 0.1],
-            'subsample'        : [0.7, 0.8, 0.9, 1.0],
-            'colsample_bytree' : [0.7, 0.8, 0.9, 1.0],
+            'subsample'        : [0.8, 1.0],
+            'colsample_bytree' : [0.8, 1.0],
             'use_goss'         : [True, False],
-            'use_efb'          : [True, False],
+            #'use_efb'          : [True, False],
         }
 
     def build(self, **params) -> 'LGBMScratchModel':
