@@ -93,6 +93,9 @@ class BaseOrdinalRegression(BaseModel):
 
 
     def fit(self, X: np.ndarray, y: np.ndarray):
+        self._gradient_descent(X, y)
+
+        # Sau khi đã có weights và bias
         self._optimize_thresholds(X, y)
         return self
  
