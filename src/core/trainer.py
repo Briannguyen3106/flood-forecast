@@ -40,6 +40,7 @@ class Trainer:
         self.random_state = random_state
         self.cv           = cv
         self.pipeline     = None   # ImbPipeline sau khi tune
+        self.train_metrics = {}
         self.test_metrics = {}
 
     # ------------------------------------------------------------------ #
@@ -176,6 +177,33 @@ class Trainer:
         return self
 
     # ------------------------------------------------------------------ #
+    def evaluate(self, df: pd.DataFrame, split_name: str = "dataset") -> dict:
+        """Evaluate the fitted pipeline on a processed dataset."""
+        assert self.pipeline is not None, "Chạy tune() trước"
+
+        X, y = self._get_X_y(df)
+        y_pred = self.pipeline.predict(X)
+
+        metrics = {
+            'f2_macro': fbeta_score(
+                y, y_pred, beta=2, average='macro', zero_division=0
+            ),
+            'f1_weighted': f1_score(
+                y, y_pred, average='weighted', zero_division=0
+            ),
+        }
+
+        print(f"\n[{split_name}] F2-macro    : {metrics['f2_macro']:.4f}")
+        print(f"[{split_name}] F1-weighted : {metrics['f1_weighted']:.4f}")
+        return metrics
+
+    # ------------------------------------------------------------------ #
+    def evaluate_train(self, train_df: pd.DataFrame) -> dict:
+        """Evaluate on the original training rows (without SMOTE resampling)."""
+        self.train_metrics = self.evaluate(train_df, split_name='Train')
+        return self.train_metrics
+
+    # ------------------------------------------------------------------ #
     def evaluate_test(self, test_df: pd.DataFrame) -> dict:
         """
         Đánh giá CUỐI CÙNG trên test set.
@@ -185,18 +213,5 @@ class Trainer:
         chỉ model.predict() được dùng.
         KHÔNG apply SMOTE trên test → phân bố thực tế được giữ nguyên.
         """
-        assert self.pipeline is not None, "Chạy tune() trước"
-
-        X_test, y_test = self._get_X_y(test_df)
-
-        # Pipeline.predict chỉ dùng model step, không dùng SMOTE
-        y_pred = self.pipeline.predict(X_test)
-
-        self.test_metrics = {
-            'f2_macro'   : fbeta_score(y_test, y_pred, beta=2, average='macro'),
-            'f1_weighted': f1_score(y_test, y_pred, average='weighted'),
-        }
-
-        print(f"\n[Test] F2-macro    : {self.test_metrics['f2_macro']:.4f}")
-        print(f"[Test] F1-weighted : {self.test_metrics['f1_weighted']:.4f}")
+        self.test_metrics = self.evaluate(test_df, split_name='Test')
         return self.test_metrics
