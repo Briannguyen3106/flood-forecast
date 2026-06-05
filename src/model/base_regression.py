@@ -84,8 +84,6 @@ class BaseOrdinalRegression(BaseModel):
                 best_1, best_2 = t1, t2
         self.threshold1 = best_1
         self.threshold2 = best_2
-        print(f"    Threshold optimized: t1={best_1:.4f}, t2={best_2:.4f}")
-        print(f"    Train F2-macro: {best_score:.4f}")
 
     def _apply_threshold(self, y_pred_continuous, t1, t2):
         y_class = np.zeros(len(y_pred_continuous), dtype=int)

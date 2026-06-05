@@ -548,10 +548,7 @@ class SVMClassifierModel(BaseModel):
                 num_changed += 1
                 n_updates += 1
 
-            if self.verbose:
-                print(
-                    f"    [SMO] pass={passes:02d}, changed={num_changed:4d}, updates={n_updates:6d}"
-                )
+            
 
             # SMO stopping criterion: if we loop over all i and change nothing,
             # increment `passes`. Otherwise reset `passes`.
