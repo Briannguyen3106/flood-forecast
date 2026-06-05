@@ -64,9 +64,7 @@ class BaseOrdinalRegression(BaseModel):
             if abs(prev_loss - loss)< self.tol:
                 break
             prev_loss = loss
-            if (iteration + 1) % 100 == 0:
-                print(f"    Iter {iteration+1}/{self.max_iter}, loss={loss:.6f}")
-
+            
     def _optimize_thresholds(self, X, y):
         y_pred_continuous  = self._predict_continuous(X)
 
@@ -97,9 +95,6 @@ class BaseOrdinalRegression(BaseModel):
 
 
     def fit(self, X: np.ndarray, y: np.ndarray):
-        print(f"  Fitting {self.__class__.__name__}...")
-        print(f"  X: {X.shape}, y distribution: {np.bincount(y.astype(int))}")
-        self._gradient_descent(X, y.astype(float))
         self._optimize_thresholds(X, y)
         return self
  
