@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+from contextlib import nullcontext, redirect_stdout
 from dataclasses import dataclass
+from io import StringIO
 from typing import Callable, Optional
 
 import numpy as np
@@ -82,6 +84,7 @@ class Trainer:
         cv: int = 5,
         n_repeats: int = 1,
         config_name: Optional[str] = None,
+        verbose: int = 1,
     ):
         if not isinstance(model, BaseModel):
             raise TypeError("model must inherit BaseModel")
@@ -93,6 +96,8 @@ class Trainer:
             raise ValueError("class_weights are required for weighted strategy")
         if cv < 2 or n_repeats < 1:
             raise ValueError("cv must be >= 2 and n_repeats must be >= 1")
+        if verbose not in {0, 1, 2}:
+            raise ValueError("verbose must be 0, 1, or 2")
 
         self.model = model
         self.preprocessor_factory = preprocessor_factory
@@ -103,6 +108,7 @@ class Trainer:
         self.cv = cv
         self.n_repeats = n_repeats
         self.config_name = config_name
+        self.verbose = verbose
 
         self.pipeline: Optional[RawModelPipeline] = None
         self.best_params: Optional[dict] = None
@@ -110,6 +116,12 @@ class Trainer:
         self.cv_results_: list[dict] = []
         self.train_metrics: dict = {}
         self.test_metrics: dict = {}
+
+    def _fit_output_context(self):
+        """Hide noisy nested estimator/preprocessor output below verbose level 2."""
+        if self.verbose >= 2:
+            return nullcontext()
+        return redirect_stdout(StringIO())
 
     def _fit_imbalance(
         self,
@@ -182,16 +194,17 @@ class Trainer:
                 raw_fold_train = raw_train_df.iloc[train_idx].copy()
                 raw_fold_val = raw_train_df.iloc[val_idx].copy()
 
-                preprocessor = self.preprocessor_factory()
-                train_processed = preprocessor.fit_transform(raw_fold_train)
-                val_processed = preprocessor.transform(raw_fold_val)
-                X_train, y_train, feature_cols = _get_processed_X_y(train_processed)
-                X_val, y_val, _ = _get_processed_X_y(val_processed, feature_cols)
-                X_train_eval, y_train_eval = X_train.copy(), y_train.copy()
+                with self._fit_output_context():
+                    preprocessor = self.preprocessor_factory()
+                    train_processed = preprocessor.fit_transform(raw_fold_train)
+                    val_processed = preprocessor.transform(raw_fold_val)
+                    X_train, y_train, feature_cols = _get_processed_X_y(train_processed)
+                    X_val, y_val, _ = _get_processed_X_y(val_processed, feature_cols)
+                    X_train_eval, y_train_eval = X_train.copy(), y_train.copy()
 
-                X_fit, y_fit, fit_weights = self._fit_imbalance(X_train, y_train)
-                estimator = self._build_estimator(params)
-                self._fit_estimator(estimator, X_fit, y_fit, fit_weights)
+                    X_fit, y_fit, fit_weights = self._fit_imbalance(X_train, y_train)
+                    estimator = self._build_estimator(params)
+                    self._fit_estimator(estimator, X_fit, y_fit, fit_weights)
 
                 train_pred = estimator.predict(X_train_eval)
                 val_pred = estimator.predict(X_val)
@@ -233,12 +246,13 @@ class Trainer:
         self.best_params = dict(best['params'])
         self.best_cv_score = best['mean_test_f2']
 
-        preprocessor = self.preprocessor_factory()
-        processed = preprocessor.fit_transform(raw_train_df.copy())
-        X_train, y_train, feature_cols = _get_processed_X_y(processed)
-        X_fit, y_fit, fit_weights = self._fit_imbalance(X_train, y_train)
-        estimator = self._build_estimator(self.best_params)
-        self._fit_estimator(estimator, X_fit, y_fit, fit_weights)
+        with self._fit_output_context():
+            preprocessor = self.preprocessor_factory()
+            processed = preprocessor.fit_transform(raw_train_df.copy())
+            X_train, y_train, feature_cols = _get_processed_X_y(processed)
+            X_fit, y_fit, fit_weights = self._fit_imbalance(X_train, y_train)
+            estimator = self._build_estimator(self.best_params)
+            self._fit_estimator(estimator, X_fit, y_fit, fit_weights)
 
         metadata = {
             'artifact_schema_version': 1,
@@ -263,11 +277,12 @@ class Trainer:
         )
         self.model.best_params = self.best_params
 
-        print(f"\n  Best params      : {self.best_params}")
-        print(f"  Best CV F2-macro : {self.best_cv_score:.4f}")
-        print(f"  CV F2 std        : {best['std_test_f2']:.4f}")
-        print(f"  High recall      : {best['mean_high_recall']:.4f}")
-        print(f"  Train/CV gap     : {best['gap']:.4f}")
+        if self.verbose >= 1:
+            print(f"\n  Best params      : {self.best_params}")
+            print(f"  Best CV F2-macro : {self.best_cv_score:.4f}")
+            print(f"  CV F2 std        : {best['std_test_f2']:.4f}")
+            print(f"  High recall      : {best['mean_high_recall']:.4f}")
+            print(f"  Train/CV gap     : {best['gap']:.4f}")
         return self
 
     def evaluate(self, raw_df: pd.DataFrame, split_name: str = 'dataset') -> dict:
