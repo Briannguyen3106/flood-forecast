@@ -382,3 +382,43 @@ gap > 0.1 → cảnh báo overfit → cần tăng regularization
 ```
 
 Đây là thông tin quan trọng giúp thành viên điều chỉnh model kịp thời thay vì chỉ nhìn vào CV score.
+
+---
+
+## 12. Conclusion From Train and Test Performance
+
+The results in `experiments/Train_Test.ipynb` show that **tree-based models are substantially more suitable for this flood-risk classification problem than linear models**. The five strongest models on the test set are Random Forest, XGBoost, XGBRF, HistGradientBoosting (`HitsGB`), and Decision Tree, all of which achieve a test F2-macro above 0.90. In comparison, the best linear-pipeline model, SVM, reaches only 0.7149, while the regression-based models remain around 0.54-0.56.
+
+| Model | Train F2-macro | Test F2-macro | F2 gap | Test F1-weighted |
+|---|---:|---:|---:|---:|
+| **Random Forest** | **0.9989** | **0.9315** | 0.0674 | **0.9340** |
+| XGBoost | 0.9510 | 0.9255 | **0.0255** | 0.9308 |
+| XGBRF | 0.9776 | 0.9230 | 0.0546 | 0.9291 |
+| HistGradientBoosting | 0.9478 | 0.9223 | **0.0255** | 0.9320 |
+| Decision Tree | 0.9345 | 0.9016 | 0.0329 | 0.9085 |
+
+**Random Forest is the recommended final model** because it obtains the highest test F2-macro (0.9315) and test F1-weighted (0.9340). It also provides the highest recall for the operationally important `High` class (0.975), meaning that it misses very few high-risk areas. Its recall is also strong for `Medium` (0.939), while the `Low` class has an F1-score of 0.955.
+
+However, Random Forest's near-perfect training performance and F2 gap of 0.0674 indicate **moderate overfitting**. Its test performance remains the best, so this does not invalidate the selection, but the gap should be monitored on new or out-of-distribution data. XGBoost and HistGradientBoosting are strong alternatives when model stability is prioritized: both retain test F2-macro above 0.92 with much smaller train-test gaps of about 0.0255.
+
+LightGBM has the smallest gap among the tree models, but its lower test F2-macro (0.8493) and especially low `High`-class recall (0.633) make it unsuitable as the primary flood-warning model. Similarly, the linear and regression models underfit the nonlinear relationships in the dataset and should not be selected for deployment.
+
+### 12.1 Analysis of Linear-Based Models
+
+| Model | Train F2-macro | Test F2-macro | F2 gap | Test F1-weighted | High recall | Medium recall |
+|---|---:|---:|---:|---:|---:|---:|
+| **SVM** | **0.8156** | **0.7149** | 0.1007 | **0.7401** | **0.785** | **0.739** |
+| **Huber** | 0.5901 | **0.5641** | 0.0260 | **0.5855** | 0.582 | **0.678** |
+| Linear Regression | 0.5766 | 0.5623 | 0.0143 | 0.5776 | 0.608 | 0.652 |
+| Lasso | 0.5645 | 0.5569 | 0.0076 | 0.5483 | 0.671 | 0.678 |
+| Ridge | 0.5674 | 0.5397 | 0.0277 | 0.5430 | 0.633 | 0.635 |
+
+Among the **regression-based models**, Huber is the best overall: it obtains the highest test F2-macro (0.5641) and test F1-weighted (0.5855). Huber reduces the influence of samples with large residuals, so its advantage over ordinary Linear Regression suggests that the dataset may contain noisy observations, outliers, or cases that do not follow the dominant linear pattern. The improvement is small, however: Huber exceeds Linear Regression by only 0.0018 in test F2-macro and 0.0079 in test F1-weighted. Therefore, the evidence supports a modest robustness benefit rather than a major performance improvement.
+
+Ridge and Lasso do not improve generalization over unregularized Linear Regression. Ridge reduces test F2-macro from 0.5623 to 0.5397, while Lasso reduces it to 0.5569. Their small train-test gaps show that this is mainly **underfitting rather than overfitting**. The base linear model already has limited capacity, and coefficient shrinkage adds bias without solving the more important problem: flood-risk classes have nonlinear relationships and interactions that a linear decision function cannot adequately represent. Lasso may also remove weak features that are individually small but useful when combined with other variables.
+
+The class-level results add an important qualification. Linear Regression has slightly better `High`-class recall than Huber (0.608 versus 0.582), while Huber improves `Medium` recall and overall weighted F1. Lasso achieves the best `High` recall among the four regressors (0.671), but its poor precision and performance on other classes keep its aggregate scores low. Thus, Huber is the most balanced regression model, but it is not the best on every individual class.
+
+SVM should be evaluated separately from the four regressors. It is the **best linear-pipeline model overall**, with a test F2-macro of 0.7149, because its margin-based classification objective is better aligned with class separation than predicting encoded class values through regression. Nevertheless, its large F2 gap (0.1007) indicates more overfitting, and it remains well behind every major tree ensemble. Consequently, Huber is the preferred regression baseline, SVM is the preferred linear classifier, and neither should replace the selected tree-based model.
+
+Overall, the experiment supports deploying **Random Forest as the primary model**, with XGBoost or HistGradientBoosting retained as benchmark alternatives. Future evaluation should use new temporal or geographic data to confirm that Random Forest's strong test results generalize beyond the current split.
