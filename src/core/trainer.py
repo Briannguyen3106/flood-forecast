@@ -173,14 +173,7 @@ class Trainer:
         folds = list(cv.split(raw_train_df, y_split))
         candidates = self._candidate_params()
 
-        print(
-            f"\n[Trainer] Tuning {self.model.__class__.__name__}: "
-            f"{len(candidates)} candidates x {len(folds)} folds"
-        )
-        print(
-            f"  config={self.config_name or 'unspecified'}, "
-            f"imbalance={self.imbalance}, scorer=F2-macro"
-        )
+        
 
         self.cv_results_ = []
         for candidate_index, params in enumerate(candidates, start=1):
@@ -225,12 +218,7 @@ class Trainer:
             }
             result['gap'] = result['mean_train_f2'] - result['mean_test_f2']
             self.cv_results_.append(result)
-            print(
-                f"  [{candidate_index:>3}/{len(candidates)}] "
-                f"F2={result['mean_test_f2']:.4f} "
-                f"HighRecall={result['mean_high_recall']:.4f} "
-                f"gap={result['gap']:.4f}"
-            )
+            
 
         self.cv_results_.sort(
             key=lambda row: (
@@ -301,9 +289,6 @@ class Trainer:
             'recall_medium': recalls[1],
             'recall_high': recalls[2],
         }
-        print(f"\n[{split_name}] F2-macro    : {metrics['f2_macro']:.4f}")
-        print(f"[{split_name}] F1-weighted : {metrics['f1_weighted']:.4f}")
-        print(f"[{split_name}] High recall : {metrics['recall_high']:.4f}")
         return metrics
 
     def evaluate_train(self, raw_train_df: pd.DataFrame) -> dict:
