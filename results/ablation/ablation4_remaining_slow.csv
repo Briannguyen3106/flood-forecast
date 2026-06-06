@@ -1,0 +1,9 @@
+experiment,config,model,cv_f2_mean,cv_f2_std,cv_f1w_mean,train_f2_mean,gap,n_features,recall_low,recall_medium,recall_high
+final_configuration,PA_base_none,DecisionTree,0.8716,0.0218,0.9158,1.0,0.1284,10,0.9582,0.8417,0.8124
+final_configuration,PA_base_smote,DecisionTree,0.8457,0.018,0.8758,1.0,0.1543,10,0.8865,0.8424,0.8429
+final_configuration,PA_G3_none,DecisionTree,0.8903,0.0219,0.9255,1.0,0.1097,11,0.959,0.8634,0.8472
+final_configuration,PA_G3_smote,DecisionTree,0.8422,0.0213,0.8696,1.0,0.1578,11,0.8757,0.8468,0.8451
+final_configuration,PA_base_none,LightGBM,0.873,0.0156,0.9145,1.0,0.127,10,0.9551,0.8388,0.8218
+final_configuration,PA_base_smote,LightGBM,0.8852,0.0172,0.9204,1.0,0.1148,10,0.954,0.8664,0.8314
+final_configuration,PA_G3_none,LightGBM,0.8987,0.0241,0.9274,1.0,0.1013,11,0.9549,0.8794,0.8587
+final_configuration,PA_G3_smote,LightGBM,0.8864,0.0167,0.921,1.0,0.1136,11,0.9557,0.8562,0.8418

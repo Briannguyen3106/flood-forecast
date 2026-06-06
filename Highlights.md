@@ -422,3 +422,64 @@ The class-level results add an important qualification. Linear Regression has sl
 SVM should be evaluated separately from the four regressors. It is the **best linear-pipeline model overall**, with a test F2-macro of 0.7149, because its margin-based classification objective is better aligned with class separation than predicting encoded class values through regression. Nevertheless, its large F2 gap (0.1007) indicates more overfitting, and it remains well behind every major tree ensemble. Consequently, Huber is the preferred regression baseline, SVM is the preferred linear classifier, and neither should replace the selected tree-based model.
 
 Overall, the experiment supports deploying **Random Forest as the primary model**, with XGBoost or HistGradientBoosting retained as benchmark alternatives. Future evaluation should use new temporal or geographic data to confirm that Random Forest's strong test results generalize beyond the current split.
+
+---
+
+## 13. Corrected Post-Fix Experiment Status (2026-06-06)
+
+Section 12 reports historical pre-regeneration test results. It must not be
+treated as the final corrected conclusion. Since that run, the project fixed
+the ordinal target mapping and moved learned preprocessing inside CV folds.
+
+### 13.1 Completed corrected work
+
+- Canonical mapping is `Low=0, Medium=1, High=2`.
+- Data preparation artifacts were regenerated.
+- Ablation uses raw train rows and fold-local preprocessing.
+- SMOTE is applied only to CV training folds.
+- Ablation 4 confirmed four model-specific setups:
+
+| Model | Selected setup | CV F2-macro | High recall | Train/CV gap |
+|---|---|---:|---:|---:|
+| Random Forest | Pipeline A baseline + SMOTE | 0.8647 | 0.7808 | 0.1353 |
+| SVM | scale + skew + weights `1:2:3` | 0.7186 | 0.6931 | 0.1090 |
+| Ridge | scale-only + no balancing | 0.5887 | 0.6772 | 0.0083 |
+| Lasso | OHE-only + no balancing | 0.5743 | 0.6500 | 0.0080 |
+
+These results demonstrate that one shared preprocessing and SMOTE strategy is
+not appropriate for all model families.
+
+### 13.2 Pending Ablation 4b
+
+The notebook now includes filtered confirmation for Decision Tree, XGBoost,
+XGBRF, custom LightGBM, HistGradientBoosting, Linear Regression, and Huber.
+Run these batches separately:
+
+```python
+ABLATION4B_BATCH = "fast"
+ABLATION4B_BATCH = "decision_tree"
+ABLATION4B_BATCH = "lightgbm"
+```
+
+The cell checkpoints after each model. The following summary cell combines
+available CSV files and writes `results/ablation/ablation4_all_winners.csv`.
+
+### 13.3 LightGBM runtime work
+
+The custom LightGBM implementation was optimized before its Ablation 4b run.
+Multiclass trees now share binning per boosting iteration, histogram counts use
+vectorized cumulative operations, and prediction traversal partitions rows by
+node. A project-sized local benchmark estimated roughly 32 seconds for one
+100-estimator fit before CV overhead; Kaggle runtime will vary.
+
+### 13.4 Handoff after successful ablation
+
+1. Confirm one setup for all 11 final-comparison models using train-only CV.
+2. Review F2-macro first, then High recall, F1-weighted, variance, and gap.
+3. Generalize `Trainer` to support no balancing, SMOTE, balanced weights, and
+   explicit class weights.
+4. Move preprocessing inside hyperparameter CV folds and tune from raw train.
+5. Update the Kaggle `Train_Test.ipynb` to use frozen per-model setups and
+   reject incompatible historical PKLs.
+6. Retrain on all train rows and inspect the test split once.
+7. Replace Section 12 conclusions only after that corrected final run.

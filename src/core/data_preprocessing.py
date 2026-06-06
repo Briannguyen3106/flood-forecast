@@ -2,7 +2,7 @@
 
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import RobustScaler, LabelEncoder, OrdinalEncoder, OneHotEncoder
+from sklearn.preprocessing import RobustScaler, OrdinalEncoder, OneHotEncoder
 from scipy.stats import yeojohnson
 
 # ================================================================== #
@@ -19,6 +19,11 @@ def assign_class(labels_str):
     return 'Low'
 
 
+RISK_CLASS_TO_INT = {'Low': 0, 'Medium': 1, 'High': 2}
+RISK_INT_TO_CLASS = {value: key for key, value in RISK_CLASS_TO_INT.items()}
+RISK_CLASS_NAMES = [RISK_INT_TO_CLASS[i] for i in range(len(RISK_INT_TO_CLASS))]
+
+
 # ================================================================== #
 #  BASE PREPROCESSOR
 # ================================================================== #
@@ -30,7 +35,6 @@ class BasePreprocessor:
         self.numerical_medians     = {}
         self.proximity_clip_uppers = None
         self.elev_low_threshold    = None
-        self.label_encoders        = LabelEncoder()
 
         self.numeric_cols = [
             'elevation_m',
@@ -141,10 +145,16 @@ class BasePreprocessor:
     # LABEL ENCODER
     # ------------------------------------------------------------------ #
     def _fit_label_encoder(self, df):
-        self.label_encoders.fit(df[self.target_col])
+        unknown = set(df[self.target_col].dropna().unique()) - set(RISK_CLASS_TO_INT)
+        if unknown:
+            raise ValueError(f"Unknown risk classes: {sorted(unknown)}")
 
     def _apply_label_encoder(self, df):
-        return self.label_encoders.transform(df[self.target_col])
+        encoded = df[self.target_col].map(RISK_CLASS_TO_INT)
+        if encoded.isna().any():
+            unknown = sorted(df.loc[encoded.isna(), self.target_col].unique())
+            raise ValueError(f"Unknown risk classes: {unknown}")
+        return encoded.astype(int).to_numpy()
 
     # ------------------------------------------------------------------ #
     # METADATA

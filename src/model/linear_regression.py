@@ -16,14 +16,16 @@ class LinearRegressionModel(BaseOrdinalRegression):
                  random_state = 42):
         super().__init__(learning_rate, max_iter, tol, random_state)
 
-    def _compute_loss(self, y, y_pred, weights):
-        return np.mean((y_pred - y)**2)
+    def _compute_loss(self, y, y_pred, weights, sample_weight=None):
+        return np.average((y_pred - y)**2, weights=sample_weight)
     
-    def _compute_gradient(self, X, y, y_pred, weights):
-        n = len(y)
+    def _compute_gradient(self, X, y, y_pred, weights, sample_weight=None):
+        sample_weight = np.ones(len(y)) if sample_weight is None else sample_weight
+        weight_sum = np.sum(sample_weight)
         residuals = y_pred-y
-        grad_w = (2/n) * X.T @ residuals
-        grad_b = (2/n) * np.sum(residuals)
+        weighted_residuals = sample_weight * residuals
+        grad_w = (2/weight_sum) * X.T @ weighted_residuals
+        grad_b = (2/weight_sum) * np.sum(weighted_residuals)
         return grad_w, grad_b
     
     def get_param_distributions(self) -> dict:

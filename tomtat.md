@@ -308,3 +308,129 @@ Notebook in:
 - Neu thu hyperparameter nhieu lan dua tren test score, test set se gian tiep tro thanh validation set va ket qua khong con khach quan.
 - Nen pin versions trong `requirements.txt` de PKL chay nhat quan tren Kaggle.
 
+## Ke Hoach Corrected Final Workflow Sau Ablation 4
+
+### Trang thai notebook final sau khi cap nhat
+
+`Train_Test.ipynb` hien tai khong con tune tren `data/processed`. Notebook:
+
+- doc `data/splits/train.csv` va `data/splits/test.csv` dang raw;
+- dung winner setup rieng cua ca 11 model;
+- fit preprocessing trong tung tuning fold thong qua `Trainer`;
+- checkpoint tung model vao `saved_models/<Model>.pkl` ngay khi hoan tat;
+- chi load PKL khi metadata khop code revision, target mapping, model, ablation
+  config, imbalance strategy va CV settings;
+- chan cac cell final test neu chua du 11 artifact hop le.
+
+Tren Kaggle, file trong `/kaggle/working` chi ton tai trong session hien tai.
+De tiep tuc sau khi session bi huy, can Save Version de luu output hoac upload
+`saved_models` thanh Kaggle Dataset, sau do dat `EXTERNAL_MODELS_DIR` trong
+cell Setup den thu muc `saved_models` da mount.
+
+Phan mo ta o tren phan anh `Train_Test.ipynb` hien tai. Truoc khi tao ket qua
+final corrected, can hoan thanh checklist duoi day.
+
+### Winner setup da xac nhan
+
+Ket qua nay duoc chon bang train-only repeated CV, khong dung test set:
+
+| Model | Preprocessing | Feature group | Imbalance |
+|---|---|---|---|
+| Random Forest | Pipeline A | Baseline, khong FE | SMOTE |
+| Ridge | Pipeline B scale-only | Baseline | None |
+| Lasso | Pipeline B OHE-only | Baseline | None |
+| SVM | Pipeline B scale + skew | Baseline | Weights `Low:Medium:High = 1:2:3` |
+
+### Model con thieu winner setup
+
+Neu cac model sau van xuat hien trong corrected final comparison, can chay
+Ablation 4 filtered confirmation cho tung model:
+
+- Decision Tree.
+- XGBoost.
+- XGBRF.
+- LightGBM.
+- HistGradientBoosting (`HitsGB`).
+- Linear Regression.
+- Huber Regression.
+
+Moi model chi nen thu cac cau hinh da shortlist tu Ablation 1-3, khong can
+chay lai toan bo Cartesian product. Tree models co the bat dau voi Pipeline A
+baseline/G3 ket hop none/SMOTE hoac class weight neu model ho tro. Linear va
+Huber can so sanh scale-only, scale+skew va weight profiles phu hop.
+
+### Thay doi code bat buoc truoc final training
+
+1. Mo rong Ablation 4 de khoa mot setup cho moi model trong final comparison.
+2. Generalize `src/core/trainer.py` de ho tro `none`, `smote`, `balanced` va
+   `weighted`; khong ep SMOTE cho moi model.
+3. Cho phep moi model truyen `preprocessor_factory`, feature groups va class
+   weights da duoc Ablation 4 chon.
+4. Tune tu raw train data (`data/splits/train.csv`) va fit preprocessing ben
+   trong tung CV training fold. Khong tune tren processed CSV da fit bang toan
+   bo train set.
+5. Dung repeated stratified CV voi `random_state=42`; chon hyperparameter bang
+   F2-macro, sau do kiem tra F1-weighted, variance, gap va High recall.
+6. Retrain tren toan bo raw train data bang setup da khoa, roi transform va
+   danh gia test mot lan.
+7. Luu metadata cung PKL: code revision, target mapping, preprocessing config,
+   feature groups, imbalance strategy, class weights, hyperparameters va
+   feature names.
+8. Khong tu dong tai PKL cu chi dua vao ten file. PKL pre-fix hoac khac config
+   phai duoc retrain hoac bi tu choi bang metadata validation.
+9. Cap nhat `Train_Test.ipynb` de bao cao CV selection metrics va final test
+   metrics rieng biet.
+10. Cap nhat `.docs/`, `Highlights.md` va artifact status sau khi final run
+    hoan tat.
+
+### Quy tac su dung test set
+
+- Test set khong duoc dung de chon preprocessing, features, imbalance strategy,
+  class weights, thresholds hoac hyperparameters.
+- Setup va model selection phai duoc khoa bang train-only CV truoc khi xem test.
+- Co the xep hang ket qua test de bao cao, nhung khong duoc dua vao bang xep
+  hang do de quay lai sua model va chay test lai.
+- Cum tu `best model` trong bao cao final nen duoc giai thich ro la model da
+  duoc chon bang CV hay chi la `best test performer`.
+
+### Kaggle
+
+Giu cell `git clone`, `%cd` va cai dependencies vi `Train_Test.ipynb` se chay
+tren Kaggle. Tuy nhien, final notebook phai clone dung code revision va khong
+duoc vo tinh load cac PKL cu khong co metadata tuong thich.
+
+## Handoff Sau Khi Chay Ablation 4b
+
+Trong `experiments/ablation_study.ipynb`, chay lan luot:
+
+```python
+ABLATION4B_BATCH = "fast"
+ABLATION4B_BATCH = "decision_tree"
+ABLATION4B_BATCH = "lightgbm"
+```
+
+Khong can chay lai Ablation 1-4 cua RF, Ridge, Lasso va SVM neu split, target,
+preprocessing va CV logic khong thay doi.
+
+Ket qua duoc checkpoint tai:
+
+```text
+results/ablation/ablation4_remaining_fast.csv
+results/ablation/ablation4_remaining_decision_tree.csv
+results/ablation/ablation4_remaining_lightgbm.csv
+results/ablation/ablation4_all_winners.csv
+```
+
+Sau khi ca ba batch thanh cong:
+
+1. Kiem tra du 11 model trong `ablation4_all_winners.csv`.
+2. Khoa winner theo F2-macro, sau do kiem tra High recall, F1-weighted,
+   standard deviation va train/CV gap.
+3. Khong mo hoac dung test score de thay doi winner.
+4. Generalize `Trainer` va dua preprocessing vao tung tuning fold.
+5. Sua `Train_Test.ipynb` de dung raw train, per-model setup va PKL metadata.
+6. Chi chay final test sau khi tat ca model/config/hyperparameter da khoa.
+
+Custom LightGBM da duoc toi uu binning, histogram va prediction traversal.
+Smoke test va prediction-equivalence check da pass; van nen chay batch
+`lightgbm` rieng de tranh vuot gioi han session Kaggle.

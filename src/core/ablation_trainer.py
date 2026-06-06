@@ -14,11 +14,14 @@ import numpy as np
 import pandas as pd
 from dataclasses import dataclass, field
 from typing import Optional
-from sklearn.metrics import fbeta_score, f1_score, make_scorer
+from sklearn.metrics import fbeta_score, f1_score, make_scorer, recall_score
+from sklearn.base import clone
 from sklearn.model_selection import RepeatedStratifiedKFold, cross_validate
+from sklearn.utils.class_weight import compute_sample_weight
 from imblearn.over_sampling import SMOTE
 from imblearn.pipeline import Pipeline as ImbPipeline
 from src.model.base_model import BaseModel
+from src.core.data_preprocessing import RISK_CLASS_TO_INT, assign_class
 
 
 # ================================================================== #
@@ -48,6 +51,9 @@ class AblationResult:
     train_f2_mean: float         # Mean train F2 (detect overfit)
     gap          : float         # train_f2 - cv_f2
     n_features   : int = 0
+    recall_low   : float = 0.0
+    recall_medium: float = 0.0
+    recall_high  : float = 0.0
 
 
 # ================================================================== #
@@ -132,6 +138,94 @@ class AblationTrainer:
             'cv_f1w_mean'  : cv_results['test_f1_weighted'].mean(),
             'train_f2_mean': cv_results['train_f2_macro'].mean(),
         }
+
+    def _run_raw_cv(self, raw_df: pd.DataFrame, model: BaseModel,
+                    preprocessor_factory, imbalance: str = 'none',
+                    class_weights: Optional[dict[int, float]] = None) -> dict:
+        """Run leakage-free CV by fitting preprocessing inside every fold."""
+        y_split = raw_df['risk_labels'].apply(assign_class).map(
+            RISK_CLASS_TO_INT
+        ).to_numpy()
+        cv = RepeatedStratifiedKFold(
+            n_splits=self.n_splits,
+            n_repeats=self.n_repeats,
+            random_state=self.random_state
+        )
+        test_f2, test_f1w, train_f2 = [], [], []
+        class_recalls = []
+        n_features = None
+
+        for train_idx, val_idx in cv.split(raw_df, y_split):
+            raw_train = raw_df.iloc[train_idx].copy()
+            raw_val = raw_df.iloc[val_idx].copy()
+            preprocessor = preprocessor_factory()
+            train_processed = preprocessor.fit_transform(raw_train)
+            val_processed = preprocessor.transform(raw_val)
+            X_train, y_train, feature_cols = self._get_X_y(train_processed)
+            X_val, y_val, _ = self._get_X_y(
+                val_processed, feature_cols=feature_cols
+            )
+            X_train_eval = X_train.copy()
+            y_train_eval = y_train.copy()
+            n_features = len(feature_cols)
+
+            estimator = clone(model)
+            estimator.build()
+            estimator = estimator.model
+            fit_weights = None
+
+            if imbalance == 'smote':
+                minority_count = np.bincount(y_train).min()
+                k_neighbors = min(5, minority_count - 1)
+                X_train, y_train = SMOTE(
+                    k_neighbors=k_neighbors,
+                    random_state=self.random_state
+                ).fit_resample(X_train, y_train)
+            elif imbalance == 'balanced':
+                fit_weights = compute_sample_weight('balanced', y_train)
+            elif imbalance == 'weighted':
+                if not class_weights:
+                    raise ValueError("class_weights are required for weighted strategy")
+                fit_weights = np.array(
+                    [class_weights.get(int(label), 1.0) for label in y_train],
+                    dtype=float
+                )
+            elif imbalance != 'none':
+                raise ValueError(f"Unknown imbalance strategy: {imbalance}")
+
+            if fit_weights is None:
+                estimator.fit(X_train, y_train)
+            else:
+                estimator.fit(X_train, y_train, sample_weight=fit_weights)
+
+            train_pred = estimator.predict(X_train_eval)
+            val_pred = estimator.predict(X_val)
+            train_f2.append(fbeta_score(
+                y_train_eval, train_pred, beta=2, average='macro', zero_division=0
+            ))
+            test_f2.append(fbeta_score(
+                y_val, val_pred, beta=2, average='macro', zero_division=0
+            ))
+            test_f1w.append(f1_score(
+                y_val, val_pred, average='weighted', zero_division=0
+            ))
+            class_recalls.append(recall_score(
+                y_val, val_pred, labels=[0, 1, 2], average=None,
+                zero_division=0
+            ))
+
+        mean_recalls = np.mean(class_recalls, axis=0)
+
+        return {
+            'cv_f2_mean': float(np.mean(test_f2)),
+            'cv_f2_std': float(np.std(test_f2)),
+            'cv_f1w_mean': float(np.mean(test_f1w)),
+            'train_f2_mean': float(np.mean(train_f2)),
+            'n_features': n_features or 0,
+            'recall_low': float(mean_recalls[0]),
+            'recall_medium': float(mean_recalls[1]),
+            'recall_high': float(mean_recalls[2]),
+        }
     
     # ------------------------------------------------------------------ #
     def _log_result(self, result: AblationResult):
@@ -142,28 +236,34 @@ class AblationTrainer:
     # ================================================================== #
     #  ABLATION 1 — IMBALANCE HANDLING
     # ================================================================== #
-    def run_ablation_imbalance(self, train_tree: pd.DataFrame, train_linear: pd.DataFrame,
-                                models: dict[str, BaseModel]) -> list[AblationResult]:
+    def run_ablation_imbalance(self, raw_train_df: pd.DataFrame,
+                               models: dict[str, BaseModel]) -> list[AblationResult]:
         """
-        So sánh: Không SMOTE vs Có SMOTE
-        Dùng tất cả features (không filter)
-
-        models: {'RF': RandomForestClassifierModel(), 'Ridge': RidgeRegressionModel()}
+        Compare no balancing, SMOTE, balanced weights and explicit risk weights.
         """
         print("\n" + "="*60)
         print("ABLATION 1 — Imbalance Handling")
         print("="*60)
 
         results = []
+        from src.core.data_preprocessing import PipelineA, PipelineB
+        strategies = [
+            ('none', 'none', None),
+            ('SMOTE', 'smote', None),
+            ('class_weight_balanced', 'balanced', None),
+            ('weights_1_1.5_2', 'weighted', {0: 1.0, 1: 1.5, 2: 2.0}),
+            ('weights_1_2_3', 'weighted', {0: 1.0, 1: 2.0, 2: 3.0}),
+            ('weights_1_2_4', 'weighted', {0: 1.0, 1: 2.0, 2: 4.0}),
+        ]
         for model_name, model in models.items():
-            train_df = train_tree if model.pipeline_type == 'tree' else train_linear
-            X, y, feature_cols = self._get_X_y(train_df)
-
-            for use_smote in [False, True]:
-                config = 'with_SMOTE' if use_smote else 'no_SMOTE'
-
-                pipeline    = self._build_pipeline(model, use_smote=use_smote)
-                metrics     = self._run_cv(pipeline, X, y)
+            preprocessor_class = PipelineA if model.pipeline_type == 'tree' else PipelineB
+            for config, strategy, weights in strategies:
+                metrics = self._run_raw_cv(
+                    raw_train_df, model,
+                    preprocessor_factory=lambda cls=preprocessor_class: cls(),
+                    imbalance=strategy,
+                    class_weights=weights
+                )
                 gap         = metrics['train_f2_mean'] - metrics['cv_f2_mean']
 
                 result = AblationResult(
@@ -175,7 +275,7 @@ class AblationTrainer:
                     cv_f1w_mean   = round(metrics['cv_f1w_mean'],   4),
                     train_f2_mean = round(metrics['train_f2_mean'], 4),
                     gap           = round(gap, 4),
-                    n_features    = len(feature_cols)
+                    n_features    = metrics['n_features']
                 )
                 results.append(result)
                 self.results.append(result)
@@ -219,16 +319,16 @@ class AblationTrainer:
             print(f"\n  Config: {config_name} — groups={fe_groups}")
             
             for model_name, model in models.items():
-                if model.pipeline_type == 'tree':
-                    preprocessor    = PipelineA(fe_groups=fe_groups)
-                else:
-                    preprocessor    = PipelineB(fe_groups=fe_groups)
-                
-                train_processed = preprocessor.fit_transform(raw_train_df)
-                X, y, feature_cols = self._get_X_y(train_processed)
-
-                pipeline    = self._build_pipeline(model, use_smote=True)
-                metrics     = self._run_cv(pipeline, X, y)
+                preprocessor_class = (
+                    PipelineA if model.pipeline_type == 'tree' else PipelineB
+                )
+                metrics = self._run_raw_cv(
+                    raw_train_df, model,
+                    preprocessor_factory=lambda cls=preprocessor_class, groups=fe_groups: cls(
+                        fe_groups=groups
+                    ),
+                    imbalance='none'
+                )
                 gap         = metrics['train_f2_mean'] - metrics['cv_f2_mean']
 
                 result = AblationResult(
@@ -240,7 +340,7 @@ class AblationTrainer:
                     cv_f1w_mean   = round(metrics['cv_f1w_mean'],   4),
                     train_f2_mean = round(metrics['train_f2_mean'], 4),
                     gap           = round(gap, 4),
-                    n_features    = len(feature_cols)
+                    n_features    = metrics['n_features']
                 )
                 results.append(result)
                 self.results.append(result)
@@ -321,19 +421,18 @@ class AblationTrainer:
                 # Config 0,1 dùng PipelineA → phù hợp cho tất cả model
                 # Config 2-7 dùng PipelineB → tốt nhất cho linear/distance
                 # RF vẫn chạy để confirm không bị ảnh hưởng
-                preprocessor = preprocessor_class(**kwargs)
-    
                 try:
-                    train_processed = preprocessor.fit_transform(raw_train_df)
+                    metrics = self._run_raw_cv(
+                        raw_train_df, model,
+                        preprocessor_factory=lambda cls=preprocessor_class, params=kwargs: cls(
+                            **params
+                        ),
+                        imbalance='none'
+                    )
                 except Exception as e:
                     print(f"    [{model_name}] ERROR: {e}")
                     continue
-                
-                X, y, feature_cols = self._get_X_y(train_processed)
-                print(f"    [{model_name}] {len(feature_cols)} features...")
-    
-                pipeline = self._build_pipeline(model, use_smote=False)
-                metrics  = self._run_cv(pipeline, X, y)
+                print(f"    [{model_name}] {metrics['n_features']} features...")
                 gap      = metrics['train_f2_mean'] - metrics['cv_f2_mean']
     
                 result = AblationResult(
@@ -345,14 +444,73 @@ class AblationTrainer:
                     cv_f1w_mean   = round(metrics['cv_f1w_mean'],   4),
                     train_f2_mean = round(metrics['train_f2_mean'], 4),
                     gap           = round(gap, 4),
-                    n_features    = len(feature_cols)
+                    n_features    = metrics['n_features']
                 )
                 results.append(result)
                 self.results.append(result)
                 self._log_result(result)
     
         return results
-    
+
+    # ================================================================== #
+    #  ABLATION 4 - FINAL MODEL-SPECIFIC CONFIGURATIONS
+    # ================================================================== #
+    def run_ablation_final_configs(
+        self, raw_train_df: pd.DataFrame, configs: list[dict]
+    ) -> list[AblationResult]:
+        """Compare a filtered list of model-specific final configurations."""
+        print("\n" + "="*60)
+        print("ABLATION 4 - Final Model-Specific Configurations")
+        print(f"  CV: {self.n_splits} folds x {self.n_repeats} repeats")
+        print("="*60)
+
+        results = []
+        required = {'config', 'model_name', 'model', 'preprocessor_factory'}
+
+        for spec in configs:
+            missing = required - set(spec)
+            if missing:
+                raise ValueError(
+                    f"Ablation 4 config is missing keys: {sorted(missing)}"
+                )
+
+            config_name = spec['config']
+            model_name = spec['model_name']
+            print(f"\n  [{model_name}] {config_name}")
+            metrics = self._run_raw_cv(
+                raw_df=raw_train_df,
+                model=spec['model'],
+                preprocessor_factory=spec['preprocessor_factory'],
+                imbalance=spec.get('imbalance', 'none'),
+                class_weights=spec.get('class_weights')
+            )
+            gap = metrics['train_f2_mean'] - metrics['cv_f2_mean']
+            result = AblationResult(
+                experiment='final_configuration',
+                config=config_name,
+                model=model_name,
+                cv_f2_mean=round(metrics['cv_f2_mean'], 4),
+                cv_f2_std=round(metrics['cv_f2_std'], 4),
+                cv_f1w_mean=round(metrics['cv_f1w_mean'], 4),
+                train_f2_mean=round(metrics['train_f2_mean'], 4),
+                gap=round(gap, 4),
+                n_features=metrics['n_features'],
+                recall_low=round(metrics['recall_low'], 4),
+                recall_medium=round(metrics['recall_medium'], 4),
+                recall_high=round(metrics['recall_high'], 4)
+            )
+            results.append(result)
+            self.results.append(result)
+            self._log_result(result)
+            print(
+                "      Recall : "
+                f"Low={result.recall_low:.4f}, "
+                f"Medium={result.recall_medium:.4f}, "
+                f"High={result.recall_high:.4f}"
+            )
+
+        return results
+
     # ================================================================== #
     #  SUMMARY
     # ================================================================== #
@@ -372,6 +530,9 @@ class AblationTrainer:
             'train_f2_mean': r.train_f2_mean,
             'gap'          : r.gap,
             'n_features'   : r.n_features,
+            'recall_low'   : r.recall_low,
+            'recall_medium': r.recall_medium,
+            'recall_high'  : r.recall_high,
         } for r in self.results])
     
     def print_summary(self):

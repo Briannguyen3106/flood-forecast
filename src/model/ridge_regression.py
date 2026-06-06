@@ -18,20 +18,26 @@ class RidgeRegressionModel(BaseOrdinalRegression):
         super().__init__(learning_rate, max_iter, tol, random_state)
         self.alpha = alpha
     
-    def _compute_loss(self, y, y_pred, weights):
+    def _compute_loss(self, y, y_pred, weights, sample_weight=None):
         residuals = y_pred-y
         l2 = self.alpha * np.sum(weights **2)
-        mse = np.mean(residuals**2)
+        mse = np.average(residuals**2, weights=sample_weight)
 
         return mse+l2
     
-    def _compute_gradient(self, X, y, y_pred, weights):
-        n=len(y)
+    def _compute_gradient(self, X, y, y_pred, weights, sample_weight=None):
+        sample_weight = np.ones(len(y)) if sample_weight is None else sample_weight
+        weight_sum = np.sum(sample_weight)
         residulas = y_pred-y
-        grad_w = (2/n) * X.T @ residulas + 2*self.alpha*weights
-        grad_b = (2/n) * np.sum(residulas)
+        weighted_residuals = sample_weight * residulas
+        grad_w = (2/weight_sum) * X.T @ weighted_residuals + 2*self.alpha*weights
+        grad_b = (2/weight_sum) * np.sum(weighted_residuals)
 
         return grad_w, grad_b
+
+    def _regularization_curvature(self):
+        return 2.0 * self.alpha
+
     def get_params(self, deep=True) -> dict:
         params = super().get_params()
         params['alpha'] = self.alpha

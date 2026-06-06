@@ -1,0 +1,12 @@
+experiment,config,model,cv_f2_mean,cv_f2_std,cv_f1w_mean,train_f2_mean,gap,n_features,recall_low,recall_medium,recall_high
+final_configuration,PA_G3_none,DecisionTree,0.8903,0.0219,0.9255,1.0,0.1097,11,0.959,0.8634,0.8472
+final_configuration,PA_G3_balanced,HistGB,0.9056,0.0155,0.9309,1.0,0.0944,11,0.954,0.8831,0.8819
+final_configuration,scale_w1152,Huber,0.5968,0.0192,0.6394,0.6053,0.0085,10,0.6226,0.5083,0.7195
+final_configuration,ohe_base_none,Lasso,0.5743,0.0252,0.6553,0.5823,0.008,30,0.721,0.3552,0.65
+final_configuration,PA_G3_none,LightGBM,0.8987,0.0241,0.9274,1.0,0.1013,11,0.9549,0.8794,0.8587
+final_configuration,scale_w1152,Linear,0.6005,0.0175,0.6435,0.6045,0.004,10,0.6355,0.4866,0.7406
+final_configuration,PA_base_smote,RF,0.8647,0.0178,0.9105,1.0,0.1353,10,0.9572,0.8431,0.7808
+final_configuration,scale_base_none,Ridge,0.5887,0.0195,0.6459,0.597,0.0083,10,0.6527,0.4736,0.6772
+final_configuration,scale_skew_w123,SVM,0.7186,0.0189,0.7886,0.8276,0.109,10,0.8575,0.613,0.6931
+final_configuration,PA_G3_none,XGB,0.8963,0.0189,0.9266,1.0,0.1037,11,0.9553,0.8787,0.8513
+final_configuration,PA_base_smote,XGBRF,0.8969,0.0166,0.9202,0.9638,0.0668,10,0.9266,0.9361,0.8536

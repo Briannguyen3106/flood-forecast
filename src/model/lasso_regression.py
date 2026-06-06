@@ -36,19 +36,21 @@ class LassoRegressionModel(BaseOrdinalRegression):
         self.alpha = alpha
 
     def _compute_loss(self, y: np.ndarray, y_pred: np.ndarray,
-                      weights: np.ndarray) -> float:
-        mse = np.mean((y_pred - y) ** 2)
+                      weights: np.ndarray, sample_weight=None) -> float:
+        mse = np.average((y_pred - y) ** 2, weights=sample_weight)
         l1  = self.alpha * np.sum(np.abs(weights))
         return mse + l1
 
     def _compute_gradient(self, X: np.ndarray, y: np.ndarray,
                           y_pred: np.ndarray,
-                          weights: np.ndarray) -> tuple[np.ndarray, float]:
-        n = len(y)
+                          weights: np.ndarray, sample_weight=None) -> tuple[np.ndarray, float]:
+        sample_weight = np.ones(len(y)) if sample_weight is None else sample_weight
+        weight_sum = np.sum(sample_weight)
         residuals = y_pred - y
         # Subgradient của |w|: sign(w), sign(0)=0
-        grad_w = (2 / n) * X.T @ residuals + self.alpha * np.sign(weights)
-        grad_b = (2 / n) * np.sum(residuals)
+        weighted_residuals = sample_weight * residuals
+        grad_w = (2 / weight_sum) * X.T @ weighted_residuals + self.alpha * np.sign(weights)
+        grad_b = (2 / weight_sum) * np.sum(weighted_residuals)
         return grad_w, grad_b
 
     def get_sparsity(self) -> dict:
