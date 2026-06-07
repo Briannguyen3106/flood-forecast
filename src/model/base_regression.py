@@ -9,17 +9,17 @@ class BaseOrdinalRegression(BaseModel):
                  tol: float = 1e-6,
                  random_state: int=42):
         super().__init__()
-        self.learning_rate = learning_rate
-        self.max_iter = max_iter
-        self.tol = tol
-        self.random_state = random_state
-        self.pipeline_type = 'linear'
+        self.learning_rate  = learning_rate
+        self.max_iter       = max_iter
+        self.tol            = tol
+        self.random_state   = random_state
+        self.pipeline_type  = 'linear'
 
-        self.weights = None
-        self.bias = None
-        self.threshold1 = None
-        self.threshold2 = None
-        self.loss_history = []
+        self.weights        = None
+        self.bias           = None
+        self.threshold1     = None
+        self.threshold2     = None
+        self.loss_history   = []
 
     def _predict_continuous(self, X):
         return np.dot(X, self.weights) + self.bias
@@ -28,16 +28,41 @@ class BaseOrdinalRegression(BaseModel):
         raise NotImplementedError
     def _compute_gradient(self, X, y, y_pred, weights):
         raise NotImplementedError
+
+    def _regularization_curvature(self):
+        return 0.0
+
+    def _stable_learning_rate(self, X, sample_weight):
+        row_squared_norms = np.einsum('ij,ij->i', X, X)
+        data_curvature = 2.0 * np.average(
+            row_squared_norms, weights=sample_weight
+        )
+        curvature = data_curvature + self._regularization_curvature()
+        if not np.isfinite(curvature):
+            raise ValueError("Training features produce non-finite curvature")
+        if curvature <= np.finfo(float).eps:
+            return self.learning_rate
+        return min(self.learning_rate, 0.5 / curvature)
         
-    def _gradient_descent(self, X, y):
+    def _gradient_descent(self, X, y, sample_weight=None):
         np.random.seed(self.random_state)
+        X = np.asarray(X, dtype=float)
+        y = np.asarray(y, dtype=float)
         n_samples, n_features = X.shape
+
+        if not np.all(np.isfinite(X)) or not np.all(np.isfinite(y)):
+            raise ValueError("X and y must contain only finite values")
 
         self.weights = np.random.randn(n_features)*0.01
         self.bias = 0.0
         self.loss_history = []
 
-        bacth_size = min(32, n_samples)
+        batch_size = min(32, n_samples)
+        if sample_weight is None:
+            sample_weight = np.ones(n_samples, dtype=float)
+        sample_weight = np.asarray(sample_weight, dtype=float)
+        if sample_weight.shape != (n_samples,) or np.any(sample_weight <= 0):
+            raise ValueError("sample_weight must contain one positive value per row")
         prev_loss = np.inf
 
         for iteration in range(self.max_iter):
@@ -45,30 +70,50 @@ class BaseOrdinalRegression(BaseModel):
             indices = np.random.permutation(n_samples)
             X_shuffled = X[indices]
             y_shuffled = y[indices]
+            weight_shuffled = sample_weight[indices]
 
-            for start  in range(0, n_samples, bacth_size):
-                end = min(start + bacth_size, n_samples)
+            for start  in range(0, n_samples, batch_size):
+                end = min(start + batch_size, n_samples)
                 X_batch = X_shuffled[start: end]
                 y_batch = y_shuffled[start: end]
+                weight_batch = weight_shuffled[start:end]
 
                 y_pred_batch = self._predict_continuous(X_batch)
-                grad_w, grad_b = self._compute_gradient(X_batch, y_batch, y_pred_batch, self.weights)
+                grad_w, grad_b = self._compute_gradient(
+                    X_batch, y_batch, y_pred_batch, self.weights,
+                    sample_weight=weight_batch
+                )
 
-                self.weights -= self.learning_rate * grad_w
-                self.bias   -= self.learning_rate * grad_b
+                step_size = self._stable_learning_rate(X_batch, weight_batch)
+                self.weights -= step_size * grad_w
+                self.bias   -= step_size * grad_b
+
+                if (not np.all(np.isfinite(self.weights))
+                        or not np.isfinite(self.bias)):
+                    raise RuntimeError(
+                        "Gradient descent diverged; reduce learning_rate or scale features"
+                    )
 
             y_pred_full = self._predict_continuous(X)
-            loss = self._compute_loss(y, y_pred_full, self.weights)
+            loss = self._compute_loss(
+                y, y_pred_full, self.weights, sample_weight=sample_weight
+            )
+            if not np.isfinite(loss):
+                raise RuntimeError(
+                    "Gradient descent produced a non-finite loss; "
+                    "reduce learning_rate or scale features"
+                )
             self.loss_history.append(loss)
 
             if abs(prev_loss - loss)< self.tol:
                 break
             prev_loss = loss
-            if (iteration + 1) % 100 == 0:
-                print(f"    Iter {iteration+1}/{self.max_iter}, loss={loss:.6f}")
-
-    def _optimize_thresholds(self, X, y):
+            
+    def _optimize_thresholds(self, X, y, sample_weight=None):
         y_pred_continuous  = self._predict_continuous(X)
+
+        if not np.all(np.isfinite(y_pred_continuous)):
+            raise RuntimeError("Cannot optimize thresholds from non-finite predictions")
 
         y_min, y_max = y_pred_continuous.min(), y_pred_continuous.max()
         candidates = np.linspace(y_min, y_max, 50)
@@ -79,15 +124,16 @@ class BaseOrdinalRegression(BaseModel):
             if t1>=t2:
                 continue
             y_class = self._apply_threshold(y_pred_continuous, t1, t2)
-            score = fbeta_score(y, y_class, beta=2, average='macro', zero_division=0)
+            score = fbeta_score(
+                y, y_class, beta=2, average='macro', zero_division=0,
+                sample_weight=sample_weight
+            )
 
             if score>best_score:
                 best_score = score
                 best_1, best_2 = t1, t2
         self.threshold1 = best_1
         self.threshold2 = best_2
-        print(f"    Threshold optimized: t1={best_1:.4f}, t2={best_2:.4f}")
-        print(f"    Train F2-macro: {best_score:.4f}")
 
     def _apply_threshold(self, y_pred_continuous, t1, t2):
         y_class = np.zeros(len(y_pred_continuous), dtype=int)
@@ -96,20 +142,21 @@ class BaseOrdinalRegression(BaseModel):
         return y_class
 
 
-    def fit(self, X, y):
-        print(f"  Fitting {self.__class__.__name__}...")
-        print(f"  X: {X.shape}, y distribution: {np.bincount(y)}")
+    def fit(self, X: np.ndarray, y: np.ndarray, sample_weight=None):
+        self._gradient_descent(X, y, sample_weight=sample_weight)
 
-        self._gradient_descent(X, y.astype(float))
-
-        self._optimize_thresholds(X, y)
+        # Sau khi đã có weights và bias
+        self._optimize_thresholds(X, y, sample_weight=sample_weight)
         return self
-    
-    def predict(self, X):
+    def predict(self, X: np.ndarray) -> np.ndarray:
         y_pred_continuous = self._predict_continuous(X)
         return self._apply_threshold(
             y_pred_continuous, self.threshold1, self.threshold2
-        )    
+        )
+ 
+    def predict_continuous(self, X: np.ndarray) -> np.ndarray:
+        """Dùng để visualize regression output"""
+        return self._predict_continuous(X)  
     
     #==================================================
     #Cho imbPipeline
@@ -132,20 +179,6 @@ class BaseOrdinalRegression(BaseModel):
     def get_param_distributions(self):
         raise NotImplementedError
     
-    # Trong BaseOrdinalRegression — thêm fit, predict là concrete methods
-    # (không phải abstract vì logic dùng chung cho cả 4 model)
-
-    def fit(self, X: np.ndarray, y: np.ndarray):
-        print(f"  Fitting {self.__class__.__name__}...")
-        self._gradient_descent(X, y.astype(float))
-        self._optimize_thresholds(X, y)
-        return self
-    
-    def predict(self, X: np.ndarray) -> np.ndarray:
-        y_pred_continuous = self._predict_continuous(X)
-        return self._apply_threshold(
-            y_pred_continuous, self.threshold1, self.threshold2
-        )
     
     def build(self, **params):
         # Reset weights để fit lại từ đầu
@@ -158,4 +191,3 @@ class BaseOrdinalRegression(BaseModel):
             setattr(self, key, value)
         self.model = self  # Chính nó là model → ImbPipeline dùng được
         return self
-        

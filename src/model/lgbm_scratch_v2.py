@@ -386,24 +386,33 @@ class HistogramTree:
             bins   = X_bin[indices, f]
             n_bins = self.bin_edges[f].shape[0]
 
-            G_hist = np.zeros(n_bins)
-            H_hist = np.zeros(n_bins)
-
             if w is not None:
-                np.add.at(G_hist, bins, gradients[indices] * w)
-                np.add.at(H_hist, bins, hessians[indices]  * w)
+                G_hist = np.bincount(
+                    bins, weights=gradients[indices] * w, minlength=n_bins
+                )
+                H_hist = np.bincount(
+                    bins, weights=hessians[indices] * w, minlength=n_bins
+                )
             else:
-                np.add.at(G_hist, bins, gradients[indices])
-                np.add.at(H_hist, bins, hessians[indices])
+                G_hist = np.bincount(
+                    bins, weights=gradients[indices], minlength=n_bins
+                )
+                H_hist = np.bincount(
+                    bins, weights=hessians[indices], minlength=n_bins
+                )
 
-            G_left, H_left = 0.0, 0.0
+            count_hist = np.bincount(bins, minlength=n_bins)
+            G_cum = np.cumsum(G_hist)
+            H_cum = np.cumsum(H_hist)
+            count_cum = np.cumsum(count_hist)
+
             for b in range(n_bins - 1):
-                G_left += G_hist[b]
-                H_left += H_hist[b]
+                G_left = G_cum[b]
+                H_left = H_cum[b]
                 G_right = G_total - G_left
                 H_right = H_total - H_left
 
-                n_left  = (bins <= b).sum()
+                n_left  = count_cum[b]
                 n_right = len(bins) - n_left
                 if (n_left  < self.min_child_samples or
                         n_right < self.min_child_samples):
@@ -416,9 +425,11 @@ class HistogramTree:
                     best_gain    = gain
                     best_feature = f
                     best_bin     = b
-                    mask_left    = X_bin[indices, f] <= b
-                    best_left_idx  = indices[mask_left]
-                    best_right_idx = indices[~mask_left]
+
+        if best_feature is not None:
+            mask_left = X_bin[indices, best_feature] <= best_bin
+            best_left_idx = indices[mask_left]
+            best_right_idx = indices[~mask_left]
 
         return best_gain, best_feature, best_bin, best_left_idx, best_right_idx
 
@@ -426,7 +437,9 @@ class HistogramTree:
     def fit(self, X: np.ndarray, gradients: np.ndarray, hessians: np.ndarray,
             weights: np.ndarray | None = None,
             fi_split: np.ndarray | None = None,
-            fi_gain:  np.ndarray | None = None):
+            fi_gain:  np.ndarray | None = None,
+            bin_edges: list[np.ndarray] | None = None,
+            X_bin: np.ndarray | None = None):
         """
         fit() mở rộng: nhận thêm sample weights (GOSS) và mảng feature importance.
 
@@ -439,8 +452,8 @@ class HistogramTree:
         fi_split   : (n_features,) — tích lũy split count (in-place update)
         fi_gain    : (n_features,) — tích lũy gain (in-place update)
         """
-        self.bin_edges = self._build_bin_edges(X)
-        X_bin          = self._bin_data(X)
+        self.bin_edges = bin_edges if bin_edges is not None else self._build_bin_edges(X)
+        X_bin = X_bin if X_bin is not None else self._bin_data(X)
 
         n_samples   = X.shape[0]
         all_indices = np.arange(n_samples)
@@ -506,8 +519,28 @@ class HistogramTree:
     # ── Predict / traverse ──────────────────────────────────────────
     def predict(self, X: np.ndarray) -> np.ndarray:
         X_bin = self._bin_data(X)
-        return np.array([self._traverse(X_bin[i], self.root)
-                         for i in range(X_bin.shape[0])])
+        return self.predict_binned(X_bin)
+
+    def predict_binned(self, X_bin: np.ndarray) -> np.ndarray:
+        """Predict from pre-binned rows using vectorized node partitioning."""
+        predictions = np.empty(X_bin.shape[0], dtype=float)
+        stack = [(self.root, np.arange(X_bin.shape[0]))]
+
+        while stack:
+            node, indices = stack.pop()
+            if len(indices) == 0:
+                continue
+            if node.is_leaf:
+                predictions[indices] = node.weight
+                continue
+
+            left_mask = (
+                X_bin[indices, node.feature_index] <= node.bin_threshold
+            )
+            stack.append((node.left, indices[left_mask]))
+            stack.append((node.right, indices[~left_mask]))
+
+        return predictions
 
     def _traverse(self, x_bin, node: HistNode):
         if node.is_leaf:
@@ -699,8 +732,7 @@ class GBDTMulticlass:
             if X_val is not None:
                 X_val_work = self.efb_bundler_.transform(X_val)
             n_features_work = X_work.shape[1]
-            print(f"  EFB: {n_features} features → {n_features_work} bundles "
-                  f"({self.efb_bundler_.compression_ratio():.1%} compression)")
+            
         else:
             X_work         = X
             X_val_work     = X_val
@@ -749,6 +781,19 @@ class GBDTMulticlass:
 
             X_sub = X_work[np.ix_(row_idx, col_idx)]
 
+            # All K class trees use the same rows and columns in this
+            # iteration, so their percentile edges and binned matrices are
+            # identical. Build them once instead of once per class.
+            shared_binner = HistogramTree(max_bin=self.max_bin)
+            shared_bin_edges = shared_binner._build_bin_edges(X_sub)
+            shared_binner.bin_edges = shared_bin_edges
+            X_sub_bin = shared_binner._bin_data(X_sub)
+            X_work_bin = shared_binner._bin_data(X_work[:, col_idx])
+            X_val_bin = (
+                shared_binner._bin_data(X_val_work[:, col_idx])
+                if X_val_work is not None else None
+            )
+
             # ── Train K cây ─────────────────────────────────────────
             iter_trees = []
             for k in range(K):
@@ -773,6 +818,8 @@ class GBDTMulticlass:
                     weights  = sample_weights,
                     fi_split = fi_split_sub,
                     fi_gain  = fi_gain_sub,
+                    bin_edges=shared_bin_edges,
+                    X_bin=X_sub_bin,
                 )
 
                 # Ghi importance back
@@ -780,9 +827,7 @@ class GBDTMulticlass:
                 self.feature_importances_gain_[col_idx]  = fi_gain_sub
 
                 # Update F trên toàn bộ mẫu
-                pred_bin = tree._bin_data(X_work[:, col_idx])
-                preds    = np.array([tree._traverse(pred_bin[i], tree.root)
-                                     for i in range(n_samples)])
+                preds = tree.predict_binned(X_work_bin)
                 if G.ndim == 2:
                     F[:, k] += self.learning_rate * preds
                 else:
@@ -801,9 +846,7 @@ class GBDTMulticlass:
             if F_val is not None:
                 for iter_trees_t in [iter_trees]:
                     for k, (tree, col_idx) in enumerate(iter_trees_t):
-                        vb   = tree._bin_data(X_val_work[:, col_idx])
-                        vpreds = np.array([tree._traverse(vb[i], tree.root)
-                                           for i in range(len(y_val))])
+                        vpreds = tree.predict_binned(X_val_bin)
                         if G.ndim == 2:
                             F_val[:, k] += self.learning_rate * vpreds
                         else:
@@ -822,12 +865,10 @@ class GBDTMulticlass:
 
                 if (self.early_stopping_rounds is not None and
                         no_improve_cnt >= self.early_stopping_rounds):
-                    print(f"  Early stopping tại iter {t+1} "
-                          f"(best={self.best_iteration_}, val_loss={best_val_loss:.6f})")
+            
                     break
 
-            print(f"  Iter {t+1:>4}/{self.n_estimators} | "
-                  f"Train loss: {train_loss:.6f}{val_msg}")
+            
 
         return self
 
@@ -850,9 +891,8 @@ class GBDTMulticlass:
 
         for iter_trees in iters:
             for k, (tree, col_idx) in enumerate(iter_trees):
-                xb   = tree._bin_data(X_work[:, col_idx])
-                preds = np.array([tree._traverse(xb[i], tree.root)
-                                  for i in range(n_samples)])
+                xb = tree._bin_data(X_work[:, col_idx])
+                preds = tree.predict_binned(xb)
                 F[:, k] += self.learning_rate * preds
 
         return F
@@ -976,18 +1016,18 @@ class LGBMScratchModel(BaseModel):
     # ── BaseModel interface ─────────────────────────────────────────
     def get_param_distributions(self) -> dict:
         return {
-            'n_estimators'     : [50, 100, 200, 300],
-            'learning_rate'    : [0.01, 0.05, 0.1, 0.2],
-            'max_depth'        : [3, 4, 5, 6, 8],
-            'num_leaves'       : [15, 31, 63],
-            'min_child_samples': [10, 20, 30, 50],
+            'n_estimators'     : [50, 100, 150],
+            'learning_rate'    : [0.05, 0.1, 0.2],
+            'max_depth'        : [3, 4, 5],
+            'num_leaves'       : [15, 31],
+            'min_child_samples': [20, 30, 50],
             'reg_lambda'       : [0.1, 1.0, 5.0, 10.0],
             'reg_alpha'        : [0.0, 0.1, 0.5, 1.0],
             'min_split_gain'   : [0.0, 0.01, 0.1],
-            'subsample'        : [0.7, 0.8, 0.9, 1.0],
-            'colsample_bytree' : [0.7, 0.8, 0.9, 1.0],
+            'subsample'        : [0.8, 1.0],
+            'colsample_bytree' : [0.8, 1.0],
             'use_goss'         : [True, False],
-            'use_efb'          : [True, False],
+            #'use_efb'          : [True, False],
         }
 
     def build(self, **params) -> 'LGBMScratchModel':

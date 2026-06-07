@@ -354,6 +354,7 @@ class SVMClassifierModel(BaseModel):
         classes: tuple[object, object],
         kernel: Callable[[np.ndarray, np.ndarray], np.ndarray],
         K: np.ndarray | None = None,
+        sample_weight: np.ndarray | None = None,
     ) -> _BinarySVMState:
         """Fit a *binary* SVM using the simplified SMO algorithm.
 
@@ -388,6 +389,12 @@ class SVMClassifierModel(BaseModel):
         C = float(self.C)
         if C <= 0:
             raise ValueError("C must be > 0")
+        if sample_weight is None:
+            sample_weight = np.ones(n_samples, dtype=float)
+        sample_weight = np.asarray(sample_weight, dtype=float)
+        if sample_weight.shape != (n_samples,) or np.any(sample_weight <= 0):
+            raise ValueError("sample_weight must contain one positive value per row")
+        C_bounds = C * sample_weight
 
         tol = float(self.tol)
         eps = float(self.eps)
@@ -433,7 +440,9 @@ class SVMClassifierModel(BaseModel):
             nonlocal rng
 
             # Prefer non-bound examples (0 < alpha < C) because they are more informative.
-            non_bound = np.where((alphas > eps) & (alphas < C - eps))[0]
+            non_bound = np.where(
+                (alphas > eps) & (alphas < C_bounds - eps)
+            )[0]
             if non_bound.size > 1:
                 # Choose j that maximizes the step size |E_i - E_j|.
                 j = int(non_bound[np.argmax(np.abs(E_i - E[non_bound]))])
@@ -461,12 +470,13 @@ class SVMClassifierModel(BaseModel):
                 E_i = float(E[i])
                 y_i = float(y_pm1[i])
                 alpha_i_old = float(alphas[i])
+                C_i = float(C_bounds[i])
 
                 # KKT violation check (simplified)
                 # If y_i * E_i < -tol and alpha_i < C  → point violates margin (needs larger alpha)
                 # If y_i * E_i >  tol and alpha_i > 0  → point violates (needs smaller alpha)
                 r_i = y_i * E_i
-                if not ((r_i < -tol and alpha_i_old < C - eps) or (r_i > tol and alpha_i_old > eps)):
+                if not ((r_i < -tol and alpha_i_old < C_i - eps) or (r_i > tol and alpha_i_old > eps)):
                     continue
 
                 j = select_j(i, E_i)
@@ -474,14 +484,15 @@ class SVMClassifierModel(BaseModel):
                 y_j = float(y_pm1[j])
 
                 alpha_j_old = float(alphas[j])
+                C_j = float(C_bounds[j])
 
                 # Compute L and H to satisfy 0 <= alpha <= C and sum alpha_i y_i = 0.
                 if y_i != y_j:
                     L = max(0.0, alpha_j_old - alpha_i_old)
-                    H = min(C, C + alpha_j_old - alpha_i_old)
+                    H = min(C_j, C_i + alpha_j_old - alpha_i_old)
                 else:
-                    L = max(0.0, alpha_i_old + alpha_j_old - C)
-                    H = min(C, alpha_i_old + alpha_j_old)
+                    L = max(0.0, alpha_i_old + alpha_j_old - C_i)
+                    H = min(C_j, alpha_i_old + alpha_j_old)
 
                 if L == H:
                     continue
@@ -523,9 +534,9 @@ class SVMClassifierModel(BaseModel):
                 )
 
                 # Choose b based on whether alphas are non-bound
-                if 0.0 + eps < alpha_i_new < C - eps:
+                if 0.0 + eps < alpha_i_new < C_i - eps:
                     b = float(b1)
-                elif 0.0 + eps < alpha_j_new < C - eps:
+                elif 0.0 + eps < alpha_j_new < C_j - eps:
                     b = float(b2)
                 else:
                     b = float(0.5 * (b1 + b2))
@@ -548,10 +559,7 @@ class SVMClassifierModel(BaseModel):
                 num_changed += 1
                 n_updates += 1
 
-            if self.verbose:
-                print(
-                    f"    [SMO] pass={passes:02d}, changed={num_changed:4d}, updates={n_updates:6d}"
-                )
+            
 
             # SMO stopping criterion: if we loop over all i and change nothing,
             # increment `passes`. Otherwise reset `passes`.
@@ -570,7 +578,9 @@ class SVMClassifierModel(BaseModel):
         # ------------------------------------------------------------------ #
         ay = alphas * y_pm1  # (n_samples,)
 
-        margin_sv = np.where((alphas > eps) & (alphas < C - eps))[0]
+        margin_sv = np.where(
+            (alphas > eps) & (alphas < C_bounds - eps)
+        )[0]
         if margin_sv.size > 0:
             # Compute decision value without b for each margin SV index i:
             #   sum_j alpha_j y_j K_ji = (ay @ K[:, i])
@@ -605,7 +615,7 @@ class SVMClassifierModel(BaseModel):
     # ====================================================================== #
     # Public API: fit / predict
     # ====================================================================== #
-    def fit(self, X: np.ndarray, y: np.ndarray):
+    def fit(self, X: np.ndarray, y: np.ndarray, sample_weight=None):
         """Fit the SVM.
 
         Multi-class handling:
@@ -625,6 +635,11 @@ class SVMClassifierModel(BaseModel):
             raise ValueError("y must be a 1D array")
         if X.shape[0] != y.shape[0]:
             raise ValueError("X and y must have the same number of rows")
+        if sample_weight is None:
+            sample_weight = np.ones(X.shape[0], dtype=float)
+        sample_weight = np.asarray(sample_weight, dtype=float)
+        if sample_weight.shape != (X.shape[0],) or np.any(sample_weight <= 0):
+            raise ValueError("sample_weight must contain one positive value per row")
 
         unique_classes = np.unique(y)
         if unique_classes.size < 2:
@@ -648,6 +663,7 @@ class SVMClassifierModel(BaseModel):
                 y_pm1=y_pm1,
                 classes=(neg_class, pos_class),
                 kernel=kernel,
+                sample_weight=sample_weight,
             )
             self._ovr_states_ = None
             return self
@@ -667,6 +683,7 @@ class SVMClassifierModel(BaseModel):
                 classes=(f"not_{cls}", cls),
                 kernel=kernel,
                 K=K_train,
+                sample_weight=sample_weight,
             )
             self._ovr_states_.append(state)
 

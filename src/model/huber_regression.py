@@ -59,19 +59,21 @@ class HuberRegressionModel(BaseOrdinalRegression):
         return grad
 
     def _compute_loss(self, y: np.ndarray, y_pred: np.ndarray,
-                      weights: np.ndarray) -> float:
+                      weights: np.ndarray, sample_weight=None) -> float:
         residuals = y_pred - y
-        return np.mean(self._huber_loss(residuals))
+        return np.average(self._huber_loss(residuals), weights=sample_weight)
 
     def _compute_gradient(self, X: np.ndarray, y: np.ndarray,
                           y_pred: np.ndarray,
-                          weights: np.ndarray) -> tuple[np.ndarray, float]:
-        n         = len(y)
+                          weights: np.ndarray, sample_weight=None) -> tuple[np.ndarray, float]:
+        sample_weight = np.ones(len(y)) if sample_weight is None else sample_weight
+        weight_sum = np.sum(sample_weight)
         residuals = y_pred - y
         # Huber gradient thay thế cho 2×residuals trong MSE
         huber_grad = self._huber_gradient(residuals)
-        grad_w = (1 / n) * X.T @ huber_grad
-        grad_b = (1 / n) * np.sum(huber_grad)
+        weighted_grad = sample_weight * huber_grad
+        grad_w = (1 / weight_sum) * X.T @ weighted_grad
+        grad_b = (1 / weight_sum) * np.sum(weighted_grad)
         return grad_w, grad_b
 
     def get_params(self, deep=True) -> dict:

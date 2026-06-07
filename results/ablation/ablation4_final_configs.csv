@@ -1,0 +1,17 @@
+experiment,config,model,cv_f2_mean,cv_f2_std,cv_f1w_mean,train_f2_mean,gap,n_features,recall_low,recall_medium,recall_high
+final_configuration,ohe_base_none,Lasso,0.5743,0.0252,0.6553,0.5823,0.008,30,0.721,0.3552,0.65
+final_configuration,ohe_G3_none,Lasso,0.5714,0.0239,0.6521,0.5852,0.0139,31,0.7141,0.3631,0.6403
+final_configuration,ohe_G3_w123,Lasso,0.5667,0.0155,0.6069,0.5767,0.01,31,0.5841,0.4763,0.6889
+final_configuration,ohe_base_w123,Lasso,0.5663,0.0203,0.6105,0.5746,0.0083,30,0.6019,0.4415,0.7079
+final_configuration,PA_base_smote,RF,0.8647,0.0178,0.9105,1.0,0.1353,10,0.9572,0.8431,0.7808
+final_configuration,PA_G3_smote,RF,0.8589,0.0237,0.9023,1.0,0.1411,11,0.945,0.8388,0.785
+final_configuration,PA_G3_none,RF,0.8555,0.0186,0.9147,1.0,0.1445,11,0.9845,0.814,0.7301
+final_configuration,PA_base_none,RF,0.8476,0.0229,0.9097,1.0,0.1524,10,0.9812,0.8119,0.7143
+final_configuration,scale_base_none,Ridge,0.5887,0.0195,0.6459,0.597,0.0083,10,0.6527,0.4736,0.6772
+final_configuration,scale_base_w1152,Ridge,0.5816,0.0221,0.6234,0.5895,0.0079,10,0.6067,0.4829,0.7132
+final_configuration,scale_G3_none,Ridge,0.5679,0.0197,0.6211,0.5818,0.0139,11,0.624,0.4466,0.6731
+final_configuration,scale_G3_w1152,Ridge,0.5611,0.0176,0.6062,0.5781,0.0171,11,0.5962,0.4393,0.7027
+final_configuration,scale_skew_w123,SVM,0.7186,0.0189,0.7886,0.8276,0.109,10,0.8575,0.613,0.6931
+final_configuration,scale_w123,SVM,0.7016,0.0222,0.7578,0.7937,0.0921,10,0.7992,0.6253,0.7025
+final_configuration,scale_skew_none,SVM,0.6942,0.0233,0.8067,0.7771,0.0829,10,0.9615,0.4953,0.5833
+final_configuration,scale_none,SVM,0.6378,0.0181,0.7598,0.7111,0.0732,10,0.9607,0.3042,0.6161
