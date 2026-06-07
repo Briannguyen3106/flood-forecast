@@ -6,6 +6,14 @@ from src.model.xgb_classifier import XGBClassifierModel
 from src.model.xgbrf_classifier import XGBRFClassifierModel
 from src.model.svm_classifier import SVMClassifierModel
 
+from src.model.random_forest_scratch import RandomForestScratchModel
+from src.model.xgb_scratch_v2 import (
+    XGBScratchV2Model,
+    XGBScratchGOSSV2Model,
+    XGBScratchEFBV2Model,
+    XGBScratchGOSS_EFBV2Model,
+)
+
 
 MODEL_REGISTRY = {
     "dummy": DummyClassifierModel,
@@ -15,7 +23,21 @@ MODEL_REGISTRY = {
     "lgbm": LGBMClassifierModel,
     "hgb": HistGradientBoostingClassifierModel,
     "svm": SVMClassifierModel,
+
+    # --- scratch variants ---
+    "rf_scratch": RandomForestScratchModel,
+
+    "xgb_scratch": XGBScratchV2Model,
+    "xgb_scratch_goss": XGBScratchGOSSV2Model,
+    "xgb_scratch_efb": XGBScratchEFBV2Model,
+    "xgb_scratch_goss_efb": XGBScratchGOSS_EFBV2Model,
+
+    # extra aliases
+    "histgb_goss": XGBHistGOSSV2Model,
+    "histgb_efb": XGBHistEFBV2Model,
+    "histgb_goss_efb": XGBHistGOSS_EFBV2Model,
 }
+
 
 
 def create_model(model_key: str, **kwargs):
