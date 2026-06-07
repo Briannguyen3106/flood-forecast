@@ -492,8 +492,9 @@ conclusion is superseded by the corrected final selection of HistGB. Current
 reports are under `results/final/`, and all 11 serialized checkpoints are under
 `saved_models/`.
 
-The artifacts were trained from revision `86a6493`. Current HEAD `b39e48f`
-only changes fitting verbosity, but exact metadata validation will still force
-retraining if the notebook is rerun at current HEAD. The current test split has
-now been observed and must not be used to revise configurations for another
-nominally final run.
+The artifacts retain revision `86a6493` for provenance. A different current
+revision now produces a warning instead of forcing retraining when the model
+contract metadata still matches. Changes that alter model behavior should bump
+the artifact schema or require explicit deletion of affected PKLs. The current
+test split has now been observed and must not be used to revise configurations
+for another nominally final run.
