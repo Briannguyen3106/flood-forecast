@@ -2,8 +2,8 @@
 
 > Người mới tham gia project nên bắt đầu tại [`.docs/README.md`](.docs/README.md). Quy tắc dành cho coding agents và contributors nằm trong [`AGENTS.md`](AGENTS.md).
 
-> Trạng thái hiện tại: Ablation 4 đã xác nhận 4 model; cần chạy các batch
-> Ablation 4b còn lại trước khi sửa trainer và chạy final test. Xem
+> Trạng thái hiện tại: corrected final run đã hoàn tất ngày 07/06/2026 với
+> 11/11 model. HistGB đứng đầu theo train-only tuning CV và Test F2-macro. Xem
 > [`.docs/CURRENT_STATUS.md`](.docs/CURRENT_STATUS.md).
 
 ## 📁 Cấu Trúc Project

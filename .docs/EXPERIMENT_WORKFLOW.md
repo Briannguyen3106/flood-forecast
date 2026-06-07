@@ -35,9 +35,8 @@ Use repeated stratified CV. Select configurations by mean F2-macro, then inspect
 
 Current status:
 
-- Random Forest, Ridge, Lasso, and SVM are already confirmed.
-- Run Ablation 4b with `fast`, `decision_tree`, and `lightgbm` batches.
-- The batch cell checkpoints after every model; the summary cell writes
+- Ablation 4 and 4b are complete for all 11 models.
+- The frozen winners are recorded in
   `results/ablation/ablation4_all_winners.csv`.
 - Do not rerun completed ablations unless the split, target mapping,
   preprocessing implementation, or CV logic changes.
@@ -61,6 +60,12 @@ For linear models, compare at least:
 ### 4. Final evaluation
 
 Run `experiments/Train_Test.ipynb` only after model decisions are frozen.
+
+The corrected final run completed on 2026-06-07. The notebook used five-fold
+stratified tuning CV with `CV_REPEATS=1`; the earlier ablation stage used its
+own repeated-CV protocol to freeze preprocessing and imbalance setups. Do not
+describe the final tuning run itself as repeated CV unless `CV_REPEATS` is
+increased and all artifacts are regenerated.
 
 The notebook is intended for Kaggle, so its clone/install setup may remain.
 It validates schema version, code revision, target mapping, model class,
@@ -95,3 +100,9 @@ Treat the following as generated artifacts:
 - `saved_models/*.pkl`.
 
 Record the code revision and experiment configuration whenever regenerating final artifacts.
+
+The current final artifacts were trained from revision
+`86a64936223ca75f3b580523ec80c0ae3e08b42b`. The repository subsequently moved
+to `b39e48f7543085a2c198fd65b85545b3abcdda82` with trainer logging changes.
+Because artifact validation compares revisions exactly, rerunning the notebook
+at the newer revision will intentionally reject those PKLs and retrain them.

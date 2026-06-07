@@ -385,7 +385,7 @@ gap > 0.1 → cảnh báo overfit → cần tăng regularization
 
 ---
 
-## 12. Conclusion From Train and Test Performance
+## 12. Historical Pre-Fix Conclusion From Train and Test Performance
 
 The results in `experiments/Train_Test.ipynb` show that **tree-based models are substantially more suitable for this flood-risk classification problem than linear models**. The five strongest models on the test set are Random Forest, XGBoost, XGBRF, HistGradientBoosting (`HitsGB`), and Decision Tree, all of which achieve a test F2-macro above 0.90. In comparison, the best linear-pipeline model, SVM, reaches only 0.7149, while the regression-based models remain around 0.54-0.56.
 
@@ -425,19 +425,19 @@ Overall, the experiment supports deploying **Random Forest as the primary model*
 
 ---
 
-## 13. Corrected Post-Fix Experiment Status (2026-06-06)
+## 13. Corrected Post-Fix Experiment Status (2026-06-07)
 
 Section 12 reports historical pre-regeneration test results. It must not be
 treated as the final corrected conclusion. Since that run, the project fixed
 the ordinal target mapping and moved learned preprocessing inside CV folds.
 
-### 13.1 Completed corrected work
+### 13.1 Completed corrected workflow
 
 - Canonical mapping is `Low=0, Medium=1, High=2`.
 - Data preparation artifacts were regenerated.
 - Ablation uses raw train rows and fold-local preprocessing.
 - SMOTE is applied only to CV training folds.
-- Ablation 4 confirmed four model-specific setups:
+- Ablation 4 and 4b confirmed model-specific setups for all 11 models.
 
 | Model | Selected setup | CV F2-macro | High recall | Train/CV gap |
 |---|---|---:|---:|---:|
@@ -447,22 +447,35 @@ the ordinal target mapping and moved learned preprocessing inside CV folds.
 | Lasso | OHE-only + no balancing | 0.5743 | 0.6500 | 0.0080 |
 
 These results demonstrate that one shared preprocessing and SMOTE strategy is
-not appropriate for all model families.
+not appropriate for all model families. The completed winner table is stored
+in `results/ablation/ablation4_all_winners.csv`.
 
-### 13.2 Pending Ablation 4b
+### 13.2 Corrected final run
 
-The notebook now includes filtered confirmation for Decision Tree, XGBoost,
-XGBRF, custom LightGBM, HistGradientBoosting, Linear Regression, and Huber.
-Run these batches separately:
+`Train_Test.ipynb` completed all 12 cells without an error. It tuned all 11
+models from raw train rows with fold-local preprocessing, required compatible
+metadata for every checkpoint, and opened the final test cells only after the
+11/11 artifact gate passed. Final tuning used stratified five-fold CV with one
+repeat, `N_ITER=100`, and `random_state=42`.
 
-```python
-ABLATION4B_BATCH = "fast"
-ABLATION4B_BATCH = "decision_tree"
-ABLATION4B_BATCH = "lightgbm"
-```
+| Rank | Model | CV F2-macro | Test F2-macro | Test F1-weighted | High recall |
+|---:|---|---:|---:|---:|---:|
+| 1 | HistGB | 0.9338 | 0.9388 | 0.9392 | 0.9747 |
+| 2 | LightGBM | 0.9098 | 0.9386 | 0.9483 | 0.9494 |
+| 3 | XGBoost | 0.9020 | 0.9294 | 0.9400 | 0.9241 |
+| 4 | DecisionTree | 0.8966 | 0.9271 | 0.9372 | 0.9367 |
+| 5 | RandomForest | 0.9003 | 0.9160 | 0.9234 | 0.9367 |
+| 6 | XGBRF | 0.9030 | 0.8984 | 0.9164 | 0.8861 |
+| 7 | SVM | 0.7386 | 0.7964 | 0.8330 | 0.8228 |
+| 8 | Ridge | 0.5999 | 0.6238 | 0.6639 | 0.6835 |
+| 9 | Linear Regression | 0.6031 | 0.6101 | 0.6553 | 0.7722 |
+| 10 | Huber | 0.6047 | 0.6098 | 0.6521 | 0.7722 |
+| 11 | Lasso | 0.5778 | 0.5820 | 0.6427 | 0.7595 |
 
-The cell checkpoints after each model. The following summary cell combines
-available CSV files and writes `results/ablation/ablation4_all_winners.csv`.
+HistGB is the corrected final selection because it ranked first by train-only
+tuning CV F2-macro. It also ranked first on test F2-macro and correctly
+identified 77 of 79 `High` rows. LightGBM ranked first on test F1-weighted,
+which remains the secondary metric.
 
 ### 13.3 LightGBM runtime work
 
@@ -472,14 +485,15 @@ vectorized cumulative operations, and prediction traversal partitions rows by
 node. A project-sized local benchmark estimated roughly 32 seconds for one
 100-estimator fit before CV overhead; Kaggle runtime will vary.
 
-### 13.4 Handoff after successful ablation
+### 13.4 Final interpretation and artifact status
 
-1. Confirm one setup for all 11 final-comparison models using train-only CV.
-2. Review F2-macro first, then High recall, F1-weighted, variance, and gap.
-3. Generalize `Trainer` to support no balancing, SMOTE, balanced weights, and
-   explicit class weights.
-4. Move preprocessing inside hyperparameter CV folds and tune from raw train.
-5. Update the Kaggle `Train_Test.ipynb` to use frozen per-model setups and
-   reject incompatible historical PKLs.
-6. Retrain on all train rows and inspect the test split once.
-7. Replace Section 12 conclusions only after that corrected final run.
+Section 12 remains a pre-fix historical baseline. Its Random Forest deployment
+conclusion is superseded by the corrected final selection of HistGB. Current
+reports are under `results/final/`, and all 11 serialized checkpoints are under
+`saved_models/`.
+
+The artifacts were trained from revision `86a6493`. Current HEAD `b39e48f`
+only changes fitting verbosity, but exact metadata validation will still force
+retraining if the notebook is rerun at current HEAD. The current test split has
+now been observed and must not be used to revise configurations for another
+nominally final run.

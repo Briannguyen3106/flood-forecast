@@ -34,13 +34,13 @@ Run the project in this order:
 4. Tune selected models on train data.
 5. Run `experiments/Train_Test.ipynb` for final train/test reporting.
 
-The current processed CSV files and historical metrics may have been generated before the target-order correction. Regenerate them before treating results as final.
+The corrected final artifacts were generated on 2026-06-07. Historical result sections must remain explicitly labeled pre-fix; current post-fix reports are under `results/final/`.
 
 ## Code Map
 
 - `src/core/data_preprocessing.py`: target construction, class mapping, Pipeline A and Pipeline B.
 - `src/core/ablation_trainer.py`: leakage-safe repeated-CV ablation runner.
-- `src/core/trainer.py`: final model tuning on processed data.
+- `src/core/trainer.py`: final model tuning from raw rows with fold-local preprocessing.
 - `src/model/base_model.py`: model interface.
 - `src/model/base_regression.py`: ordinal regression and threshold logic.
 - `src/model/`: model implementations.
@@ -75,4 +75,3 @@ Update the relevant file under `.docs/` when changing:
 - experiment protocol;
 - model selection conclusions;
 - known limitations or artifact status.
-

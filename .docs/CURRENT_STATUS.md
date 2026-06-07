@@ -1,75 +1,100 @@
 # Current Status
 
-Last updated: 2026-06-06.
+Last updated: 2026-06-07.
 
-## Completed in Code
+## Corrected Workflow Complete
 
-- Canonical target mapping changed to `Low=0, Medium=1, High=2`.
-- Final-report label order changed to Low, Medium, High.
-- Ablation preprocessing moved inside CV folds.
-- Linear, Ridge, Lasso, and Huber support sample-weighted losses and threshold selection.
-- Custom SVM supports sample-weighted soft-margin bounds.
-- Imbalance ablation now includes none, SMOTE, balanced weights, and explicit weight profiles.
-- Current split and processed artifacts were regenerated with the corrected target order.
-- Ablation 1-3 and the first Ablation 4 pass were run with fold-local preprocessing.
-- Ablation 4 confirmed setups for Random Forest, Ridge, Lasso, and SVM.
-- `ablation_study.ipynb` now contains checkpointed Ablation 4b batches for the seven remaining models.
-- Custom LightGBM now reuses multiclass binning, uses cumulative histograms, and vectorizes traversal.
-- Ablation 4b is complete and `ablation4_all_winners.csv` contains all 11 models.
-- `Trainer` now tunes from raw rows with fold-local preprocessing and supports
-  model-specific none, SMOTE, balanced, and explicit-weight strategies.
-- `Train_Test.ipynb` now uses raw splits and the 11 frozen Ablation 4 setups.
-  It checkpoints each completed model, validates artifact metadata before
-  reuse, and blocks final test evaluation until all artifacts are compatible.
+- Canonical target mapping is `Low=0, Medium=1, High=2`.
+- Raw splits and processed artifacts were regenerated after the mapping fix.
+- Ablation preprocessing is fitted inside each training fold.
+- Ablation 4 and 4b froze one preprocessing, feature, and imbalance setup for
+  each of the 11 models using train data only.
+- `Trainer` tunes from raw rows and supports none, SMOTE, balanced sample
+  weights, and explicit class weights.
+- `Train_Test.ipynb` validates artifact schema, revision, target mapping,
+  model class, frozen setup, CV settings, and random seed before reuse.
+- The final test gate opened only after all 11 artifacts were compatible.
+- All 12 notebook cells completed without an error on 2026-06-07.
 
-## Confirmed Ablation 4 Setups
+## Final Model Setups
 
-These are post-fix train-only repeated-CV results, not test results:
+| Model | Frozen setup |
+|---|---|
+| Decision Tree | Pipeline A + G3 + no balancing |
+| Random Forest | Pipeline A baseline + SMOTE |
+| XGBoost | Pipeline A + G3 + no balancing |
+| XGBRF | Pipeline A baseline + SMOTE |
+| custom LightGBM | Pipeline A + G3 + no balancing |
+| HistGradientBoosting | Pipeline A + G3 + estimator class weight `balanced` |
+| Linear Regression | Pipeline B scale-only + weights `1:1.5:2` |
+| Ridge | Pipeline B scale-only + no balancing |
+| Lasso | Pipeline B OHE-only + no balancing |
+| Huber | Pipeline B scale-only + weights `1:1.5:2` |
+| SVM | Pipeline B scale + skew + weights `1:2:3` |
 
-| Model | Selected setup | CV F2-macro | High recall |
-|---|---|---:|---:|
-| Random Forest | Pipeline A baseline + SMOTE | 0.8647 | 0.7808 |
-| SVM | scale + skew + weights `1:2:3` | 0.7186 | 0.6931 |
-| Ridge | scale-only + no balancing | 0.5887 | 0.6772 |
-| Lasso | OHE-only + no balancing | 0.5743 | 0.6500 |
+For HistGradientBoosting, the notebook records trainer imbalance as `none`
+because balancing is configured inside the estimator wrapper. Applying trainer
+sample weights as well would duplicate the selected strategy.
 
-Random Forest has a train/CV F2 gap of 0.1353 and SVM has a gap of 0.1090,
-so later tuning should include meaningful regularization.
+## Corrected Final Results
 
-## Ablation 4b Pending
+Final tuning used raw train rows, fold-local preprocessing, five stratified
+folds, `CV_REPEATS=1`, `N_ITER=100`, and `random_state=42`. The test set has
+593 rows and was used only after tuning and artifact validation completed.
 
-Pending models: Decision Tree, XGBoost, XGBRF, custom LightGBM,
-HistGradientBoosting, Linear Regression, and Huber Regression.
+| Test rank | Model | CV F2-macro | Test F2-macro | Test F1-weighted | High recall |
+|---:|---|---:|---:|---:|---:|
+| 1 | HistGB | 0.9338 | 0.9388 | 0.9392 | 0.9747 |
+| 2 | LightGBM | 0.9098 | 0.9386 | 0.9483 | 0.9494 |
+| 3 | XGBoost | 0.9020 | 0.9294 | 0.9400 | 0.9241 |
+| 4 | DecisionTree | 0.8966 | 0.9271 | 0.9372 | 0.9367 |
+| 5 | RandomForest | 0.9003 | 0.9160 | 0.9234 | 0.9367 |
+| 6 | XGBRF | 0.9030 | 0.8984 | 0.9164 | 0.8861 |
+| 7 | SVM | 0.7386 | 0.7964 | 0.8330 | 0.8228 |
+| 8 | Ridge | 0.5999 | 0.6238 | 0.6639 | 0.6835 |
+| 9 | LinearRegression | 0.6031 | 0.6101 | 0.6553 | 0.7722 |
+| 10 | Huber | 0.6047 | 0.6098 | 0.6521 | 0.7722 |
+| 11 | Lasso | 0.5778 | 0.5820 | 0.6427 | 0.7595 |
 
-Run the final notebook cells in separate batches:
+HistGB was selected by the primary train-only tuning metric and was also the
+best test performer. Its test confusion matrix correctly classified 77 of 79
+`High` rows. LightGBM achieved the highest test F1-weighted score, but model
+selection remains based on F2-macro.
 
-```python
-ABLATION4B_BATCH = "fast"
-ABLATION4B_BATCH = "decision_tree"
-ABLATION4B_BATCH = "lightgbm"
-```
+## Artifacts
 
-The `fast` batch covers XGBoost, XGBRF, HistGradientBoosting, Linear, and
-Huber. CSV checkpoints are written after every model.
+Current reports:
 
-## Must Be Regenerated
+- `results/final/final_metrics.csv`
+- `results/final/per_class_metrics.csv`
+- `results/final/detailed_metrics.json`
+- `results/final/model_comparison.png`
+- `results/final/confusion_matrices_top3.png`
+- `results/final/training_checkpoint_manifest.csv`
+- `saved_models/*.pkl` for all 11 models
 
-- Linear model tuning results.
-- Final train/test metrics and confusion matrices.
-- All serialized final model files and their configuration metadata.
+The artifacts contain code revision
+`86a64936223ca75f3b580523ec80c0ae3e08b42b`. Current repository HEAD is
+`b39e48f7543085a2c198fd65b85545b3abcdda82`; the intervening change suppresses
+verbose fitting output and does not alter the model algorithm. Exact revision
+validation means a rerun at current HEAD will reject and regenerate the PKLs.
 
-Historical metrics in `Highlights.md` remain useful as a baseline but are not the final corrected results.
+## Known Limitations
 
-## Known Issues
+- Regression thresholds are optimized on the same fit rows. Out-of-fold
+  threshold optimization would provide a cleaner estimate.
+- Final tuning uses five-fold stratified CV with one repeat. Do not call this
+  stage repeated CV; repeated CV was used during configuration ablation.
+- The repository has no formal automated test suite.
+- `requirements.txt` does not list every plotting or optional model dependency.
+- `main.py` is stale and is not the project entry point.
+- Personal experiment notebooks may still contain old target-mapping comments.
+- The final test has now been observed. Do not revise configurations from these
+  test scores and rerun against the same split as if it were unseen data.
 
-- Regression thresholds are optimized on the same fit rows. Out-of-fold threshold optimization would provide a cleaner estimate and is a recommended improvement.
-- The repository has no formal automated test suite; current validation relies on compilation and smoke tests.
-- `requirements.txt` does not list every library referenced by all optional models/notebooks, such as plotting and some boosting/tuning packages.
-- `main.py` is stale and should not be used as the project entry point.
-- Several personal experiment notebooks still contain comments or labels for the old class mapping. Update them before rerunning those notebooks.
+## Next Work
 
-## Next Actions
-
-1. Run the checkpointed tuning cell on Kaggle from raw train data.
-2. Confirm all 11 compatible artifacts before entering the final-test cells.
-3. Run the final test comparison once, then update historical conclusions.
+1. Update the written report and presentation using the post-fix tables.
+2. Preserve Section 12 of `Highlights.md` only as a labeled pre-fix baseline.
+3. For a future experiment revision, use new holdout data or nested/OOF
+   procedures rather than tuning decisions against the current test results.

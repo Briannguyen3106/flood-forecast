@@ -1,0 +1,1024 @@
+{
+  "DecisionTree": {
+    "train_f2_macro": 0.9468917554527477,
+    "train_f1_weighted": 0.9597259479491504,
+    "test_f2_macro": 0.9270878863485982,
+    "test_f1_weighted": 0.937161953192348,
+    "cv_f2_macro": 0.8966121758566248,
+    "best_params": {
+      "min_samples_split": 5,
+      "min_samples_leaf": 5,
+      "max_depth": 10,
+      "criterion": "entropy"
+    },
+    "artifact_metadata": {
+      "artifact_schema_version": 1,
+      "model_class": "DecisionTreeClassifierModel",
+      "target_mapping": {
+        "Low": 0,
+        "Medium": 1,
+        "High": 2
+      },
+      "config_name": "PA_G3_none",
+      "imbalance": "none",
+      "class_weights": null,
+      "best_params": {
+        "min_samples_split": 5,
+        "min_samples_leaf": 5,
+        "max_depth": 10,
+        "criterion": "entropy"
+      },
+      "best_cv_f2_macro": 0.8966121758566248,
+      "n_iter": 100,
+      "cv_splits": 5,
+      "cv_repeats": 1,
+      "random_state": 42,
+      "feature_names": [
+        "elevation_m",
+        "drainage_density_km_per_km2",
+        "storm_drain_proximity_m",
+        "historical_rainfall_intensity_mm_hr",
+        "return_period_years",
+        "G3_soil_x_rainfall",
+        "land_use",
+        "soil_group",
+        "storm_drain_type",
+        "rainfall_source",
+        "dem_source"
+      ],
+      "code_revision": "86a64936223ca75f3b580523ec80c0ae3e08b42b"
+    },
+    "confusion_matrix": [
+      [
+        373,
+        16,
+        10
+      ],
+      [
+        4,
+        108,
+        3
+      ],
+      [
+        1,
+        4,
+        74
+      ]
+    ],
+    "per_class": {
+      "Low": {
+        "precision": 0.9867724867724867,
+        "recall": 0.9348370927318296,
+        "f1-score": 0.9601029601029601,
+        "support": 399.0
+      },
+      "Medium": {
+        "precision": 0.84375,
+        "recall": 0.9391304347826087,
+        "f1-score": 0.8888888888888888,
+        "support": 115.0
+      },
+      "High": {
+        "precision": 0.8505747126436781,
+        "recall": 0.9367088607594937,
+        "f1-score": 0.891566265060241,
+        "support": 79.0
+      }
+    }
+  },
+  "RandomForest": {
+    "train_f2_macro": 0.9394929071766613,
+    "train_f1_weighted": 0.9428772902333968,
+    "test_f2_macro": 0.9160415740672464,
+    "test_f1_weighted": 0.9234083744517805,
+    "cv_f2_macro": 0.9002593959188033,
+    "best_params": {
+      "n_estimators": 200,
+      "min_samples_split": 2,
+      "min_samples_leaf": 1,
+      "max_features": 0.7,
+      "max_depth": 8,
+      "class_weight": "balanced_subsample"
+    },
+    "artifact_metadata": {
+      "artifact_schema_version": 1,
+      "model_class": "RandomForestClassifierModel",
+      "target_mapping": {
+        "Low": 0,
+        "Medium": 1,
+        "High": 2
+      },
+      "config_name": "PA_base_smote",
+      "imbalance": "smote",
+      "class_weights": null,
+      "best_params": {
+        "n_estimators": 200,
+        "min_samples_split": 2,
+        "min_samples_leaf": 1,
+        "max_features": 0.7,
+        "max_depth": 8,
+        "class_weight": "balanced_subsample"
+      },
+      "best_cv_f2_macro": 0.9002593959188033,
+      "n_iter": 100,
+      "cv_splits": 5,
+      "cv_repeats": 1,
+      "random_state": 42,
+      "feature_names": [
+        "elevation_m",
+        "drainage_density_km_per_km2",
+        "storm_drain_proximity_m",
+        "historical_rainfall_intensity_mm_hr",
+        "return_period_years",
+        "land_use",
+        "soil_group",
+        "storm_drain_type",
+        "rainfall_source",
+        "dem_source"
+      ],
+      "code_revision": "86a64936223ca75f3b580523ec80c0ae3e08b42b"
+    },
+    "confusion_matrix": [
+      [
+        362,
+        22,
+        15
+      ],
+      [
+        0,
+        110,
+        5
+      ],
+      [
+        0,
+        5,
+        74
+      ]
+    ],
+    "per_class": {
+      "Low": {
+        "precision": 1.0,
+        "recall": 0.9072681704260651,
+        "f1-score": 0.9513797634691196,
+        "support": 399.0
+      },
+      "Medium": {
+        "precision": 0.8029197080291971,
+        "recall": 0.9565217391304348,
+        "f1-score": 0.873015873015873,
+        "support": 115.0
+      },
+      "High": {
+        "precision": 0.7872340425531915,
+        "recall": 0.9367088607594937,
+        "f1-score": 0.8554913294797688,
+        "support": 79.0
+      }
+    }
+  },
+  "XGBoost": {
+    "train_f2_macro": 0.9771519779127513,
+    "train_f1_weighted": 0.9790052173989713,
+    "test_f2_macro": 0.9294476571855811,
+    "test_f1_weighted": 0.940044542687115,
+    "cv_f2_macro": 0.9020027588350417,
+    "best_params": {
+      "subsample": 1.0,
+      "reg_lambda": 0.001,
+      "reg_alpha": 0.0001,
+      "n_estimators": 500,
+      "min_child_weight": 5,
+      "max_depth": 5,
+      "learning_rate": 0.03,
+      "gamma": 0.5,
+      "colsample_bytree": 0.8
+    },
+    "artifact_metadata": {
+      "artifact_schema_version": 1,
+      "model_class": "XGBClassifierModel",
+      "target_mapping": {
+        "Low": 0,
+        "Medium": 1,
+        "High": 2
+      },
+      "config_name": "PA_G3_none",
+      "imbalance": "none",
+      "class_weights": null,
+      "best_params": {
+        "subsample": 1.0,
+        "reg_lambda": 0.001,
+        "reg_alpha": 0.0001,
+        "n_estimators": 500,
+        "min_child_weight": 5,
+        "max_depth": 5,
+        "learning_rate": 0.03,
+        "gamma": 0.5,
+        "colsample_bytree": 0.8
+      },
+      "best_cv_f2_macro": 0.9020027588350417,
+      "n_iter": 100,
+      "cv_splits": 5,
+      "cv_repeats": 1,
+      "random_state": 42,
+      "feature_names": [
+        "elevation_m",
+        "drainage_density_km_per_km2",
+        "storm_drain_proximity_m",
+        "historical_rainfall_intensity_mm_hr",
+        "return_period_years",
+        "G3_soil_x_rainfall",
+        "land_use",
+        "soil_group",
+        "storm_drain_type",
+        "rainfall_source",
+        "dem_source"
+      ],
+      "code_revision": "86a64936223ca75f3b580523ec80c0ae3e08b42b"
+    },
+    "confusion_matrix": [
+      [
+        376,
+        16,
+        7
+      ],
+      [
+        6,
+        108,
+        1
+      ],
+      [
+        3,
+        3,
+        73
+      ]
+    ],
+    "per_class": {
+      "Low": {
+        "precision": 0.9766233766233766,
+        "recall": 0.9423558897243107,
+        "f1-score": 0.9591836734693877,
+        "support": 399.0
+      },
+      "Medium": {
+        "precision": 0.8503937007874016,
+        "recall": 0.9391304347826087,
+        "f1-score": 0.8925619834710744,
+        "support": 115.0
+      },
+      "High": {
+        "precision": 0.9012345679012346,
+        "recall": 0.9240506329113924,
+        "f1-score": 0.9125,
+        "support": 79.0
+      }
+    }
+  },
+  "XGBRF": {
+    "train_f2_macro": 0.9492741330548232,
+    "train_f1_weighted": 0.9506680473621875,
+    "test_f2_macro": 0.8983583143325616,
+    "test_f1_weighted": 0.9164479976017702,
+    "cv_f2_macro": 0.9030343154994263,
+    "best_params": {
+      "subsample": 0.9,
+      "reg_lambda": 0.1,
+      "reg_alpha": 0.01,
+      "n_estimators": 600,
+      "min_child_weight": 5,
+      "max_depth": 8,
+      "colsample_bytree": 0.8,
+      "colsample_bynode": 0.9
+    },
+    "artifact_metadata": {
+      "artifact_schema_version": 1,
+      "model_class": "XGBRFClassifierModel",
+      "target_mapping": {
+        "Low": 0,
+        "Medium": 1,
+        "High": 2
+      },
+      "config_name": "PA_base_smote",
+      "imbalance": "smote",
+      "class_weights": null,
+      "best_params": {
+        "subsample": 0.9,
+        "reg_lambda": 0.1,
+        "reg_alpha": 0.01,
+        "n_estimators": 600,
+        "min_child_weight": 5,
+        "max_depth": 8,
+        "colsample_bytree": 0.8,
+        "colsample_bynode": 0.9
+      },
+      "best_cv_f2_macro": 0.9030343154994263,
+      "n_iter": 100,
+      "cv_splits": 5,
+      "cv_repeats": 1,
+      "random_state": 42,
+      "feature_names": [
+        "elevation_m",
+        "drainage_density_km_per_km2",
+        "storm_drain_proximity_m",
+        "historical_rainfall_intensity_mm_hr",
+        "return_period_years",
+        "land_use",
+        "soil_group",
+        "storm_drain_type",
+        "rainfall_source",
+        "dem_source"
+      ],
+      "code_revision": "86a64936223ca75f3b580523ec80c0ae3e08b42b"
+    },
+    "confusion_matrix": [
+      [
+        365,
+        23,
+        11
+      ],
+      [
+        3,
+        107,
+        5
+      ],
+      [
+        2,
+        7,
+        70
+      ]
+    ],
+    "per_class": {
+      "Low": {
+        "precision": 0.9864864864864865,
+        "recall": 0.9147869674185464,
+        "f1-score": 0.9492847854356307,
+        "support": 399.0
+      },
+      "Medium": {
+        "precision": 0.781021897810219,
+        "recall": 0.9304347826086956,
+        "f1-score": 0.8492063492063492,
+        "support": 115.0
+      },
+      "High": {
+        "precision": 0.813953488372093,
+        "recall": 0.8860759493670886,
+        "f1-score": 0.8484848484848485,
+        "support": 79.0
+      }
+    }
+  },
+  "LightGBM": {
+    "train_f2_macro": 0.9868361889927287,
+    "train_f1_weighted": 0.988632647895882,
+    "test_f2_macro": 0.9385536961341429,
+    "test_f1_weighted": 0.9483187794439177,
+    "cv_f2_macro": 0.9097536326427693,
+    "best_params": {
+      "use_goss": true,
+      "subsample": 0.8,
+      "reg_lambda": 10.0,
+      "reg_alpha": 1.0,
+      "num_leaves": 31,
+      "n_estimators": 150,
+      "min_split_gain": 0.1,
+      "min_child_samples": 20,
+      "max_depth": 5,
+      "learning_rate": 0.2,
+      "colsample_bytree": 1.0
+    },
+    "artifact_metadata": {
+      "artifact_schema_version": 1,
+      "model_class": "LGBMScratchModel",
+      "target_mapping": {
+        "Low": 0,
+        "Medium": 1,
+        "High": 2
+      },
+      "config_name": "PA_G3_none",
+      "imbalance": "none",
+      "class_weights": null,
+      "best_params": {
+        "use_goss": true,
+        "subsample": 0.8,
+        "reg_lambda": 10.0,
+        "reg_alpha": 1.0,
+        "num_leaves": 31,
+        "n_estimators": 150,
+        "min_split_gain": 0.1,
+        "min_child_samples": 20,
+        "max_depth": 5,
+        "learning_rate": 0.2,
+        "colsample_bytree": 1.0
+      },
+      "best_cv_f2_macro": 0.9097536326427693,
+      "n_iter": 100,
+      "cv_splits": 5,
+      "cv_repeats": 1,
+      "random_state": 42,
+      "feature_names": [
+        "elevation_m",
+        "drainage_density_km_per_km2",
+        "storm_drain_proximity_m",
+        "historical_rainfall_intensity_mm_hr",
+        "return_period_years",
+        "G3_soil_x_rainfall",
+        "land_use",
+        "soil_group",
+        "storm_drain_type",
+        "rainfall_source",
+        "dem_source"
+      ],
+      "code_revision": "86a64936223ca75f3b580523ec80c0ae3e08b42b"
+    },
+    "confusion_matrix": [
+      [
+        380,
+        14,
+        5
+      ],
+      [
+        5,
+        107,
+        3
+      ],
+      [
+        2,
+        2,
+        75
+      ]
+    ],
+    "per_class": {
+      "Low": {
+        "precision": 0.9819121447028424,
+        "recall": 0.9523809523809523,
+        "f1-score": 0.9669211195928753,
+        "support": 399.0
+      },
+      "Medium": {
+        "precision": 0.8699186991869918,
+        "recall": 0.9304347826086956,
+        "f1-score": 0.8991596638655462,
+        "support": 115.0
+      },
+      "High": {
+        "precision": 0.9036144578313253,
+        "recall": 0.9493670886075949,
+        "f1-score": 0.9259259259259259,
+        "support": 79.0
+      }
+    }
+  },
+  "HistGB": {
+    "train_f2_macro": 0.9639114484734409,
+    "train_f1_weighted": 0.9568215797388727,
+    "test_f2_macro": 0.9388033501392735,
+    "test_f1_weighted": 0.9392298152848578,
+    "cv_f2_macro": 0.9338346224738794,
+    "best_params": {
+      "min_samples_leaf": 50,
+      "max_leaf_nodes": 31,
+      "max_iter": 300,
+      "max_depth": 6,
+      "learning_rate": 0.01,
+      "l2_regularization": 1.0,
+      "class_weight": "balanced"
+    },
+    "artifact_metadata": {
+      "artifact_schema_version": 1,
+      "model_class": "HistGradientBoostingClassifierModel",
+      "target_mapping": {
+        "Low": 0,
+        "Medium": 1,
+        "High": 2
+      },
+      "config_name": "PA_G3_balanced",
+      "imbalance": "none",
+      "class_weights": null,
+      "best_params": {
+        "min_samples_leaf": 50,
+        "max_leaf_nodes": 31,
+        "max_iter": 300,
+        "max_depth": 6,
+        "learning_rate": 0.01,
+        "l2_regularization": 1.0,
+        "class_weight": "balanced"
+      },
+      "best_cv_f2_macro": 0.9338346224738794,
+      "n_iter": 100,
+      "cv_splits": 5,
+      "cv_repeats": 1,
+      "random_state": 42,
+      "feature_names": [
+        "elevation_m",
+        "drainage_density_km_per_km2",
+        "storm_drain_proximity_m",
+        "historical_rainfall_intensity_mm_hr",
+        "return_period_years",
+        "G3_soil_x_rainfall",
+        "land_use",
+        "soil_group",
+        "storm_drain_type",
+        "rainfall_source",
+        "dem_source"
+      ],
+      "code_revision": "86a64936223ca75f3b580523ec80c0ae3e08b42b"
+    },
+    "confusion_matrix": [
+      [
+        368,
+        20,
+        11
+      ],
+      [
+        0,
+        111,
+        4
+      ],
+      [
+        0,
+        2,
+        77
+      ]
+    ],
+    "per_class": {
+      "Low": {
+        "precision": 1.0,
+        "recall": 0.9223057644110275,
+        "f1-score": 0.9595827900912647,
+        "support": 399.0
+      },
+      "Medium": {
+        "precision": 0.8345864661654135,
+        "recall": 0.9652173913043478,
+        "f1-score": 0.8951612903225806,
+        "support": 115.0
+      },
+      "High": {
+        "precision": 0.8369565217391305,
+        "recall": 0.9746835443037974,
+        "f1-score": 0.9005847953216374,
+        "support": 79.0
+      }
+    }
+  },
+  "LinearRegression": {
+    "train_f2_macro": 0.6035846109824771,
+    "train_f1_weighted": 0.6482587232273952,
+    "test_f2_macro": 0.6100580522842872,
+    "test_f1_weighted": 0.6552893232566247,
+    "cv_f2_macro": 0.603050489073018,
+    "best_params": {
+      "tol": 1e-06,
+      "max_iter": 2000,
+      "learning_rate": 0.05
+    },
+    "artifact_metadata": {
+      "artifact_schema_version": 1,
+      "model_class": "LinearRegressionModel",
+      "target_mapping": {
+        "Low": 0,
+        "Medium": 1,
+        "High": 2
+      },
+      "config_name": "scale_w1152",
+      "imbalance": "weighted",
+      "class_weights": {
+        "0": 1.0,
+        "1": 1.5,
+        "2": 2.0
+      },
+      "best_params": {
+        "tol": 1e-06,
+        "max_iter": 2000,
+        "learning_rate": 0.05
+      },
+      "best_cv_f2_macro": 0.603050489073018,
+      "n_iter": 100,
+      "cv_splits": 5,
+      "cv_repeats": 1,
+      "random_state": 42,
+      "feature_names": [
+        "elevation_m",
+        "drainage_density_km_per_km2",
+        "storm_drain_proximity_m",
+        "historical_rainfall_intensity_mm_hr",
+        "return_period_years",
+        "soil_group",
+        "land_use",
+        "storm_drain_type",
+        "rainfall_source",
+        "dem_source"
+      ],
+      "code_revision": "86a64936223ca75f3b580523ec80c0ae3e08b42b"
+    },
+    "confusion_matrix": [
+      [
+        266,
+        105,
+        28
+      ],
+      [
+        52,
+        51,
+        12
+      ],
+      [
+        6,
+        12,
+        61
+      ]
+    ],
+    "per_class": {
+      "Low": {
+        "precision": 0.8209876543209876,
+        "recall": 0.6666666666666666,
+        "f1-score": 0.73582295988935,
+        "support": 399.0
+      },
+      "Medium": {
+        "precision": 0.30357142857142855,
+        "recall": 0.4434782608695652,
+        "f1-score": 0.36042402826855124,
+        "support": 115.0
+      },
+      "High": {
+        "precision": 0.6039603960396039,
+        "recall": 0.7721518987341772,
+        "f1-score": 0.6777777777777778,
+        "support": 79.0
+      }
+    }
+  },
+  "Ridge": {
+    "train_f2_macro": 0.6043339596070693,
+    "train_f1_weighted": 0.6514636949391859,
+    "test_f2_macro": 0.6237766793524714,
+    "test_f1_weighted": 0.6638535033560958,
+    "cv_f2_macro": 0.5998519978495029,
+    "best_params": {
+      "max_iter": 500,
+      "learning_rate": 0.005,
+      "alpha": 0.1
+    },
+    "artifact_metadata": {
+      "artifact_schema_version": 1,
+      "model_class": "RidgeRegressionModel",
+      "target_mapping": {
+        "Low": 0,
+        "Medium": 1,
+        "High": 2
+      },
+      "config_name": "scale_base_none",
+      "imbalance": "none",
+      "class_weights": null,
+      "best_params": {
+        "max_iter": 500,
+        "learning_rate": 0.005,
+        "alpha": 0.1
+      },
+      "best_cv_f2_macro": 0.5998519978495029,
+      "n_iter": 100,
+      "cv_splits": 5,
+      "cv_repeats": 1,
+      "random_state": 42,
+      "feature_names": [
+        "elevation_m",
+        "drainage_density_km_per_km2",
+        "storm_drain_proximity_m",
+        "historical_rainfall_intensity_mm_hr",
+        "return_period_years",
+        "soil_group",
+        "land_use",
+        "storm_drain_type",
+        "rainfall_source",
+        "dem_source"
+      ],
+      "code_revision": "86a64936223ca75f3b580523ec80c0ae3e08b42b"
+    },
+    "confusion_matrix": [
+      [
+        256,
+        133,
+        10
+      ],
+      [
+        45,
+        67,
+        3
+      ],
+      [
+        7,
+        18,
+        54
+      ]
+    ],
+    "per_class": {
+      "Low": {
+        "precision": 0.8311688311688312,
+        "recall": 0.6416040100250626,
+        "f1-score": 0.7241867043847242,
+        "support": 399.0
+      },
+      "Medium": {
+        "precision": 0.3073394495412844,
+        "recall": 0.5826086956521739,
+        "f1-score": 0.4024024024024024,
+        "support": 115.0
+      },
+      "High": {
+        "precision": 0.8059701492537313,
+        "recall": 0.6835443037974683,
+        "f1-score": 0.7397260273972602,
+        "support": 79.0
+      }
+    }
+  },
+  "Lasso": {
+    "train_f2_macro": 0.5902746618534243,
+    "train_f1_weighted": 0.646089419520992,
+    "test_f2_macro": 0.5820158897699308,
+    "test_f1_weighted": 0.6427295072073972,
+    "cv_f2_macro": 0.5778470101835309,
+    "best_params": {
+      "max_iter": 2000,
+      "learning_rate": 0.001,
+      "alpha": 0.0001
+    },
+    "artifact_metadata": {
+      "artifact_schema_version": 1,
+      "model_class": "LassoRegressionModel",
+      "target_mapping": {
+        "Low": 0,
+        "Medium": 1,
+        "High": 2
+      },
+      "config_name": "ohe_base_none",
+      "imbalance": "none",
+      "class_weights": null,
+      "best_params": {
+        "max_iter": 2000,
+        "learning_rate": 0.001,
+        "alpha": 0.0001
+      },
+      "best_cv_f2_macro": 0.5778470101835309,
+      "n_iter": 100,
+      "cv_splits": 5,
+      "cv_repeats": 1,
+      "random_state": 42,
+      "feature_names": [
+        "elevation_m",
+        "drainage_density_km_per_km2",
+        "storm_drain_proximity_m",
+        "historical_rainfall_intensity_mm_hr",
+        "return_period_years",
+        "soil_group",
+        "land_use_Commercial",
+        "land_use_Green",
+        "land_use_Industrial",
+        "land_use_Informal",
+        "land_use_Institutional",
+        "land_use_Mixed",
+        "land_use_Residential",
+        "land_use_Roads",
+        "land_use_Water",
+        "storm_drain_type_CurbInlet",
+        "storm_drain_type_GratedInlet",
+        "storm_drain_type_Manhole",
+        "storm_drain_type_OpenChannel",
+        "storm_drain_type_Unknown",
+        "rainfall_source_Blended",
+        "rainfall_source_ERA5",
+        "rainfall_source_IMD",
+        "rainfall_source_LocalGauge",
+        "rainfall_source_Unknown",
+        "dem_source_Copernicus_EEA-10_v5",
+        "dem_source_Copernicus_GLO-30_v2023",
+        "dem_source_Copernicus_GLO-90_v2022",
+        "dem_source_SRTM_1arc",
+        "dem_source_SRTM_3arc"
+      ],
+      "code_revision": "86a64936223ca75f3b580523ec80c0ae3e08b42b"
+    },
+    "confusion_matrix": [
+      [
+        275,
+        99,
+        25
+      ],
+      [
+        65,
+        38,
+        12
+      ],
+      [
+        7,
+        12,
+        60
+      ]
+    ],
+    "per_class": {
+      "Low": {
+        "precision": 0.792507204610951,
+        "recall": 0.6892230576441103,
+        "f1-score": 0.7372654155495979,
+        "support": 399.0
+      },
+      "Medium": {
+        "precision": 0.2550335570469799,
+        "recall": 0.33043478260869563,
+        "f1-score": 0.2878787878787879,
+        "support": 115.0
+      },
+      "High": {
+        "precision": 0.6185567010309279,
+        "recall": 0.759493670886076,
+        "f1-score": 0.6818181818181818,
+        "support": 79.0
+      }
+    }
+  },
+  "Huber": {
+    "train_f2_macro": 0.6029906343743575,
+    "train_f1_weighted": 0.6448778576802021,
+    "test_f2_macro": 0.6098354702596462,
+    "test_f1_weighted": 0.6520911704988974,
+    "cv_f2_macro": 0.6046883699601958,
+    "best_params": {
+      "max_iter": 500,
+      "learning_rate": 0.01,
+      "delta": 1.5
+    },
+    "artifact_metadata": {
+      "artifact_schema_version": 1,
+      "model_class": "HuberRegressionModel",
+      "target_mapping": {
+        "Low": 0,
+        "Medium": 1,
+        "High": 2
+      },
+      "config_name": "scale_w1152",
+      "imbalance": "weighted",
+      "class_weights": {
+        "0": 1.0,
+        "1": 1.5,
+        "2": 2.0
+      },
+      "best_params": {
+        "max_iter": 500,
+        "learning_rate": 0.01,
+        "delta": 1.5
+      },
+      "best_cv_f2_macro": 0.6046883699601958,
+      "n_iter": 100,
+      "cv_splits": 5,
+      "cv_repeats": 1,
+      "random_state": 42,
+      "feature_names": [
+        "elevation_m",
+        "drainage_density_km_per_km2",
+        "storm_drain_proximity_m",
+        "historical_rainfall_intensity_mm_hr",
+        "return_period_years",
+        "soil_group",
+        "land_use",
+        "storm_drain_type",
+        "rainfall_source",
+        "dem_source"
+      ],
+      "code_revision": "86a64936223ca75f3b580523ec80c0ae3e08b42b"
+    },
+    "confusion_matrix": [
+      [
+        259,
+        107,
+        33
+      ],
+      [
+        44,
+        55,
+        16
+      ],
+      [
+        6,
+        12,
+        61
+      ]
+    ],
+    "per_class": {
+      "Low": {
+        "precision": 0.8381877022653722,
+        "recall": 0.6491228070175439,
+        "f1-score": 0.731638418079096,
+        "support": 399.0
+      },
+      "Medium": {
+        "precision": 0.3160919540229885,
+        "recall": 0.4782608695652174,
+        "f1-score": 0.3806228373702422,
+        "support": 115.0
+      },
+      "High": {
+        "precision": 0.5545454545454546,
+        "recall": 0.7721518987341772,
+        "f1-score": 0.6455026455026455,
+        "support": 79.0
+      }
+    }
+  },
+  "SVM": {
+    "train_f2_macro": 0.7778258204124381,
+    "train_f1_weighted": 0.829359910213109,
+    "test_f2_macro": 0.796385862684577,
+    "test_f1_weighted": 0.8330432453525569,
+    "cv_f2_macro": 0.7386223597382402,
+    "best_params": {
+      "tol": 0.001,
+      "max_passes": 5,
+      "kernel": "poly",
+      "gamma": "scale",
+      "degree": 3,
+      "coef0": 1.0,
+      "C": 0.1
+    },
+    "artifact_metadata": {
+      "artifact_schema_version": 1,
+      "model_class": "SVMClassifierModel",
+      "target_mapping": {
+        "Low": 0,
+        "Medium": 1,
+        "High": 2
+      },
+      "config_name": "scale_skew_w123",
+      "imbalance": "weighted",
+      "class_weights": {
+        "0": 1.0,
+        "1": 2.0,
+        "2": 3.0
+      },
+      "best_params": {
+        "tol": 0.001,
+        "max_passes": 5,
+        "kernel": "poly",
+        "gamma": "scale",
+        "degree": 3,
+        "coef0": 1.0,
+        "C": 0.1
+      },
+      "best_cv_f2_macro": 0.7386223597382402,
+      "n_iter": 100,
+      "cv_splits": 5,
+      "cv_repeats": 1,
+      "random_state": 42,
+      "feature_names": [
+        "elevation_m",
+        "drainage_density_km_per_km2",
+        "storm_drain_proximity_m",
+        "historical_rainfall_intensity_mm_hr",
+        "return_period_years",
+        "soil_group",
+        "land_use",
+        "storm_drain_type",
+        "rainfall_source",
+        "dem_source"
+      ],
+      "code_revision": "86a64936223ca75f3b580523ec80c0ae3e08b42b"
+    },
+    "confusion_matrix": [
+      [
+        341,
+        32,
+        26
+      ],
+      [
+        21,
+        86,
+        8
+      ],
+      [
+        11,
+        3,
+        65
+      ]
+    ],
+    "per_class": {
+      "Low": {
+        "precision": 0.9142091152815014,
+        "recall": 0.8546365914786967,
+        "f1-score": 0.883419689119171,
+        "support": 399.0
+      },
+      "Medium": {
+        "precision": 0.7107438016528925,
+        "recall": 0.7478260869565218,
+        "f1-score": 0.7288135593220338,
+        "support": 115.0
+      },
+      "High": {
+        "precision": 0.6565656565656566,
+        "recall": 0.8227848101265823,
+        "f1-score": 0.7303370786516854,
+        "support": 79.0
+      }
+    }
+  }
+}

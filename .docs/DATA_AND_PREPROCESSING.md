@@ -61,15 +61,19 @@ Do not assume the full Pipeline B is optimal. Historical ablation suggested:
 - SVM preferred scale plus skew correction;
 - OHE and all engineered features together did not consistently help.
 
-The corrected Ablation 4 run has confirmed:
+The corrected Ablation 4 and 4b runs confirmed all final configurations:
 
 - Random Forest: Pipeline A baseline, no engineered groups, with SMOTE;
+- Decision Tree: Pipeline A with G3, without balancing;
+- XGBoost: Pipeline A with G3, without balancing;
+- XGBRF: Pipeline A baseline with SMOTE;
+- custom LightGBM: Pipeline A with G3, without balancing;
+- HistGradientBoosting: Pipeline A with G3 and the estimator's balanced class weighting;
+- Linear Regression: scale-only baseline with `1:1.5:2` risk weights;
 - Ridge: scale-only baseline, without balancing;
 - Lasso: OHE-only baseline, without balancing;
+- Huber: scale-only baseline with `1:1.5:2` risk weights;
 - SVM: scale plus skew correction, baseline features, with `1:2:3` risk weights.
-
-The remaining models are pending Ablation 4b. Do not extrapolate these four
-configurations to every model in the same family.
 
 ## Leakage Rule
 

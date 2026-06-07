@@ -54,14 +54,32 @@ These results came from the earlier `Train_Test.ipynb` run and are retained only
 | SVM | 0.7149 | 0.7401 |
 | Huber | 0.5641 | 0.5855 |
 
-These are pre-regeneration results. Do not cite them as the final corrected experiment until data preparation, ablation, tuning, and final evaluation have been rerun.
+These are pre-fix results retained only as a historical baseline. Do not cite
+them as the final corrected experiment.
 
-## Corrected Experiment Progress
+## Corrected Final Results
 
-Data preparation and leakage-safe ablation have been rerun. Ablation 4 has
-confirmed configurations for Random Forest, Ridge, Lasso, and SVM using only
-raw train data and repeated stratified CV. Seven models remain in Ablation 4b
-before final tuning can begin.
+The corrected workflow was completed on 2026-06-07. Ablation froze one setup
+per model using raw train data only. Final tuning also started from raw train
+rows and fitted preprocessing independently inside each stratified CV fold.
+The 593-row test split was evaluated only after all 11 artifacts passed the
+notebook compatibility gate.
 
-See `CURRENT_STATUS.md` for the selected setups and exact handoff steps.
-Historical test rankings above remain baselines only.
+| Rank | Model | Tuning CV F2-macro | Test F2-macro | Test F1-weighted | High recall |
+|---:|---|---:|---:|---:|---:|
+| 1 | HistGradientBoosting | 0.9338 | 0.9388 | 0.9392 | 0.9747 |
+| 2 | LightGBM | 0.9098 | 0.9386 | 0.9483 | 0.9494 |
+| 3 | XGBoost | 0.9020 | 0.9294 | 0.9400 | 0.9241 |
+| 4 | Decision Tree | 0.8966 | 0.9271 | 0.9372 | 0.9367 |
+| 5 | Random Forest | 0.9003 | 0.9160 | 0.9234 | 0.9367 |
+| 6 | XGBRF | 0.9030 | 0.8984 | 0.9164 | 0.8861 |
+| 7 | SVM | 0.7386 | 0.7964 | 0.8330 | 0.8228 |
+| 8 | Ridge | 0.5999 | 0.6238 | 0.6639 | 0.6835 |
+| 9 | Linear Regression | 0.6031 | 0.6101 | 0.6553 | 0.7722 |
+| 10 | Huber | 0.6047 | 0.6098 | 0.6521 | 0.7722 |
+| 11 | Lasso | 0.5778 | 0.5820 | 0.6427 | 0.7595 |
+
+HistGradientBoosting is both the model selected by train-only tuning CV and
+the best test performer. LightGBM has the highest test F1-weighted score, but
+the primary selection metric remains F2-macro. See `CURRENT_STATUS.md` for
+artifact provenance and limitations.

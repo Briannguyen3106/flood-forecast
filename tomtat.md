@@ -308,7 +308,7 @@ Notebook in:
 - Neu thu hyperparameter nhieu lan dua tren test score, test set se gian tiep tro thanh validation set va ket qua khong con khach quan.
 - Nen pin versions trong `requirements.txt` de PKL chay nhat quan tren Kaggle.
 
-## Ke Hoach Corrected Final Workflow Sau Ablation 4
+## Corrected Final Workflow - Da Hoan Tat
 
 ### Trang thai notebook final sau khi cap nhat
 
@@ -327,10 +327,10 @@ De tiep tuc sau khi session bi huy, can Save Version de luu output hoac upload
 `saved_models` thanh Kaggle Dataset, sau do dat `EXTERNAL_MODELS_DIR` trong
 cell Setup den thu muc `saved_models` da mount.
 
-Phan mo ta o tren phan anh `Train_Test.ipynb` hien tai. Truoc khi tao ket qua
-final corrected, can hoan thanh checklist duoi day.
+Phan mo ta o tren phan anh `Train_Test.ipynb` hien tai. Corrected final run da
+hoan tat ngay 2026-06-07 voi 11/11 artifact hop le va 12/12 cell khong co loi.
 
-### Winner setup da xac nhan
+### Winner setup da khoa
 
 Ket qua nay duoc chon bang train-only repeated CV, khong dung test set:
 
@@ -341,47 +341,44 @@ Ket qua nay duoc chon bang train-only repeated CV, khong dung test set:
 | Lasso | Pipeline B OHE-only | Baseline | None |
 | SVM | Pipeline B scale + skew | Baseline | Weights `Low:Medium:High = 1:2:3` |
 
-### Model con thieu winner setup
+Bay model con lai cung da duoc khoa:
 
-Neu cac model sau van xuat hien trong corrected final comparison, can chay
-Ablation 4 filtered confirmation cho tung model:
+| Model | Preprocessing | Feature group | Imbalance |
+|---|---|---|---|
+| Decision Tree | Pipeline A | G3 | None |
+| XGBoost | Pipeline A | G3 | None |
+| XGBRF | Pipeline A | Baseline | SMOTE |
+| LightGBM | Pipeline A | G3 | None |
+| HistGradientBoosting | Pipeline A | G3 | Estimator `class_weight='balanced'` |
+| Linear Regression | Pipeline B scale-only | Baseline | Weights `1:1.5:2` |
+| Huber Regression | Pipeline B scale-only | Baseline | Weights `1:1.5:2` |
 
-- Decision Tree.
-- XGBoost.
-- XGBRF.
-- LightGBM.
-- HistGradientBoosting (`HitsGB`).
-- Linear Regression.
-- Huber Regression.
+Trainer ghi HistGB voi `imbalance='none'` vi balanced class weight nam ben
+trong estimator wrapper; khong duoc ap them sample weight lan thu hai.
 
-Moi model chi nen thu cac cau hinh da shortlist tu Ablation 1-3, khong can
-chay lai toan bo Cartesian product. Tree models co the bat dau voi Pipeline A
-baseline/G3 ket hop none/SMOTE hoac class weight neu model ho tro. Linear va
-Huber can so sanh scale-only, scale+skew va weight profiles phu hop.
+### Ket qua final post-fix
 
-### Thay doi code bat buoc truoc final training
+Final tuning dung raw train, fold-local preprocessing, stratified 5-fold CV,
+`CV_REPEATS=1`, `N_ITER=100` va `random_state=42`. Day khong phai repeated CV
+o giai doan final tuning; repeated CV duoc dung trong ablation de khoa setup.
 
-1. Mo rong Ablation 4 de khoa mot setup cho moi model trong final comparison.
-2. Generalize `src/core/trainer.py` de ho tro `none`, `smote`, `balanced` va
-   `weighted`; khong ep SMOTE cho moi model.
-3. Cho phep moi model truyen `preprocessor_factory`, feature groups va class
-   weights da duoc Ablation 4 chon.
-4. Tune tu raw train data (`data/splits/train.csv`) va fit preprocessing ben
-   trong tung CV training fold. Khong tune tren processed CSV da fit bang toan
-   bo train set.
-5. Dung repeated stratified CV voi `random_state=42`; chon hyperparameter bang
-   F2-macro, sau do kiem tra F1-weighted, variance, gap va High recall.
-6. Retrain tren toan bo raw train data bang setup da khoa, roi transform va
-   danh gia test mot lan.
-7. Luu metadata cung PKL: code revision, target mapping, preprocessing config,
-   feature groups, imbalance strategy, class weights, hyperparameters va
-   feature names.
-8. Khong tu dong tai PKL cu chi dua vao ten file. PKL pre-fix hoac khac config
-   phai duoc retrain hoac bi tu choi bang metadata validation.
-9. Cap nhat `Train_Test.ipynb` de bao cao CV selection metrics va final test
-   metrics rieng biet.
-10. Cap nhat `.docs/`, `Highlights.md` va artifact status sau khi final run
-    hoan tat.
+| Rank | Model | CV F2 | Test F2 | Test F1-weighted | High recall |
+|---:|---|---:|---:|---:|---:|
+| 1 | HistGB | 0.9338 | 0.9388 | 0.9392 | 0.9747 |
+| 2 | LightGBM | 0.9098 | 0.9386 | 0.9483 | 0.9494 |
+| 3 | XGBoost | 0.9020 | 0.9294 | 0.9400 | 0.9241 |
+| 4 | DecisionTree | 0.8966 | 0.9271 | 0.9372 | 0.9367 |
+| 5 | RandomForest | 0.9003 | 0.9160 | 0.9234 | 0.9367 |
+| 6 | XGBRF | 0.9030 | 0.8984 | 0.9164 | 0.8861 |
+| 7 | SVM | 0.7386 | 0.7964 | 0.8330 | 0.8228 |
+| 8 | Ridge | 0.5999 | 0.6238 | 0.6639 | 0.6835 |
+| 9 | Linear Regression | 0.6031 | 0.6101 | 0.6553 | 0.7722 |
+| 10 | Huber | 0.6047 | 0.6098 | 0.6521 | 0.7722 |
+| 11 | Lasso | 0.5778 | 0.5820 | 0.6427 | 0.7595 |
+
+HistGB duoc chon bang train-only tuning CV va cung la best test performer.
+Model du doan dung 77/79 dong `High`. LightGBM co Test F1-weighted cao nhat,
+nhung F2-macro van la metric chinh.
 
 ### Quy tac su dung test set
 
@@ -399,20 +396,9 @@ Giu cell `git clone`, `%cd` va cai dependencies vi `Train_Test.ipynb` se chay
 tren Kaggle. Tuy nhien, final notebook phai clone dung code revision va khong
 duoc vo tinh load cac PKL cu khong co metadata tuong thich.
 
-## Handoff Sau Khi Chay Ablation 4b
+## Artifact Status
 
-Trong `experiments/ablation_study.ipynb`, chay lan luot:
-
-```python
-ABLATION4B_BATCH = "fast"
-ABLATION4B_BATCH = "decision_tree"
-ABLATION4B_BATCH = "lightgbm"
-```
-
-Khong can chay lai Ablation 1-4 cua RF, Ridge, Lasso va SVM neu split, target,
-preprocessing va CV logic khong thay doi.
-
-Ket qua duoc checkpoint tai:
+Ket qua ablation duoc checkpoint tai:
 
 ```text
 results/ablation/ablation4_remaining_fast.csv
@@ -421,16 +407,10 @@ results/ablation/ablation4_remaining_lightgbm.csv
 results/ablation/ablation4_all_winners.csv
 ```
 
-Sau khi ca ba batch thanh cong:
+Final reports nam trong `results/final/`; 11 model nam trong `saved_models/`.
+Artifact metadata ghi revision `86a6493`. HEAD hien tai la `b39e48f`, chi thay
+doi verbosity cua trainer, nhung exact revision validation se buoc retrain neu
+chay lai notebook tai HEAD moi.
 
-1. Kiem tra du 11 model trong `ablation4_all_winners.csv`.
-2. Khoa winner theo F2-macro, sau do kiem tra High recall, F1-weighted,
-   standard deviation va train/CV gap.
-3. Khong mo hoac dung test score de thay doi winner.
-4. Generalize `Trainer` va dua preprocessing vao tung tuning fold.
-5. Sua `Train_Test.ipynb` de dung raw train, per-model setup va PKL metadata.
-6. Chi chay final test sau khi tat ca model/config/hyperparameter da khoa.
-
-Custom LightGBM da duoc toi uu binning, histogram va prediction traversal.
-Smoke test va prediction-equivalence check da pass; van nen chay batch
-`lightgbm` rieng de tranh vuot gioi han session Kaggle.
+Test split da duoc xem trong final run. Khong duoc sua config dua tren bang test
+nay roi chay lai va coi ket qua la danh gia tren du lieu chua tung thay.
