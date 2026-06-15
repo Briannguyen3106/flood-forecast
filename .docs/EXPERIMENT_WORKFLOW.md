@@ -68,9 +68,10 @@ describe the final tuning run itself as repeated CV unless `CV_REPEATS` is
 increased and all artifacts are regenerated.
 
 The notebook is intended for Kaggle, so its clone/install setup may remain.
-It validates schema version, code revision, target mapping, model class,
-ablation configuration, imbalance strategy, CV settings, and random seed before
-loading a PKL. Each completed model is saved atomically. To resume after a
+It validates schema version, target mapping, model class, ablation
+configuration, imbalance strategy, CV settings, and random seed before loading
+a PKL. Code revision is retained for provenance and a mismatch produces a
+warning, not rejection. Each completed model is saved atomically. To resume after a
 Kaggle session is destroyed, publish the prior notebook output or upload its
 `saved_models` directory as a Dataset and set `EXTERNAL_MODELS_DIR`.
 
@@ -101,8 +102,8 @@ Treat the following as generated artifacts:
 
 Record the code revision and experiment configuration whenever regenerating final artifacts.
 
-The current final artifacts were trained from revision
-`86a64936223ca75f3b580523ec80c0ae3e08b42b`. The repository subsequently moved
-to `b39e48f7543085a2c198fd65b85545b3abcdda82` with trainer logging changes.
-Because artifact validation compares revisions exactly, rerunning the notebook
-at the newer revision will intentionally reject those PKLs and retrain them.
+Artifacts retain their training revision for provenance, but a revision
+difference alone does not force retraining. The notebook warns and reuses the
+checkpoint when all model-contract metadata matches. When model behavior or
+preprocessing changes without a corresponding schema/config change, increment
+`ARTIFACT_SCHEMA_VERSION` or remove the affected PKL explicitly.
