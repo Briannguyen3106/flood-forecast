@@ -11,8 +11,9 @@ Last updated: 2026-06-07.
   each of the 11 models using train data only.
 - `Trainer` tunes from raw rows and supports none, SMOTE, balanced sample
   weights, and explicit class weights.
-- `Train_Test.ipynb` validates artifact schema, revision, target mapping,
-  model class, frozen setup, CV settings, and random seed before reuse.
+- `Train_Test.ipynb` validates artifact schema, target mapping, model class,
+  frozen setup, CV settings, and random seed before reuse, while retaining the
+  training revision as provenance and warning when it differs.
 - The final test gate opened only after all 11 artifacts were compatible.
 - All 12 notebook cells completed without an error on 2026-06-07.
 
@@ -73,11 +74,12 @@ Current reports:
 - `results/final/training_checkpoint_manifest.csv`
 - `saved_models/*.pkl` for all 11 models
 
-The artifacts contain code revision
-`86a64936223ca75f3b580523ec80c0ae3e08b42b`. Current repository HEAD is
-`b39e48f7543085a2c198fd65b85545b3abcdda82`; the intervening change suppresses
-verbose fitting output and does not alter the model algorithm. Exact revision
-validation means a rerun at current HEAD will reject and regenerate the PKLs.
+The artifacts retain their training code revision for provenance. Revision
+differences now produce a warning rather than automatic rejection. Reuse still
+requires matching artifact schema, target mapping, model class, frozen config,
+imbalance strategy, class weights, CV settings, and random seed. Delete an
+artifact manually when a code change alters behavior without changing one of
+those contract fields.
 
 ## Known Limitations
 

@@ -318,8 +318,8 @@ Notebook in:
 - dung winner setup rieng cua ca 11 model;
 - fit preprocessing trong tung tuning fold thong qua `Trainer`;
 - checkpoint tung model vao `saved_models/<Model>.pkl` ngay khi hoan tat;
-- chi load PKL khi metadata khop code revision, target mapping, model, ablation
-  config, imbalance strategy va CV settings;
+- chi load PKL khi metadata khop target mapping, model, ablation config,
+  imbalance strategy va CV settings; code revision khac chi tao canh bao;
 - chan cac cell final test neu chua du 11 artifact hop le.
 
 Tren Kaggle, file trong `/kaggle/working` chi ton tai trong session hien tai.
@@ -393,8 +393,8 @@ nhung F2-macro van la metric chinh.
 ### Kaggle
 
 Giu cell `git clone`, `%cd` va cai dependencies vi `Train_Test.ipynb` se chay
-tren Kaggle. Tuy nhien, final notebook phai clone dung code revision va khong
-duoc vo tinh load cac PKL cu khong co metadata tuong thich.
+tren Kaggle. Khong bat buoc clone dung revision da train PKL, nhung artifact
+van phai co schema, target mapping, model va config metadata tuong thich.
 
 ## Artifact Status
 
@@ -408,9 +408,10 @@ results/ablation/ablation4_all_winners.csv
 ```
 
 Final reports nam trong `results/final/`; 11 model nam trong `saved_models/`.
-Artifact metadata ghi revision `86a6493`. HEAD hien tai la `b39e48f`, chi thay
-doi verbosity cua trainer, nhung exact revision validation se buoc retrain neu
-chay lai notebook tai HEAD moi.
+Artifact metadata van ghi revision luc train de truy vet. Neu revision hien tai
+khac, notebook chi canh bao va van load PKL khi schema, target mapping, model,
+config, imbalance, class weights va CV settings deu khop. Neu code thay doi hanh
+vi model, can tang `ARTIFACT_SCHEMA_VERSION` hoac xoa PKL bi anh huong.
 
 Test split da duoc xem trong final run. Khong duoc sua config dua tren bang test
 nay roi chay lai va coi ket qua la danh gia tren du lieu chua tung thay.
